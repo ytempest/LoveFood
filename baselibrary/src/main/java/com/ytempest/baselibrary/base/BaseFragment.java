@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.ytempest.baselibrary.ioc.ViewUtils;
+import butterknife.ButterKnife;
 
 
 /**
@@ -29,7 +29,7 @@ public abstract class BaseFragment extends Fragment {
         rootView = View.inflate(mContext, getLayoutId(), null);
 
         // 加入注解
-        ViewUtils.inject(rootView, this);
+        ButterKnife.bind(rootView);
 
         return rootView;
     }
@@ -52,7 +52,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 启动Activity，带结果
      */
-    protected void startActivityForResult(Class<?> clazz,int requetCode) {
+    protected void startActivityForResult(Class<?> clazz, int requetCode) {
         Intent intent = new Intent(mContext, clazz);
         startActivityForResult(intent, requetCode);
     }
@@ -72,7 +72,6 @@ public abstract class BaseFragment extends Fragment {
     protected void showToastLong(@StringRes int resId) {
         Toast.makeText(mContext, resId, Toast.LENGTH_LONG).show();
     }
-
 
 
     protected abstract int getLayoutId();

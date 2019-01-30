@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.ytempest.baselibrary.ioc.ViewUtils;
 import com.ytempest.baselibrary.util.ActivityStackManager;
+
+import butterknife.ButterKnife;
 
 /**
  * @author ytempest
@@ -27,7 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         // 设置布局layout
         setContentView(getLayoutResId());
 
-        ViewUtils.inject(this);
+        ButterKnife.bind(this);
 
         // 初始化头部
         initTitle();

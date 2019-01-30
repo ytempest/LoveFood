@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FE6F61</color>
-    <color name="colorPrimaryDark">#FE6F61</color>
+    <color name="colorPrimary">#ff6360</color>
+    <color name="colorPrimaryDark">#ff6360</color>
     <color name="colorAccent">#FF4081</color>
+
+
+    <!-- 首页底部按钮组文字正常颜色和按下时的颜色-->
+    <color name="rb_text_normal_color">#636363</color>
+    <color name="rb_text_press_color">#32CDC6</color>
+    <!-- 首页底部按钮组的背景颜色-->
+    <color name="rg_bg">#ebebeb</color>
+
+
 </resources>
