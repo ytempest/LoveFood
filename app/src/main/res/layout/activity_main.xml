@@ -14,9 +14,9 @@
         android:layout_weight="1" />
 
     <View
-        android:background="#ebebeb"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="0.3dp"
+        android:background="#E2E2E2" />
 
     <RadioGroup
         android:layout_width="match_parent"
@@ -28,6 +28,7 @@
         <RadioButton
             android:id="@+id/rb_indicator_topic"
             style="@style/rb_button_style"
+            android:checked="true"
             android:drawableTop="@drawable/selector_rb_topic_bg"
             android:text="话题" />
 
