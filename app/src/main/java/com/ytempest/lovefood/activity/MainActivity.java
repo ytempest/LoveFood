@@ -74,7 +74,7 @@ public class MainActivity extends BaseSkinActivity {
 
     @OnClick(R.id.rb_indicator_activity)
     public void onActivityClick(View view) {
-        setCurrentItem(FragmentType.COOKBOOK);
+        setCurrentItem(FragmentType.ACTIVITY);
     }
 
     @OnClick(R.id.rb_indicator_personal)
