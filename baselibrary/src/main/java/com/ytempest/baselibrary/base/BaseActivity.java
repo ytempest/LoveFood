@@ -4,10 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.ytempest.baselibrary.base.mvp.IPresenter;
+import com.ytempest.baselibrary.base.mvp.MvpActivity;
 import com.ytempest.baselibrary.util.ActivityStackManager;
 
 import butterknife.ButterKnife;
@@ -15,7 +16,7 @@ import butterknife.ButterKnife;
 /**
  * @author ytempest
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<Presenter extends IPresenter> extends MvpActivity<Presenter> {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

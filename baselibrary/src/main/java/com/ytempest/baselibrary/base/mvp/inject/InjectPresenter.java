@@ -1,4 +1,7 @@
-package com.ytempest.lovefood.mvp.inject;
+package com.ytempest.baselibrary.base.mvp.inject;
+
+
+import com.ytempest.baselibrary.base.mvp.IPresenter;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,7 +13,8 @@ import java.lang.annotation.Target;
  *         Description：
  */
 
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface InjectPresenter {
+    Class<? extends IPresenter> value();
 }

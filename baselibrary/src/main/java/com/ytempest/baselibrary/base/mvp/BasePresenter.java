@@ -1,8 +1,9 @@
-package com.ytempest.lovefood.mvp;
+package com.ytempest.baselibrary.base.mvp;
+
+import com.ytempest.baselibrary.base.mvp.inject.InjectModel;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
 
 /**
@@ -10,7 +11,7 @@ import java.lang.reflect.Proxy;
  *         Description：这个类主要用于解决 attach() 和 detach()方法要在每一个Activity中设置的问题；
  *         这个问题的解决方法是：Base + 泛型
  */
-public class BasePresenter<View extends IView, Model extends IModel> {
+public class BasePresenter<View extends IView, Model extends IModel> implements IPresenter {
 
     private View mView;
     /**
@@ -18,10 +19,23 @@ public class BasePresenter<View extends IView, Model extends IModel> {
      */
     private View mProxyView;
     private Model mModel;
+    private IContract mContract;
 
-    @SuppressWarnings("unchecked")
-    public void attach(View view) {
-        mView = view;
+    public BasePresenter() {
+        InjectModel injectModel = this.getClass().getAnnotation(InjectModel.class);
+        if (injectModel == null) {
+            throw new IllegalStateException(String.format("请使用@%s注解为%s注入Model", InjectModel.class.getSimpleName(), this.getClass().getCanonicalName()));
+        }
+
+        Class<? extends IModel> clazz = injectModel.value();
+
+        mModel = (Model) Utils.get(clazz);
+    }
+
+
+    @Override
+    public <T extends IView> void attach(T view) {
+        mView = (View) view;
         // 通过创建 View 的代理对象，来监听V的各个方法（即：onLoading()、onError()、onSucceed()）的执行
         mProxyView = (View) Proxy.newProxyInstance(view.getClass().getClassLoader(), view.getClass().getInterfaces(),
                 new InvocationHandler() {
@@ -33,39 +47,39 @@ public class BasePresenter<View extends IView, Model extends IModel> {
                         return null;
                     }
                 });
-
-        mModel = createModel();
-
-
-    }
-
-    @SuppressWarnings("unchecked")
-    private Model createModel() {
-        ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();
-        Class<Model> targetClass = (Class<Model>) type.getActualTypeArguments()[1];
-        Model model = null;
-        try {
-            model = targetClass.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return model;
     }
 
 
+    @Override
     public void detach() {
+        mModel.detach();
         mView = null;
         mProxyView = null;
+        mContract = null;
     }
+
+
+    /* View */
 
     protected View getView() {
         return mProxyView;
     }
 
+    /* Model */
+
     protected Model getModel() {
         return mModel;
+    }
+
+    @Override
+    public <T extends IContract> void setContract(T contract) {
+        this.mContract = contract;
+        mModel.setContract(mContract);
+    }
+
+    @Override
+    public <T extends IContract> T getContract() {
+        return (T) mContract;
     }
 }
 

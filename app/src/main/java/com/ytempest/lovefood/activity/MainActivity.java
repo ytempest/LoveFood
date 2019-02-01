@@ -2,18 +2,19 @@ package com.ytempest.lovefood.activity;
 
 import android.support.annotation.IntDef;
 import android.support.v4.app.Fragment;
-
-import android.view.View;
 import android.widget.RadioButton;
 
+import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.view.NotScrollViewPager;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.adapter.FragmentPagerAdapter;
+import com.ytempest.lovefood.contract.MainContract;
 import com.ytempest.lovefood.fragment.ActivityFragment;
 import com.ytempest.lovefood.fragment.CookbookFragment;
 import com.ytempest.lovefood.fragment.PersonalFragment;
 import com.ytempest.lovefood.fragment.TopicFragment;
+import com.ytempest.lovefood.presenter.MainPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseSkinActivity {
+@InjectPresenter(MainPresenter.class)
+public class MainActivity extends BaseSkinActivity<MainContract.Presenter> implements MainContract.View, MainContract {
+
+    private static final String TAG = "MainActivity";
 
     @BindView(R.id.view_pager)
     protected NotScrollViewPager mViewPager;
@@ -54,7 +58,7 @@ public class MainActivity extends BaseSkinActivity {
         fragments.add(new PersonalFragment());
 
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(), fragments));
-        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setOffscreenPageLimit(3);
     }
 
     @Override
@@ -63,22 +67,22 @@ public class MainActivity extends BaseSkinActivity {
     }
 
     @OnClick(R.id.rb_indicator_topic)
-    public void onTopicClick(View view) {
+    public void onTopicClick(android.view.View view) {
         setCurrentItem(FragmentType.TOPIC);
     }
 
     @OnClick(R.id.rb_indicator_cookbook)
-    public void onCookbookClick(View view) {
+    public void onCookbookClick(android.view.View view) {
         setCurrentItem(FragmentType.COOKBOOK);
     }
 
     @OnClick(R.id.rb_indicator_activity)
-    public void onActivityClick(View view) {
+    public void onActivityClick(android.view.View view) {
         setCurrentItem(FragmentType.ACTIVITY);
     }
 
     @OnClick(R.id.rb_indicator_personal)
-    public void onPersonalClick(View view) {
+    public void onPersonalClick(android.view.View view) {
         setCurrentItem(FragmentType.PERSONAL);
     }
 
@@ -88,6 +92,7 @@ public class MainActivity extends BaseSkinActivity {
         }
         mViewPager.setCurrentItem(item, false);
     }
+
 
     @IntDef({
             FragmentType.TOPIC,

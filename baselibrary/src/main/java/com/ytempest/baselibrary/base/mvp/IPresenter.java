@@ -14,8 +14,15 @@
  * limitations under the License.
  */
 
-package com.ytempest.lovefood.mvp;
+package com.ytempest.baselibrary.base.mvp;
 
 
-public interface IPresenter{
+public interface IPresenter {
+    <T extends IContract> void setContract(T contract);
+
+    <T extends IContract> T getContract();
+
+    <T extends IView> void attach(T view);
+
+    void detach();
 }

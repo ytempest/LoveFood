@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package com.ytempest.lovefood.mvp;
+package com.ytempest.baselibrary.base.mvp;
 
 public interface IView {
-
 
 }

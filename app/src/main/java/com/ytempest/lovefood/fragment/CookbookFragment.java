@@ -1,13 +1,17 @@
 package com.ytempest.lovefood.fragment;
 
 import com.ytempest.baselibrary.base.BaseFragment;
+import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.lovefood.R;
+import com.ytempest.lovefood.contract.CookbookContract;
+import com.ytempest.lovefood.presenter.CookbookPresenter;
 
 /**
  * @author ytempest
  *         Description：
  */
-public class CookbookFragment extends BaseFragment {
+@InjectPresenter(CookbookPresenter.class)
+public class CookbookFragment extends BaseFragment<CookbookContract.Presenter> implements CookbookContract.View, CookbookContract {
 
     @Override
     protected int getLayoutId() {
