@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ytempest.lovefood.activity.LoginActivity">
+
+    <!-- android:layout_height="?attr/actionBarSize" -->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:id="@+id/bar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="登录"
+            android:textColor="@android:color/white"
+            android:textSize="23sp" />
+    </android.support.v7.widget.Toolbar>
+
+
+    <EditText
+        android:id="@+id/et_account"
+        style="@style/default_edit_text_style"
+        android:drawableLeft="@drawable/icon_user"
+        android:hint="账号/手机号码"
+        android:inputType="text" />
+
+    <View style="@style/gray_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_password"
+            style="@style/default_edit_text_style"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/icon_password"
+            android:hint="密码"
+            android:inputType="textPassword" />
+
+        <CheckBox
+            android:id="@+id/cb_show_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:button="@drawable/selector_show_password"
+            android:checked="false"
+            android:padding="9dp" />
+    </LinearLayout>
+
+    <View style="@style/gray_line" />
+
+
+    <com.ytempest.framelibrary.view.button.ModifiableButton
+        android:id="@+id/bt_login"
+        style="@style/default_button_style"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:text="登录"
+        app:disable_bg="@drawable/round_corner_button_gray_bg"
+        app:disable_text_color="@android:color/darker_gray" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp">
+
+        <TextView
+            android:id="@+id/tv_forget_pwd"
+            style="@style/bottom_text_style"
+            android:layout_gravity="left"
+            android:text="忘记密码" />
+
+        <TextView
+            android:id="@+id/tv_register"
+            style="@style/bottom_text_style"
+            android:layout_gravity="right"
+            android:text="免费注册" />
+    </FrameLayout>
+
+</LinearLayout>
