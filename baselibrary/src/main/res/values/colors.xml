@@ -10,4 +10,8 @@
     <color name="load_view_shadow_color">#42808080</color>
     <!-- LoadView中的文字描述 -->
     <color name="load_view_text_desc">#8c696767</color>
+
+
+    <!-- LoadDialog的颜色集合 -->
+    <color name="loading_dialog_bg">#767676</color>
 </resources>

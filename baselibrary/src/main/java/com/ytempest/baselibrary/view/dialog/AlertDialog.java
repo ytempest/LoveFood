@@ -56,7 +56,7 @@ public class AlertDialog extends Dialog {
         private final AlertController.AlertParams P;
 
         public Builder(Context context) {
-            this(context, R.style.alert_dialog);
+            this(context, R.style.custom_dialog);
             if (context == context.getApplicationContext()) {
                 throw new IllegalArgumentException("AlertDialog 的上下文不能使用ApplicationContext！ ");
             }

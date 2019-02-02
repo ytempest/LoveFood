@@ -7,7 +7,6 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
@@ -55,7 +54,7 @@ public class LoadView extends LinearLayout {
         super(context, attrs, defStyleAttr);
 
         // 把布局文件加载到本类中
-        inflate(context, R.layout.ui_load_view, this);
+        inflate(context, R.layout.view_load_view, this);
 
         mShapeView = findViewById(R.id.iv_shape_view);
 

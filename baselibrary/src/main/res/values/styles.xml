@@ -1,7 +1,7 @@
 <resources>
 
     <!-- 对话框的样式 -->
-    <style name="alert_dialog" parent="@android:style/Theme.Dialog">
+    <style name="custom_dialog" parent="@android:style/Theme.Dialog">
         <!-- 边框 -->
         <item name="android:windowFrame">@null</item>
         <!-- 是否浮现在activity之上 -->
@@ -28,8 +28,10 @@
         <item name="android:windowExitAnimation">@anim/dialog_scale_anim_out</item>
     </style>
 
-    <style name="progress_dialog" parent="alert_dialog">
-        <item name="android:windowFullscreen">true</item>
+    <!-- LoadDialog的样式 -->
+    <style name="load_dialog" parent="custom_dialog">
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 
 </resources>
