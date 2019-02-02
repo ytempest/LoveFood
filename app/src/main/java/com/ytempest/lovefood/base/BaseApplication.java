@@ -5,6 +5,7 @@ import android.app.Application;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.framelibrary.imageloader.GlideImageLoader;
 import com.ytempest.framelibrary.skin.SkinManager;
+import com.ytempest.framelibrary.util.LogUtils;
 import com.ytempest.lovefood.util.ResourcesUtils;
 
 /**
@@ -26,5 +27,8 @@ public class BaseApplication extends Application {
 
     private void initUtils() {
         ResourcesUtils.init(this);
+
+        // 打印日志
+        LogUtils.setEnable(true);
     }
 }
