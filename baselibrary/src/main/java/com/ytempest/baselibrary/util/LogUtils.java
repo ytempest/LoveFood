@@ -1,4 +1,4 @@
-package com.ytempest.framelibrary.util;
+package com.ytempest.baselibrary.util;
 
 import android.text.TextUtils;
 import android.util.Log;

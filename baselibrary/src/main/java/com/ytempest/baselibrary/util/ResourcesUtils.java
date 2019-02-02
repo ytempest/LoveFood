@@ -1,4 +1,4 @@
-package com.ytempest.lovefood.util;
+package com.ytempest.baselibrary.util;
 
 import android.content.Context;
 import android.support.annotation.IntegerRes;
