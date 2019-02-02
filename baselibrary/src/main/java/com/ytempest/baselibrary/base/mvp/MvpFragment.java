@@ -4,8 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
+import com.ytempest.baselibrary.view.CustomToast;
+import com.ytempest.baselibrary.view.load.LoadDialog;
 
 
 /**
@@ -54,6 +57,34 @@ public abstract class MvpFragment<Presenter extends IPresenter> extends Fragment
     @Override
     public void onDestroy() {
         mPresenter.detach();
+        if (mDialog != null) {
+            mDialog.dismiss();
+        }
         super.onDestroy();
+    }
+
+    /*-------    LoadDialog    -------*/
+
+    private LoadDialog mDialog;
+
+    @Override
+    public void onRequestStart(String tip) {
+        mDialog = new LoadDialog(getActivity());
+        if (!TextUtils.isEmpty(tip)) {
+            mDialog.setTip(tip);
+        }
+        mDialog.show();
+    }
+
+    @Override
+    public void onRequestFail(String errorMsg) {
+        mDialog.dismiss();
+        CustomToast.getInstance().show(errorMsg);
+    }
+
+    @Override
+    public void onRequestSuccess(String msg) {
+        mDialog.dismiss();
+        CustomToast.getInstance().show(msg);
     }
 }

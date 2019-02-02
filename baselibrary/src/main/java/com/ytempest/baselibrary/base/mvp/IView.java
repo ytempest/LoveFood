@@ -17,5 +17,9 @@
 package com.ytempest.baselibrary.base.mvp;
 
 public interface IView {
+    void onRequestStart(String tip);
 
+    void onRequestFail(String errorMsg);
+
+    void onRequestSuccess(String msg);
 }

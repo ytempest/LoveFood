@@ -5,13 +5,18 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
+import android.widget.TextView;
 
 import com.ytempest.baselibrary.R;
+
+import org.w3c.dom.Text;
 
 /**
  * @author ytempest
  */
 public class LoadDialog extends Dialog {
+
+    private TextView mTextView;
 
     public LoadDialog(@NonNull Context context) {
         this(context, R.style.load_dialog);
@@ -50,5 +55,11 @@ public class LoadDialog extends Dialog {
     private void init() {
         setContentView(R.layout.view_loading_dialog);
         setCanceledOnTouchOutside(false);
+
+        mTextView = findViewById(R.id.tv_tip);
+    }
+
+    public void setTip(String tip) {
+        mTextView.setText(tip);
     }
 }

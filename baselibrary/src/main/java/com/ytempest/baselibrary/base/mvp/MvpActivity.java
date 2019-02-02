@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
+import com.ytempest.baselibrary.view.CustomToast;
+import com.ytempest.baselibrary.view.load.LoadDialog;
 
 /**
  * @author ytempest
@@ -56,6 +58,33 @@ public abstract class MvpActivity<Presenter extends IPresenter> extends AppCompa
     @Override
     protected void onDestroy() {
         mPresenter.detach();
+        if (mDialog != null) {
+            mDialog.dismiss();
+        }
         super.onDestroy();
+    }
+
+
+    /*-------    LoadDialog    -------*/
+
+    private LoadDialog mDialog;
+
+    @Override
+    public void onRequestStart(String tip) {
+        mDialog = new LoadDialog(this);
+        mDialog.setTip(tip);
+        mDialog.show();
+    }
+
+    @Override
+    public void onRequestFail(String errorMsg) {
+        mDialog.dismiss();
+        CustomToast.getInstance().show(errorMsg);
+    }
+
+    @Override
+    public void onRequestSuccess(String msg) {
+        mDialog.dismiss();
+        CustomToast.getInstance().show(msg);
     }
 }
