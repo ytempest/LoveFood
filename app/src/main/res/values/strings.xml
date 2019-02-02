@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">LoveFood</string>
+    <string name="topic">话题</string>
+    <string name="cookbook">菜谱</string>
+    <string name="activity">活动</string>
+    <string name="personal">我的</string>
 </resources>

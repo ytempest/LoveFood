@@ -30,24 +30,24 @@
             style="@style/rb_button_style"
             android:checked="true"
             android:drawableTop="@drawable/selector_rb_topic_bg"
-            android:text="话题" />
+            android:text="@string/topic" />
 
         <RadioButton
             android:id="@+id/rb_indicator_cookbook"
             style="@style/rb_button_style"
             android:drawableTop="@drawable/selector_rb_cookbook_bg"
-            android:text="菜谱" />
+            android:text="@string/cookbook" />
 
         <RadioButton
             android:id="@+id/rb_indicator_activity"
             style="@style/rb_button_style"
             android:drawableTop="@drawable/selector_rb_activity_bg"
-            android:text="活动" />
+            android:text="@string/activity" />
 
         <RadioButton
             android:id="@+id/rb_indicator_personal"
             style="@style/rb_button_style"
             android:drawableTop="@drawable/selector_rb_personal_bg"
-            android:text="我的" />
+            android:text="@string/personal" />
     </RadioGroup>
 </LinearLayout>
