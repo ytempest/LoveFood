@@ -11,7 +11,7 @@ import com.ytempest.lovefood.presenter.CookbookPresenter;
  *         Description：
  */
 @InjectPresenter(CookbookPresenter.class)
-public class CookbookFragment extends BaseFragment<CookbookContract.Presenter> implements CookbookContract.View, CookbookContract {
+public class CookbookFragment extends BaseFragment<CookbookContract.Presenter> implements CookbookContract.CookbookView, CookbookContract {
 
     @Override
     protected int getLayoutId() {

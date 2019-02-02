@@ -13,7 +13,7 @@ public interface ActivityContract extends IContract {
     interface Presenter extends IPresenter {
     }
 
-    interface View extends IView {
+    interface ActivityView extends IView {
     }
 
     interface Model extends IModel {

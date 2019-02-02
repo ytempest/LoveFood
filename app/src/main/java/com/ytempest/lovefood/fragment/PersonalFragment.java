@@ -12,7 +12,7 @@ import com.ytempest.lovefood.presenter.PersonalPresenter;
  *         Description：
  */
 @InjectPresenter(PersonalPresenter.class)
-public class PersonalFragment extends BaseFragment<PersonalContract.Presenter> implements PersonalContract.View, PersonalContract {
+public class PersonalFragment extends BaseFragment<PersonalContract.Presenter> implements PersonalContract.PersonalView, PersonalContract {
 
     @Override
     protected int getLayoutId() {

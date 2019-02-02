@@ -1,12 +1,15 @@
 package com.ytempest.lovefood.activity;
 
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.contract.LoginContract;
 import com.ytempest.lovefood.presenter.LoginPresenter;
+
+import butterknife.OnClick;
 
 /**
  * @author ytempest
@@ -39,4 +42,10 @@ public class LoginActivity extends BaseSkinActivity<LoginContract.Presenter> imp
     protected void initData() {
 
     }
+
+    @OnClick(R.id.bt_login)
+    protected void onLoginClick(View view) {
+        getPresenter().login("", "");
+    }
+
 }

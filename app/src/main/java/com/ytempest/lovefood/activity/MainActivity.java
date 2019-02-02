@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 @InjectPresenter(MainPresenter.class)
-public class MainActivity extends BaseSkinActivity<MainContract.Presenter> implements MainContract.View, MainContract {
+public class MainActivity extends BaseSkinActivity<MainContract.Presenter> implements MainContract.MainView, MainContract {
 
     private static final String TAG = "MainActivity";
 

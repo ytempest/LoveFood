@@ -10,5 +10,5 @@ import com.ytempest.lovefood.model.CookbookModel;
  * @date 2019/2/1
  */
 @InjectModel(CookbookModel.class)
-public class CookbookPresenter extends BasePresenter<CookbookContract.View, CookbookContract.Model> implements CookbookContract.Presenter {
+public class CookbookPresenter extends BasePresenter<CookbookContract.CookbookView, CookbookContract.Model> implements CookbookContract.Presenter {
 }

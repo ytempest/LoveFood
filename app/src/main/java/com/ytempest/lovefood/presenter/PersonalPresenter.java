@@ -10,5 +10,5 @@ import com.ytempest.lovefood.model.PersonalModel;
  * @date 2019/2/1
  */
 @InjectModel(PersonalModel.class)
-public class PersonalPresenter extends BasePresenter<PersonalContract.View, PersonalContract.Model> implements PersonalContract.Presenter {
+public class PersonalPresenter extends BasePresenter<PersonalContract.PersonalView, PersonalContract.Model> implements PersonalContract.Presenter {
 }

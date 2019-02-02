@@ -14,7 +14,7 @@ public interface MainContract extends IContract {
     interface Presenter extends IPresenter {
     }
 
-    interface View extends IView {
+    interface MainView extends IView {
     }
 
     interface Model extends IModel {

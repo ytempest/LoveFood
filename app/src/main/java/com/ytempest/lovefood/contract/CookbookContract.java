@@ -13,7 +13,7 @@ public interface CookbookContract extends IContract {
     interface Presenter extends IPresenter {
     }
 
-    interface View extends IView {
+    interface CookbookView extends IView {
     }
 
     interface Model extends IModel {

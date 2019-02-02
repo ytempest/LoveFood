@@ -11,7 +11,7 @@ import com.ytempest.lovefood.presenter.ActivityPresenter;
  *         Description：
  */
 @InjectPresenter(ActivityPresenter.class)
-public class ActivityFragment extends BaseFragment<ActivityContract.Presenter> implements ActivityContract.View, ActivityContract {
+public class ActivityFragment extends BaseFragment<ActivityContract.Presenter> implements ActivityContract.ActivityView, ActivityContract {
 
     @Override
     protected int getLayoutId() {

@@ -10,5 +10,5 @@ import com.ytempest.lovefood.model.TopicModel;
  * @date 2019/2/1
  */
 @InjectModel(TopicModel.class)
-public class TopicPresenter extends BasePresenter<TopicContract.View, TopicContract.Model> implements TopicContract.Presenter {
+public class TopicPresenter extends BasePresenter<TopicContract.TopicView, TopicContract.Model> implements TopicContract.Presenter {
 }

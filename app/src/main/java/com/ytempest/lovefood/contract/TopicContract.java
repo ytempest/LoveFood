@@ -13,7 +13,7 @@ public interface TopicContract extends IContract {
     interface Presenter extends IPresenter {
     }
 
-    interface View extends IView {
+    interface TopicView extends IView {
     }
 
     interface Model extends IModel {

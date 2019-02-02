@@ -10,5 +10,5 @@ import com.ytempest.lovefood.model.MainModel;
  * @date 2019/2/1
  */
 @InjectModel(MainModel.class)
-public class MainPresenter extends BasePresenter<MainContract.View, MainContract.Model> implements MainContract.Presenter {
+public class MainPresenter extends BasePresenter<MainContract.MainView, MainContract.Model> implements MainContract.Presenter {
 }

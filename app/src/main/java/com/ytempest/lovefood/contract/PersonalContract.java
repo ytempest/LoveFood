@@ -13,7 +13,7 @@ public interface PersonalContract extends IContract {
     interface Presenter extends IPresenter {
     }
 
-    interface View extends IView {
+    interface PersonalView extends IView {
     }
 
     interface Model extends IModel {
