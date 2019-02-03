@@ -1,15 +1,16 @@
 package com.ytempest.framelibrary.encrypt;
 
 
+import android.text.TextUtils;
+
 import com.ytempest.framelibrary.encrypt.binary.Base64;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import java.security.Key;
 
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
+import javax.crypto.spec.IvParameterSpec;
 
 /**
  * @author ytempest
@@ -17,72 +18,58 @@ import javax.crypto.spec.SecretKeySpec;
  */
 class DesUtils {
 
-    private static final String KEY_ALGORITHM = "DES";
-    private static final String DEFAULT_CIPHER_ALGORITHM = "DES/ECB/PKCS5Padding";
-
     private static final String DES_KEY = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAK0NxuvIsSXnhae9gBGEeh5rO29ch_cygM_8eNM-uDoSje0g_NzaZs4FG59kRRQ7P7Il9AHZsIO4lXptvwLWgmcCAwEAAQ";
 
+    private static final String ALGORITHM_MODE = "DES";
+    private static final String ALGORITHM_DES = "DES/CBC/PKCS5Padding";
+    private static final String IV_PARAMETER_SPEC = "12345678";
+    private static final String UTF_8 = "UTF-8";
+
 
     /**
-     * DES 加密操作
-     *
-     * @param content 待加密内容
-     * @return 返回Base64转码后的加密数据
+     * DES加密算法
      */
-
-    public static String encrypt(String content) {
-        try {
-            // 创建密码器
-            Cipher cipher = Cipher.getInstance(DEFAULT_CIPHER_ALGORITHM);
-            // 使用密钥初始化，设置为加密模式
-            cipher.init(Cipher.ENCRYPT_MODE, getSecretKey(DES_KEY));
-            // 加密
-            byte[] result = cipher.doFinal(content.getBytes("utf-8"));
-            //通过Base64转码返回
-            return Base64.encodeBase64URLSafeString(result);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+    public static String encrypt(String data) {
+        if (TextUtils.isEmpty(data)) {
+            return null;
         }
-        return null;
+        try {
+            DESKeySpec dks = new DESKeySpec(DES_KEY.getBytes());
+            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(ALGORITHM_MODE);
+            // key的长度不能够小于8位字节
+            Key secretKey = keyFactory.generateSecret(dks);
+            Cipher cipher = Cipher.getInstance(ALGORITHM_DES);
+            IvParameterSpec iv = new IvParameterSpec(IV_PARAMETER_SPEC.getBytes());
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey, iv);
+            byte[] bytes = cipher.doFinal(data.getBytes(UTF_8));
+            return Base64.encodeBase64URLSafeString(bytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
-     * DES 解密操作
+     * DES 解密算法
      */
-    public static String decrypt(String content) {
-        try {
-            // 创建密码器
-            Cipher cipher = Cipher.getInstance(DEFAULT_CIPHER_ALGORITHM);
-            // 使用密钥初始化，设置为解密模式
-            cipher.init(Cipher.DECRYPT_MODE, getSecretKey(DES_KEY));
-            //执行操作
-            byte[] result = cipher.doFinal(Base64.decodeBase64(content));
-            return new String(result, "utf-8");
-        } catch (Exception ex) {
-            ex.printStackTrace();
+    public static String decrypt(String data) {
+        if (TextUtils.isEmpty(data)) {
+            return null;
         }
-        return null;
+        try {
+            DESKeySpec dks = new DESKeySpec(DES_KEY.getBytes());
+            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(ALGORITHM_MODE);
+            // key的长度不能够小于8位字节
+            Key secretKey = keyFactory.generateSecret(dks);
+            Cipher cipher = Cipher.getInstance(ALGORITHM_DES);
+            IvParameterSpec iv = new IvParameterSpec(IV_PARAMETER_SPEC.getBytes());
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, iv);
+            return new String(cipher.doFinal(Base64.decodeBase64(data)), UTF_8);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return data;
+        }
     }
 
-    /**
-     * 生成加密秘钥
-     *
-     * @return 返回生成指定算法密钥生成器的 KeyGenerator 对象
-     */
-    private static SecretKeySpec getSecretKey(final String key) {
-        KeyGenerator kg = null;
-        try {
-            kg = KeyGenerator.getInstance(KEY_ALGORITHM);
-            //DES 要求密钥长度为 56
-            kg.init(56, new SecureRandom(key.getBytes()));
-            //生成一个密钥
-            SecretKey secretKey = kg.generateKey();
-            // 转换为DES专用密钥
-            return new SecretKeySpec(secretKey.getEncoded(), KEY_ALGORITHM);
-        } catch (NoSuchAlgorithmException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
 }
 
