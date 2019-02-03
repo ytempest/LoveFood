@@ -2,6 +2,7 @@ package com.ytempest.lovefood.activity;
 
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
@@ -9,6 +10,7 @@ import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.contract.LoginContract;
 import com.ytempest.lovefood.presenter.LoginPresenter;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -17,6 +19,13 @@ import butterknife.OnClick;
  */
 @InjectPresenter(LoginPresenter.class)
 public class LoginActivity extends BaseSkinActivity<LoginContract.Presenter> implements LoginContract.LoginView, LoginContract {
+
+    @BindView(R.id.et_account)
+    protected EditText mAccountEt;
+
+    @BindView(R.id.et_password)
+    protected EditText mPasswordEt;
+
 
     @Override
     protected int getLayoutResId() {
@@ -45,7 +54,10 @@ public class LoginActivity extends BaseSkinActivity<LoginContract.Presenter> imp
 
     @OnClick(R.id.bt_login)
     protected void onLoginClick(View view) {
-        getPresenter().login("", "");
+        String account = mAccountEt.getText().toString().trim();
+        String password = mPasswordEt.getText().toString().trim();
+
+        getPresenter().login(account, password);
     }
 
 }

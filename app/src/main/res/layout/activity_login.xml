@@ -31,7 +31,7 @@
         android:id="@+id/et_account"
         style="@style/default_edit_text_style"
         android:drawableLeft="@drawable/icon_user"
-        android:hint="账号/手机号码"
+        android:hint="账号"
         android:inputType="text" />
 
     <View style="@style/gray_line" />

@@ -12,10 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitClient {
 
-    private static final String URL = "http://192.168.5.104:8080/student_manage_war_exploded/";
-
-//    public static final String URL = "http://192.168.0.160:8081/";
-
+    private static final String URL = "http://192.168.31.68:8080/";
 
     private static RetrofitClient INSTANCE = null;
     private Retrofit mRetrofit;

@@ -2,7 +2,6 @@ package com.ytempest.lovefood.presenter;
 
 import com.ytempest.baselibrary.base.mvp.BasePresenter;
 import com.ytempest.baselibrary.base.mvp.inject.InjectModel;
-import com.ytempest.baselibrary.util.LogUtils;
 import com.ytempest.lovefood.contract.LoginContract;
 import com.ytempest.lovefood.data.BaseResult;
 import com.ytempest.lovefood.http.observable.BaseObserver;
@@ -24,13 +23,12 @@ public class LoginPresenter extends BasePresenter<LoginContract.LoginView, Login
                 .subscribe(new BaseObserver<BaseResult>() {
                     @Override
                     public void onNext(BaseResult value) {
-                        LogUtils.e(TAG, "onNext: " + Thread.currentThread());
-                        getView().onRequestSuccess("登录成功");
+                        getView().onRequestSuccess(value.getMsg());
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        LogUtils.e(TAG, "onNext: " + Thread.currentThread());
+                        e.printStackTrace();
                     }
                 });
     }
