@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.ytempest.baselibrary.base.mvp.IPresenter;
 import com.ytempest.baselibrary.base.mvp.MvpFragment;
+import com.ytempest.baselibrary.view.CustomToast;
 
 import butterknife.ButterKnife;
 
@@ -59,20 +60,8 @@ public abstract class BaseFragment<Presenter extends IPresenter> extends MvpFrag
         startActivityForResult(intent, requetCode);
     }
 
-    protected void showToastShort(String tip) {
-        Toast.makeText(mContext, tip, Toast.LENGTH_SHORT).show();
-    }
-
-    protected void showToastShort(@StringRes int resId) {
-        Toast.makeText(mContext, resId, Toast.LENGTH_SHORT).show();
-    }
-
-    protected void showToastLong(String tip) {
-        Toast.makeText(mContext, tip, Toast.LENGTH_LONG).show();
-    }
-
-    protected void showToastLong(@StringRes int resId) {
-        Toast.makeText(mContext, resId, Toast.LENGTH_LONG).show();
+    protected void showToast(String tip) {
+        CustomToast.getInstance().show(tip);
     }
 
 

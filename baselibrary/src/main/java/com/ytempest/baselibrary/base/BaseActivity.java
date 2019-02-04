@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.ytempest.baselibrary.base.mvp.IPresenter;
 import com.ytempest.baselibrary.base.mvp.MvpActivity;
 import com.ytempest.baselibrary.util.ActivityStackManager;
+import com.ytempest.baselibrary.view.CustomToast;
 
 import butterknife.ButterKnife;
 
@@ -87,28 +88,9 @@ public abstract class BaseActivity<Presenter extends IPresenter> extends MvpActi
         startActivityForResult(intent, requestCode);
     }
 
-    /**
-     * findViewById
-     *
-     * @return View
-     */
-    protected <T extends View> T viewById(int viewId) {
-        return (T) findViewById(viewId);
-    }
 
-
-    protected void showToastShort(String tip) {
-        Toast.makeText(BaseActivity.this, tip, Toast.LENGTH_SHORT).show();
-    }
-
-
-    protected void showToastLong(String tip) {
-        Toast.makeText(BaseActivity.this, tip, Toast.LENGTH_LONG).show();
-    }
-
-
-    protected String getStringById(@StringRes int resId) {
-        return getResources().getString(resId);
+    protected void showToast(String tip) {
+        CustomToast.getInstance().show(tip);
     }
 
     // 只能放一些通用的方法，基本每个Activity都需要使用的方法，readDataBase最好不要放进来 ，
