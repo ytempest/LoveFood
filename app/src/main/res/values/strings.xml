@@ -4,4 +4,6 @@
     <string name="cookbook">菜谱</string>
     <string name="activity">活动</string>
     <string name="personal">我的</string>
+
+    <string name="net_disable">当前网络不可用</string>
 </resources>

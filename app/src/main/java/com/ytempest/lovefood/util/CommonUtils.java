@@ -1,5 +1,9 @@
 package com.ytempest.lovefood.util;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import java.io.Closeable;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,32 +16,24 @@ import java.io.OutputStream;
  */
 public class CommonUtils {
 
-    public static void close(Closeable closeable) {
-        if (closeable != null) {
-            try {
-                closeable.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static void writeToFile(InputStream inputStream, String targetPath) {
-        OutputStream outputStream = null;
+    /**
+     * 判断当前网络是否可用
+     */
+    public static boolean isNetworkAvailable(Context context) {
+        // 获取网络连接管理器对象
         try {
-            outputStream = new FileOutputStream(targetPath);
-
-            byte[] buffer = new byte[1024 * 5];
-            int len = 0;
-            while ((len = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, len);
+            ConnectivityManager connectivityManager = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (connectivityManager != null) {
+                NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+                if (info != null && info.isAvailable()) {
+                    return true;
+                }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            CommonUtils.close(inputStream);
-            CommonUtils.close(outputStream);
         }
-
+        return false;
     }
+
 }

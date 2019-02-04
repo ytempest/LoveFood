@@ -6,19 +6,16 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
-import com.ytempest.baselibrary.util.LogUtils;
 import com.ytempest.baselibrary.util.ResourcesUtils;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
-import com.ytempest.framelibrary.encrypt.EncryptUtils;
 import com.ytempest.framelibrary.view.button.ModifiableButton;
 import com.ytempest.lovefood.R;
+import com.ytempest.lovefood.aop.CheckNet;
 import com.ytempest.lovefood.contract.LoginContract;
 import com.ytempest.lovefood.listener.PasswordStatusChangeListener;
 import com.ytempest.lovefood.listener.TextWatcherListener;
 import com.ytempest.lovefood.presenter.LoginPresenter;
 import com.ytempest.lovefood.util.RegexUtils;
-
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -122,6 +119,7 @@ public class LoginActivity extends BaseSkinActivity<LoginContract.Presenter> imp
 
     }
 
+    @CheckNet
     @OnClick(R.id.bt_login)
     protected void onLoginClick(View view) {
         String account = mAccountEt.getText().toString().trim();
