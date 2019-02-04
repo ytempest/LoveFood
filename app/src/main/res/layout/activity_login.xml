@@ -52,7 +52,7 @@
             android:inputType="textPassword" />
 
         <CheckBox
-            android:id="@+id/cb_show_pwd"
+            android:id="@+id/cb_pwd_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"

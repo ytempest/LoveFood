@@ -6,6 +6,7 @@ import com.ytempest.lovefood.contract.LoginContract;
 import com.ytempest.lovefood.data.BaseResult;
 import com.ytempest.lovefood.http.observable.BaseObserver;
 import com.ytempest.lovefood.model.LoginModel;
+import com.ytempest.lovefood.util.ResultUtils;
 
 /**
  * @author ytempest
@@ -19,11 +20,17 @@ public class LoginPresenter extends BasePresenter<LoginContract.LoginView, Login
     @Override
     public void login(String account, String password) {
         getView().onRequestStart("正在登录...");
+
         getModel().getLoginData(account, password)
                 .subscribe(new BaseObserver<BaseResult>() {
                     @Override
                     public void onNext(BaseResult value) {
-                        getView().onRequestSuccess(value.getMsg());
+                        if (value.getCode() == ResultUtils.SUCCESS) {
+                            getView().onRequestSuccess(value.getMsg());
+
+                        } else if (value.getCode() == ResultUtils.ERROR) {
+                            getView().onRequestFail(value.getMsg());
+                        }
                     }
 
                     @Override
