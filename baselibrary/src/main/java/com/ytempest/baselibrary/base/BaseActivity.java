@@ -3,9 +3,6 @@ package com.ytempest.baselibrary.base;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.view.View;
-import android.widget.Toast;
 
 import com.ytempest.baselibrary.base.mvp.IPresenter;
 import com.ytempest.baselibrary.base.mvp.MvpActivity;
@@ -46,7 +43,6 @@ public abstract class BaseActivity<Presenter extends IPresenter> extends MvpActi
         super.onDestroy();
         // 注销 Activity，防止内存泄漏
         ActivityStackManager.getInstance().unregisterActivity(this);
-
     }
 
     /**

@@ -2,11 +2,14 @@ package com.ytempest.lovefood.presenter;
 
 import com.ytempest.baselibrary.base.mvp.BasePresenter;
 import com.ytempest.baselibrary.base.mvp.inject.InjectModel;
+import com.ytempest.baselibrary.util.LogUtils;
 import com.ytempest.lovefood.contract.LoginContract;
 import com.ytempest.lovefood.data.BaseResult;
+import com.ytempest.lovefood.data.UserInfo;
 import com.ytempest.lovefood.http.observable.BaseObserver;
 import com.ytempest.lovefood.model.LoginModel;
 import com.ytempest.lovefood.util.ResultUtils;
+import com.ytempest.lovefood.util.UserHelper;
 
 /**
  * @author ytempest
@@ -22,20 +25,19 @@ public class LoginPresenter extends BasePresenter<LoginContract.LoginView, Login
         getView().onRequestStart("正在登录...");
 
         getModel().getLoginData(account, password)
-                .subscribe(new BaseObserver<BaseResult>() {
+                .subscribe(new BaseObserver<BaseResult<UserInfo>>() {
                     @Override
-                    public void onNext(BaseResult value) {
+                    public void onNext(BaseResult<UserInfo> value) {
                         if (value.getCode() == ResultUtils.SUCCESS) {
+                            // 保存用户数据
+                            getModel().saveUserInfo(value.getData());
+
+                            // 通知view请求成功
                             getView().onRequestSuccess(value.getMsg());
 
                         } else if (value.getCode() == ResultUtils.ERROR) {
                             getView().onRequestFail(value.getMsg());
                         }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
                     }
                 });
     }

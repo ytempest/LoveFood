@@ -20,7 +20,6 @@ public class SpUtils {
             synchronized (SpUtils.class) {
                 if (INSTANCE == null) {
                     INSTANCE = new SpUtils(context);
-
                 }
             }
         }

@@ -5,6 +5,7 @@ import com.ytempest.baselibrary.base.mvp.IModel;
 import com.ytempest.baselibrary.base.mvp.IPresenter;
 import com.ytempest.baselibrary.base.mvp.IView;
 import com.ytempest.lovefood.data.BaseResult;
+import com.ytempest.lovefood.data.UserInfo;
 
 import io.reactivex.Observable;
 
@@ -23,6 +24,8 @@ public interface LoginContract extends IContract {
     }
 
     interface Model extends IModel {
-        Observable<BaseResult> getLoginData(String account, String password);
+        Observable<BaseResult<UserInfo>> getLoginData(String account, String password);
+
+        void saveUserInfo(UserInfo userInfo);
     }
 }

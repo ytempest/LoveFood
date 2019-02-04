@@ -1,6 +1,7 @@
 package com.ytempest.lovefood.http;
 
 import com.ytempest.lovefood.data.BaseResult;
+import com.ytempest.lovefood.data.UserInfo;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -23,7 +24,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("user/login")
-    Observable<BaseResult> login(@Field("account") String account,
-                                 @Field("password") String password);
+    Observable<BaseResult<UserInfo>> login(@Field("account") String account,
+                                           @Field("password") String password);
 
 }

@@ -1,11 +1,13 @@
 package com.ytempest.lovefood.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
+import com.ytempest.baselibrary.util.ActivityStackManager;
 import com.ytempest.baselibrary.util.ResourcesUtils;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.button.ModifiableButton;
@@ -110,6 +112,16 @@ public class LoginActivity extends BaseSkinActivity<LoginContract.Presenter> imp
     @Override
     protected void initData() {
 
+    }
+
+    /* MVP */
+
+    @Override
+    public void onRequestSuccess(String msg) {
+        super.onRequestSuccess(msg);
+
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        ActivityStackManager.getInstance().finishActivity(this);
     }
 
     /* Click */

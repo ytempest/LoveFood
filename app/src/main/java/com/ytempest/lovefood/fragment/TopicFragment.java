@@ -30,14 +30,7 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
 
     @Override
     protected void initData() {
-        RetrofitClient.client().getService().login("", "")
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<BaseResult>() {
-                    @Override
-                    public void onNext(BaseResult value) {
-                        super.onNext(value);
-                    }
-                });
+
     }
 }
 

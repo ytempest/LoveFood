@@ -2,6 +2,7 @@ package com.ytempest.lovefood.activity;
 
 import android.support.annotation.IntDef;
 import android.support.v4.app.Fragment;
+import android.view.View;
 import android.widget.RadioButton;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
@@ -67,22 +68,22 @@ public class MainActivity extends BaseSkinActivity<MainContract.Presenter> imple
     }
 
     @OnClick(R.id.rb_indicator_topic)
-    public void onTopicClick(android.view.View view) {
+    public void onTopicClick(View view) {
         setCurrentItem(FragmentType.TOPIC);
     }
 
     @OnClick(R.id.rb_indicator_cookbook)
-    public void onCookbookClick(android.view.View view) {
+    public void onCookbookClick(View view) {
         setCurrentItem(FragmentType.COOKBOOK);
     }
 
     @OnClick(R.id.rb_indicator_activity)
-    public void onActivityClick(android.view.View view) {
+    public void onActivityClick(View view) {
         setCurrentItem(FragmentType.ACTIVITY);
     }
 
     @OnClick(R.id.rb_indicator_personal)
-    public void onPersonalClick(android.view.View view) {
+    public void onPersonalClick(View view) {
         setCurrentItem(FragmentType.PERSONAL);
     }
 

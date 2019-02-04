@@ -34,4 +34,12 @@ public class BaseResult<Data> {
         this.data = data;
     }
 
+    @Override
+    public String toString() {
+        return "BaseResult{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }

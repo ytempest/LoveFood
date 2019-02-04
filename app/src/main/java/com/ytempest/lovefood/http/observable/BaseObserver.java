@@ -20,7 +20,7 @@ public class BaseObserver<Data> implements Observer<Data> {
 
     @Override
     public void onError(Throwable e) {
-
+        throw new RuntimeException("请求异常");
     }
 
     @Override
