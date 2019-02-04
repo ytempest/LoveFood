@@ -159,7 +159,7 @@ public class LoginActivity extends BaseSkinActivity<LoginContract.Presenter> imp
 
     @OnClick(R.id.tv_register)
     protected void onRegisterClick(View view) {
-        // TODO: 2019/02/04 等待注册用户的处理逻辑
+        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
     }
 
     /* Method */

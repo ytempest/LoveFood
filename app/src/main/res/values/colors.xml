@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ff6360</color>
-    <color name="colorPrimaryDark">#ff6360</color>
+    <color name="colorPrimary">@color/app_color</color>
+    <color name="colorPrimaryDark">@color/app_color</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="app_color">#ff6360</color>
 
 
     <!-- 首页底部按钮组文字正常颜色和按下时的颜色-->

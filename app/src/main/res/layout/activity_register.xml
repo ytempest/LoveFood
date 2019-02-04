@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ytempest.lovefood.activity.LoginActivity">
+
+    <!-- android:layout_height="?attr/actionBarSize" -->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:id="@+id/bar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="注册"
+            android:textColor="@android:color/white"
+            android:textSize="23sp" />
+    </android.support.v7.widget.Toolbar>
+
+
+    <EditText
+        android:id="@+id/et_account"
+        style="@style/edit_text_padding_style"
+        android:hint="请输入3~12位组成的账号"
+        android:inputType="text" />
+
+    <View style="@style/gray_line_padding" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_password"
+            style="@style/edit_text_padding_style"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:hint="请输入3~18位组成的密码"
+            android:inputType="textPassword" />
+
+        <CheckBox
+            android:id="@+id/cb_pwd_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:button="@drawable/selector_show_password"
+            android:checked="false"
+            android:padding="9dp" />
+    </LinearLayout>
+
+    <View style="@style/gray_line_padding" />
+
+    <EditText
+        android:id="@+id/et_phone"
+        style="@style/edit_text_padding_style"
+        android:layout_marginTop="13dp"
+        android:hint="请输入手机号码"
+        android:inputType="phone" />
+
+    <View style="@style/gray_line_padding" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_code"
+            style="@style/edit_text_padding_style"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:hint="请输入验证码"
+            android:inputType="number" />
+
+        <com.ytempest.framelibrary.view.button.VerifyButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/round_corner_button_default_bg"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="获取验证码"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <View style="@style/gray_line_padding" />
+
+
+    <com.ytempest.framelibrary.view.button.ModifiableButton
+        android:id="@+id/bt_login"
+        style="@style/default_button_style"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:text="注册"
+        app:disable_bg="@drawable/round_corner_button_gray_bg"
+        app:disable_text_color="@android:color/darker_gray" />
+
+</LinearLayout>

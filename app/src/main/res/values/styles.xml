@@ -16,6 +16,12 @@
         <item name="android:background">#c7c7c7</item>
     </style>
 
+    <!-- 灰色分界线 -->
+    <style name="gray_line_padding" parent="gray_line">
+        <item name="android:layout_marginLeft">16sp</item>
+        <item name="android:layout_marginRight">16sp</item>
+    </style>
+
     <!-- 默认的按钮 -->
     <style name="default_button_style">
         <item name="android:layout_width">match_parent</item>
