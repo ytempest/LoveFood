@@ -1,9 +1,13 @@
 package com.ytempest.framelibrary.view.button;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
+import android.support.annotation.StringDef;
 import android.util.AttributeSet;
+
+import com.ytempest.baselibrary.util.LogUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author ytempest
@@ -13,28 +17,20 @@ public class VerifyButton extends ModifiableButton {
 
     private static final String TAG = "VerifyButton";
 
-    private boolean mIsStopCountDown = false;
-    private boolean mIsInCountDown = false;
+    /**
+     * 用于抵消post的时候消耗的时间差
+     */
+    private static final long FIX_LENGTH = 200;
+    private final Map<String, AbsStatus> STATUS_CACHE = new HashMap<>();
+    private AbsStatus mCur;
 
-    private int mTimerCount;
+    private long mFinishTimestamp;
+    private long mStartTimestamp;
 
-    private Handler mHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            mTimerCount--;
-            if (mTimerCount > 0) {
-                countDown(mTimerCount);
-            } else {
-                stopCountDown();
-            }
-            return false;
-        }
-    });
 
     public VerifyButton(Context context) {
         this(context, null);
     }
-
 
     public VerifyButton(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -43,68 +39,213 @@ public class VerifyButton extends ModifiableButton {
     public VerifyButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+        mCur = map(StatusMark.IDLE);
+        mCur.onStart();
     }
 
 
     private void stopCountDown() {
-        mIsStopCountDown = true;
-        mIsInCountDown = false;
-        // 切换按钮状态
-        switchNormalStatus();
-        if (mOnCountDownListener != null) {
-            mOnCountDownListener.onFinish();
+        moveTo(StatusMark.IDLE);
+    }
+
+    private void countDown() {
+        long currentTimestamp = System.currentTimeMillis();
+        if (currentTimestamp < mFinishTimestamp) {
+            setText(getFormatDuring());
+            postDelayed(COUNT_DOWN_TASK, 500);
+
+        } else {
+            stopCountDown();
         }
     }
 
-    private void countDown(int timerCount) {
-        setText(getFormatDuring(timerCount));
-        if (!mIsStopCountDown) {
-            mHandler.sendEmptyMessageDelayed(0, 1000);
+    private final Runnable COUNT_DOWN_TASK = new Runnable() {
+        @Override
+        public void run() {
+            countDown();
+        }
+    };
+
+    private String getFormatDuring() {
+        long count = (mFinishTimestamp - System.currentTimeMillis()) / 1000;
+        return String.format("%02d后重获", count);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        removeCallbacks(COUNT_DOWN_TASK);
+    }
+
+
+    /* Status Control */
+
+    public void startRequest() {
+        moveTo(StatusMark.REQUEST);
+    }
+
+    public void startCountDownByLength(long count) {
+        startCountDown(System.currentTimeMillis() + count);
+    }
+
+    public void startCountDown(long finishTimestamp) {
+        mStartTimestamp = System.currentTimeMillis();
+        mFinishTimestamp = finishTimestamp + FIX_LENGTH;
+        moveTo(StatusMark.COUNTDOWN);
+    }
+
+    private void moveTo(@StatusMark String mark) {
+        mCur.onStop();
+        mCur = map(mark);
+        mCur.onStart();
+    }
+
+    private AbsStatus map(@StatusMark String mark) {
+        AbsStatus status = STATUS_CACHE.get(mark);
+        if (status == null) {
+            switch (mark) {
+                case StatusMark.IDLE:
+                    status = new IdleStatus();
+                    break;
+                case StatusMark.REQUEST:
+                    status = new RequestStatus();
+                    break;
+                case StatusMark.COUNTDOWN:
+                    status = new CountDownStatus();
+                    break;
+                default:
+                    break;
+            }
+            STATUS_CACHE.put(mark, status);
+        }
+        return status;
+    }
+
+
+    public void pauseCountdown() {
+        mCur.onPause();
+    }
+
+    public void resumeCountdown() {
+        mCur.onResume();
+    }
+
+    void resetIdle() {
+        mStartTimestamp = 0;
+        mFinishTimestamp = 0;
+        mCur = map(StatusMark.IDLE);
+        mCur.onStart();
+    }
+
+
+    /* Status */
+
+    @StringDef({StatusMark.IDLE,
+            StatusMark.REQUEST,
+            StatusMark.COUNTDOWN})
+    private @interface StatusMark {
+        String IDLE = "Idle";
+        String REQUEST = "Request";
+        String COUNTDOWN = "Countdown";
+
+    }
+
+    private abstract class AbsStatus {
+
+        private final String mTag;
+
+        AbsStatus(@StatusMark String mark) {
+            mTag = TAG + "_" + mark;
+        }
+
+        void onStart() {
+            LogUtils.d(mTag, "onStart: ");
+        }
+
+        void onStop() {
+            LogUtils.d(mTag, "onStop: ");
+        }
+
+        void onPause() {
+            LogUtils.d(mTag, "onPause: ");
+        }
+
+        void onResume() {
+            LogUtils.d(mTag, "onResume: ");
         }
     }
 
-    private String getFormatDuring(int timerCount) {
-        String result = timerCount < 10 ? "0" + timerCount : "" + timerCount;
-        result += "s后重获";
-        return result;
+    private class IdleStatus extends AbsStatus {
+
+        IdleStatus() {
+            super(StatusMark.IDLE);
+        }
+
+        @Override
+        void onStart() {
+            super.onStart();
+            switchNormalStatus();
+            setText("获取验证码");
+        }
+
+        @Override
+        void onStop() {
+            super.onStop();
+        }
+
     }
 
-    /**
-     * 开始倒计时，从count一直到 0
-     */
-    public void startCountDown(int count) {
-        mTimerCount = count;
-        mIsStopCountDown = false;
-        switchDisableStatus();
-        countDown(count);
+    private class RequestStatus extends AbsStatus {
+
+        RequestStatus() {
+            super(StatusMark.REQUEST);
+        }
+
+        @Override
+        void onStart() {
+            super.onStart();
+            switchDisableStatus();
+            setText("获取中...");
+        }
+
+        @Override
+        void onStop() {
+            super.onStop();
+        }
+
     }
 
-    /**
-     * 开始发送短信请求
-     */
-    public void startRequestCode() {
-        switchRequestCodeStatus();
-    }
+    private class CountDownStatus extends AbsStatus {
 
-    private void switchRequestCodeStatus() {
-        switchDisableStatus();
-        mIsInCountDown = true;
-        setText("获取中...");
-    }
+        CountDownStatus() {
+            super(StatusMark.COUNTDOWN);
+        }
 
+        @Override
+        void onStart() {
+            super.onStart();
+            switchDisableStatus();
+            countDown();
+        }
 
-    public boolean isInCountDown() {
-        return mIsInCountDown;
-    }
+        @Override
+        void onPause() {
+            super.onPause();
+            removeCallbacks(COUNT_DOWN_TASK);
+        }
 
-    private OnCountDownListener mOnCountDownListener;
+        @Override
+        void onResume() {
+            super.onResume();
+            countDown();
+        }
 
-    public void setOnCountDownListener(OnCountDownListener onCountDownListener) {
-        mOnCountDownListener = onCountDownListener;
-    }
+        @Override
+        void onStop() {
+            super.onStop();
+            resetIdle();
+        }
 
-    public interface OnCountDownListener {
-        void onFinish();
     }
 
 }

@@ -12,7 +12,7 @@ public class LogUtils {
     private static boolean IS_LOG = true;
 
     public static void setEnable(boolean enable) {
-        IS_LOG = true;
+        IS_LOG = enable;
     }
 
     private static boolean isShowLog() {

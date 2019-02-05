@@ -8,6 +8,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
+import com.ytempest.baselibrary.util.LogUtils;
 import com.ytempest.baselibrary.util.ResourcesUtils;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.button.VerifyButton;
@@ -15,6 +16,7 @@ import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.contract.RegisterContract;
 import com.ytempest.lovefood.listener.PasswordStatusChangeListener;
 import com.ytempest.lovefood.presenter.RegisterPresenter;
+import com.ytempest.lovefood.util.CustomThreadExecutor;
 import com.ytempest.lovefood.util.RegexUtils;
 
 import butterknife.BindView;
@@ -26,6 +28,8 @@ import butterknife.OnClick;
  */
 @InjectPresenter(RegisterPresenter.class)
 public class RegisterActivity extends BaseSkinActivity<RegisterContract.Presenter> implements RegisterContract.RegisterView, RegisterContract {
+
+    private static final String TAG = "RegisterActivity";
 
     @BindView(R.id.et_account)
     protected EditText mAccountEt;
@@ -85,6 +89,18 @@ public class RegisterActivity extends BaseSkinActivity<RegisterContract.Presente
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mVerifyButton.pauseCountdown();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mVerifyButton.resumeCountdown();
+    }
+
     /* Click */
 
 
@@ -95,11 +111,12 @@ public class RegisterActivity extends BaseSkinActivity<RegisterContract.Presente
 
     @OnClick(R.id.bt_verify)
     protected void onVerifyClick(View view) {
-
+        mVerifyButton.startRequest();
     }
 
     @OnClick(R.id.bt_register)
     protected void onRegisterClick(View view) {
+
         // 判断账号格式
         String account = mAccountEt.getText().toString().trim();
         int minAccountLen = ResourcesUtils.getInt(R.integer.user_account_min_count);
