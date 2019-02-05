@@ -27,4 +27,14 @@ public interface ApiService {
     Observable<BaseResult<UserInfo>> login(@Field("account") String account,
                                            @Field("password") String password);
 
+    /**
+     * 注册用户
+     */
+    @FormUrlEncoded
+    @POST("user/register")
+    Observable<BaseResult<UserInfo>> register(@Field("account") String account,
+                                              @Field("pwd") String password,
+                                              @Field("phone") String phone);
+
+
 }

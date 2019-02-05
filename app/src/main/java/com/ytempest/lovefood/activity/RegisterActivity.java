@@ -1,16 +1,15 @@
 package com.ytempest.lovefood.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
-import com.ytempest.baselibrary.util.LogUtils;
+import com.ytempest.baselibrary.util.ActivityStackManager;
 import com.ytempest.baselibrary.util.ResourcesUtils;
 import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
@@ -21,19 +20,10 @@ import com.ytempest.lovefood.common.DefaultEventHandler;
 import com.ytempest.lovefood.contract.RegisterContract;
 import com.ytempest.lovefood.listener.PasswordStatusChangeListener;
 import com.ytempest.lovefood.presenter.RegisterPresenter;
-import com.ytempest.lovefood.util.CustomThreadExecutor;
 import com.ytempest.lovefood.util.RegexUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.UnknownHostException;
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
 
 /**
  * @author ytempest
@@ -63,8 +53,6 @@ public class RegisterActivity extends BaseSkinActivity<RegisterContract.Presente
 
     @BindView(R.id.bt_verify)
     protected VerifyButton mVerifyButton;
-
-    private DefaultEventHandler mEventHandler;
 
     @Override
     protected int getLayoutResId() {
@@ -102,7 +90,6 @@ public class RegisterActivity extends BaseSkinActivity<RegisterContract.Presente
 
     @Override
     protected void initData() {
-        initEventHandler();
     }
 
 
@@ -120,51 +107,11 @@ public class RegisterActivity extends BaseSkinActivity<RegisterContract.Presente
 
     @Override
     protected void onDestroy() {
-        SMSSDK.unregisterEventHandler(mEventHandler);
         super.onDestroy();
-    }
-
-    private void initEventHandler() {
-        mEventHandler = new DefaultEventHandler();
-        mEventHandler.setListener(new DefaultEventHandler.OnVerifyListener() {
-            @Override
-            public void onSendCodeSuccess() {
-                mVerifyButton.startCountDownByLength(COUNT_DOWN_TIME);
-            }
-
-            @Override
-            public void onVerifyCodeSuccess(String country, String phone) {
-                String account = mAccountEt.getText().toString().trim();
-                String password = mPasswordEt.getText().toString().trim();
-                getPresenter().register(account, password, password);
-            }
-
-            @Override
-            public void onVerifyCodeError(int code) {
-                String msg = "未知错误";
-                if (code == DefaultEventHandler.CODE_ERROR) {
-                    msg = "验证码错误";
-                } else if (code == DefaultEventHandler.CODE_EMPTY) {
-                    msg = "请填写验证码";
-                }
-                CustomToast.getInstance().show(msg);
-            }
-
-            @Override
-            public void onFail(Throwable t) {
-                CustomToast.getInstance().show("验证异常，请稍后重试");
-            }
-        });
-        SMSSDK.registerEventHandler(mEventHandler);
     }
 
 
     /* Click */
-
-    @OnClick(R.id.cb_pwd_status)
-    protected void onShowPasswordClick(View view) {
-
-    }
 
     @CheckNet
     @OnClick(R.id.bt_verify)
@@ -173,8 +120,9 @@ public class RegisterActivity extends BaseSkinActivity<RegisterContract.Presente
         if (!isPhoneCorrectly(phone)) {
             return;
         }
+
         mVerifyButton.startRequest();
-        SMSSDK.getVerificationCode("86", phone);
+        getPresenter().getVerificationCode("86", phone);
     }
 
     @CheckNet
@@ -223,9 +171,8 @@ public class RegisterActivity extends BaseSkinActivity<RegisterContract.Presente
             return;
         }
 
-        // 判断验证码是否正确
-        // 第一个参数是国际区号，大陆的是86
-        SMSSDK.submitVerificationCode("86", phone, verifyCode);
+        // 注册
+        getPresenter().register(account, password, "86", phone, verifyCode);
     }
 
     private boolean isPhoneCorrectly(String phone) {
@@ -240,4 +187,47 @@ public class RegisterActivity extends BaseSkinActivity<RegisterContract.Presente
         return true;
     }
 
+    /* MVP View */
+
+    @Override
+    public void onSendCodeSuccess() {
+        mVerifyButton.startCountDownByLength(COUNT_DOWN_TIME);
+    }
+
+    @Override
+    public void onVerifyCodeError(int code) {
+        String msg = getMsg(code);
+        CustomToast.getInstance().show(msg);
+        mVerifyButton.stopCountDown();
+    }
+
+    private String getMsg(int code) {
+        switch (code) {
+            case DefaultEventHandler.CODE_ERROR:
+                return "验证码错误";
+
+            case DefaultEventHandler.CODE_EMPTY:
+                return "请填写验证码";
+
+            case DefaultEventHandler.CODE_SERVICE_ERROR:
+                return "服务器异常";
+
+            case DefaultEventHandler.CODE_UNKNOWN:
+            default:
+                return "未知错误";
+        }
+    }
+
+    @Override
+    public void onVerifyFail(Throwable t) {
+        CustomToast.getInstance().show("验证异常，请稍后重试");
+    }
+
+    @Override
+    public void onRequestSuccess(String msg) {
+        super.onRequestSuccess(msg);
+        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+        ActivityStackManager.getInstance().finishActivity(RegisterActivity.class);
+        ActivityStackManager.getInstance().finishActivity(LoginActivity.class);
+    }
 }

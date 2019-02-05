@@ -8,18 +8,20 @@ import io.reactivex.disposables.Disposable;
  *         Description：
  */
 public class BaseObserver<Data> implements Observer<Data> {
+
     @Override
     public void onSubscribe(Disposable d) {
 
     }
 
     @Override
-    public void onNext(Data value) {
+    public void onNext(Data result) {
 
     }
 
     @Override
     public void onError(Throwable e) {
+        e.printStackTrace();
         throw new RuntimeException("请求异常");
     }
 

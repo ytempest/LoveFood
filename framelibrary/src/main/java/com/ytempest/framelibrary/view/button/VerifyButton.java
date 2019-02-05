@@ -44,7 +44,7 @@ public class VerifyButton extends ModifiableButton {
     }
 
 
-    private void stopCountDown() {
+    public void stopCountDown() {
         moveTo(StatusMark.IDLE);
     }
 

@@ -71,7 +71,9 @@ public abstract class MvpActivity<Presenter extends IPresenter> extends AppCompa
 
     @Override
     public void onRequestStart(String tip) {
-        mDialog = new LoadDialog(this);
+        if (mDialog == null) {
+            mDialog = new LoadDialog(this);
+        }
         mDialog.setTip(tip);
         mDialog.show();
     }

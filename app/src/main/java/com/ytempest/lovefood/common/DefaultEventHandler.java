@@ -29,6 +29,11 @@ public class DefaultEventHandler extends EventHandler {
      */
     public static final int CODE_EMPTY = 2;
     /**
+     * 服务器内部错误
+     */
+    public static final int CODE_SERVICE_ERROR = 3;
+
+    /**
      * 未知错误
      */
     public static final int CODE_UNKNOWN = -1;
@@ -74,7 +79,12 @@ public class DefaultEventHandler extends EventHandler {
             Throwable throwable = (Throwable) data;
             if (throwable instanceof UnknownHostException) {
                 if (listener != null) {
-                    listener.onFail(throwable);
+                    CustomThreadExecutor.getInstance().runOnMain(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onVerifyFail(throwable);
+                        }
+                    });
                 }
 
             } else {
@@ -84,28 +94,40 @@ public class DefaultEventHandler extends EventHandler {
                 try {
                     JSONObject jsonObj = new JSONObject(throwable.getMessage());
                     final String statusCode = jsonObj.optString("status");
-                    CustomThreadExecutor.getInstance().runOnMain(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (listener != null) {
-                                int code = CODE_UNKNOWN;
-                                if ("468".equals(statusCode)) {
-                                    // 第一种异常，有网时验证码错误
-                                    code = CODE_ERROR;
-
-                                } else if ("466".equals(statusCode)) {
-                                    // 第二种异常，没有填写验证码
-                                    code = CODE_EMPTY;
-                                }
+                    LogUtils.d(TAG, "afterEvent: jsonObj = " + jsonObj.toString());
+                    if (listener != null) {
+                        CustomThreadExecutor.getInstance().runOnMain(new Runnable() {
+                            @Override
+                            public void run() {
+                                int code = mapCode(statusCode);
                                 listener.onVerifyCodeError(code);
                             }
-                        }
-                    });
+                        });
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
 
+        }
+    }
+
+    private int mapCode(String statusCode) {
+        switch (statusCode) {
+            case "468":
+                // 有网时验证码错误
+                return CODE_ERROR;
+
+            case "466":
+                // 没有填写验证码
+                return CODE_EMPTY;
+
+            case "500":
+                // 服务器内部错误
+                return CODE_SERVICE_ERROR;
+
+            default:
+                return CODE_UNKNOWN;
         }
     }
 
@@ -139,6 +161,6 @@ public class DefaultEventHandler extends EventHandler {
         /**
          * 当出现异常时回调
          */
-        void onFail(Throwable t);
+        void onVerifyFail(Throwable t);
     }
 }
