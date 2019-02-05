@@ -11,6 +11,7 @@ import com.ytempest.baselibrary.base.mvp.IView;
  */
 public interface RegisterContract extends IContract {
     interface Presenter extends IPresenter {
+        void register(String account, String password, String phone);
     }
 
     interface RegisterView extends IView {

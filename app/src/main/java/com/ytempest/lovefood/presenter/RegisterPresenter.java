@@ -12,4 +12,8 @@ import com.ytempest.lovefood.model.RegisterModel;
 @InjectModel(RegisterModel.class)
 public class RegisterPresenter extends BasePresenter<RegisterContract.RegisterView, RegisterContract.Model>
         implements RegisterContract.Presenter {
+    @Override
+    public void register(String account, String password, String phone) {
+
+    }
 }

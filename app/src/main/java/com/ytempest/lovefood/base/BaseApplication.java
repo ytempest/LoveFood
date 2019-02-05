@@ -2,6 +2,7 @@ package com.ytempest.lovefood.base;
 
 import android.app.Application;
 
+import com.mob.MobSDK;
 import com.ytempest.baselibrary.base.BaseLibrary;
 import com.ytempest.baselibrary.util.LogUtils;
 import com.ytempest.framelibrary.base.FrameLibrary;
@@ -20,6 +21,9 @@ public class BaseApplication extends Application {
         BaseLibrary.init(this);
 
         FrameLibrary.init(this);
+
+        // 初始化 MobSDK
+        MobSDK.init(this, "27cdc1d5f5ff5", "558df308bbb5de301500d31121438c15");
 
         initUtils();
     }
