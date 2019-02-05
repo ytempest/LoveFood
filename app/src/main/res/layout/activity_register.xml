@@ -30,6 +30,7 @@
     <EditText
         android:id="@+id/et_account"
         style="@style/edit_text_padding_style"
+        android:layout_marginTop="13dp"
         android:hint="请输入3~12位组成的账号"
         android:inputType="text" />
 
@@ -86,10 +87,11 @@
             android:inputType="number" />
 
         <com.ytempest.framelibrary.view.button.VerifyButton
+            android:id="@+id/bt_verify"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="16dp"
-            android:background="@drawable/round_corner_button_default_bg"
+            android:background="@drawable/shape_round_corner_button_default"
             android:gravity="center"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
@@ -101,14 +103,13 @@
     <View style="@style/gray_line_padding" />
 
 
-    <com.ytempest.framelibrary.view.button.ModifiableButton
-        android:id="@+id/bt_login"
+    <Button
+        android:id="@+id/bt_register"
         style="@style/default_button_style"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
-        android:text="注册"
-        app:disable_bg="@drawable/round_corner_button_gray_bg"
-        app:disable_text_color="@android:color/darker_gray" />
+        android:background="@drawable/selector_round_corner_bg"
+        android:text="注册" />
 
 </LinearLayout>

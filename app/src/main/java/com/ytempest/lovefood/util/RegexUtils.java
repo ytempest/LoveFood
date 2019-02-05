@@ -12,6 +12,7 @@ public class RegexUtils {
     private static Pattern PASSWORD_REGEX = Pattern.compile("[a-zA-Z0-9]{6,18}");
     public static final Pattern PHONE_REGEX = Pattern.compile("^((17[0-9])|(14[0-9])|(13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
     public static final Pattern EMAIL_REGEX = Pattern.compile("^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$");
+    public static final Pattern VERIFY_CODE_REGEX = Pattern.compile("[0-9]{4}");
 
     public static boolean isAccount(String account) {
         return isMatch(ACCOUNT_REGEX, account);
@@ -29,7 +30,14 @@ public class RegexUtils {
         return isMatch(EMAIL_REGEX, email);
     }
 
+    public static boolean isVerifyCode(String code) {
+        return isMatch(VERIFY_CODE_REGEX, code);
+    }
+
     public static boolean isMatch(Pattern regex, String str) {
+        if (str == null) {
+            return false;
+        }
         Matcher m = regex.matcher(str);
         return m.matches();
     }

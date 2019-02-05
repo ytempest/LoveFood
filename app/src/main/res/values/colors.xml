@@ -6,6 +6,10 @@
 
     <color name="app_color">#ff6360</color>
 
+    <!-- 系统颜色按钮的加深版 -->
+    <color name="deep_app_color">#ff5451</color>
+
+
 
     <!-- 首页底部按钮组文字正常颜色和按下时的颜色-->
     <color name="rb_text_normal_color">#A3A3A3</color>

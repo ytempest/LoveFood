@@ -71,7 +71,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
         android:text="登录"
-        app:disable_bg="@drawable/round_corner_button_gray_bg"
+        app:disable_bg="@drawable/shape_round_corner_button_gray"
         app:disable_text_color="@android:color/darker_gray" />
 
     <FrameLayout
