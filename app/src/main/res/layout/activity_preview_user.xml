@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/common_bg"
     android:orientation="vertical"
-    tools:context="com.ytempest.lovefood.activity.PreviewUserActivity">
+    tool:context="com.ytempest.lovefood.activity.PreviewUserActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <com.ytempest.framelibrary.view.NavigationView
             android:id="@+id/navigation_view"
@@ -17,8 +19,118 @@
             android:layout_height="45dp"
             android:background="@color/app_color"
             app:left_icon="@drawable/icon_left_arrow"
-            app:right_text="收藏"
             app:title_text="个人信息" />
+
+        <FrameLayout style="@style/preview_row_container_style">
+
+            <TextView
+                style="@style/preview_left_text_style"
+                android:text="头 像" />
+
+
+            <ImageView
+                android:id="@+id/iv_head"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="right|center_vertical"
+                android:scaleType="centerCrop"
+                tool:src="@drawable/default_head" />
+        </FrameLayout>
+
+        <View style="@style/gray_line" />
+
+        <FrameLayout style="@style/preview_row_container_style">
+
+            <TextView
+                style="@style/preview_left_text_style"
+                android:text="用户名" />
+
+
+            <TextView
+                android:id="@+id/tv_account"
+                style="@style/preview_right_text_style"
+                tool:text="ytempest" />
+        </FrameLayout>
+
+        <View style="@style/gray_line" />
+
+        <FrameLayout style="@style/preview_row_container_style">
+
+            <TextView
+                style="@style/preview_left_text_style"
+                android:text="性 别" />
+
+
+            <TextView
+                android:id="@+id/tv_sex"
+                style="@style/preview_right_text_style"
+                tool:text="男" />
+        </FrameLayout>
+
+        <View style="@style/gray_line" />
+
+        <FrameLayout style="@style/preview_row_container_style">
+
+            <TextView
+                style="@style/preview_left_text_style"
+                android:text="出生日期" />
+
+
+            <TextView
+                android:id="@+id/tv_birth"
+                style="@style/preview_right_text_style"
+                tool:text="1996/07/21" />
+        </FrameLayout>
+
+        <View style="@style/gray_line" />
+
+        <View
+            style="@style/gray_line"
+            android:layout_marginTop="20dp" />
+
+        <FrameLayout style="@style/preview_row_container_style">
+
+            <TextView
+                style="@style/preview_left_text_style"
+                android:text="手机号码" />
+
+
+            <TextView
+                android:id="@+id/tv_phone"
+                style="@style/preview_right_text_style"
+                tool:text="123456879" />
+        </FrameLayout>
+
+        <View style="@style/gray_line" />
+
+        <FrameLayout style="@style/preview_row_container_style">
+
+            <TextView
+                style="@style/preview_left_text_style"
+                android:text="QQ" />
+
+
+            <TextView
+                android:id="@+id/tv_qq"
+                style="@style/preview_right_text_style"
+                tool:text="123456789" />
+        </FrameLayout>
+
+        <View style="@style/gray_line" />
+
+        <FrameLayout style="@style/preview_row_container_style">
+
+            <TextView
+                style="@style/preview_left_text_style"
+                android:text="邮 箱" />
+
+            <TextView
+                android:id="@+id/tv_email"
+                style="@style/preview_right_text_style"
+                tool:text="123456789@qq.com" />
+        </FrameLayout>
+
+        <View style="@style/gray_line" />
 
     </LinearLayout>
 

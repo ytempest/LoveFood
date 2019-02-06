@@ -39,16 +39,7 @@ public class PreviewUserActivity extends BaseSkinActivity<PreviewUserContract.Pr
 
     @Override
     protected void initData() {
-
-        mNavigationView.setTitleText("User info");
         mNavigationView.enableLeftFinish(this);
-
-        mNavigationView.setRightClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CustomToast.getInstance().show("right");
-            }
-        });
 
     }
 }
