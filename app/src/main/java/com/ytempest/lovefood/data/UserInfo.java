@@ -5,11 +5,11 @@ package com.ytempest.lovefood.data;
  *         Description：
  */
 public class UserInfo {
-    private int userId;
+    private Long userId;
     private String userAccount;
     private String userHeadUrl;
     private String userSex;
-    private long userBirth;
+    private Long userBirth;
     private String userPhone;
     private String userEmail;
     private String userQQ;
@@ -17,11 +17,11 @@ public class UserInfo {
     public UserInfo() {
     }
 
-    public int getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -49,11 +49,11 @@ public class UserInfo {
         this.userSex = userSex;
     }
 
-    public long getUserBirth() {
+    public Long getUserBirth() {
         return userBirth;
     }
 
-    public void setUserBirth(long userBirth) {
+    public void setUserBirth(Long userBirth) {
         this.userBirth = userBirth;
     }
 
