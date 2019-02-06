@@ -13,6 +13,7 @@ import com.ytempest.baselibrary.util.ActivityStackManager;
 import com.ytempest.baselibrary.util.ResourcesUtils;
 import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
+import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.framelibrary.view.button.VerifyButton;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.aop.CheckNet;
@@ -35,6 +36,9 @@ public class RegisterActivity extends BaseSkinActivity<RegisterContract.Presente
     private static final String TAG = "RegisterActivity";
 
     private static final long COUNT_DOWN_TIME = 90000;
+
+    @BindView(R.id.navigation_view)
+    protected NavigationView mNavigationView;
 
     @BindView(R.id.et_account)
     protected EditText mAccountEt;
@@ -61,25 +65,9 @@ public class RegisterActivity extends BaseSkinActivity<RegisterContract.Presente
 
     @Override
     protected void initTitle() {
-        Toolbar tooBar = findViewById(R.id.toolbar);
-        tooBar.setNavigationIcon(R.drawable.icon_left_arrow);
-
-        setSupportActionBar(tooBar);
-
-        //设置不现实自带的title文字
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mNavigationView.enableLeftFinish(this);
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void initView() {

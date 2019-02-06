@@ -5,27 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.ytempest.lovefood.activity.LoginActivity">
+    tools:context="com.ytempest.lovefood.activity.RegisterActivity">
 
-    <!-- android:layout_height="?attr/actionBarSize" -->
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <com.ytempest.framelibrary.view.NavigationView
+        android:id="@+id/navigation_view"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-        <TextView
-            android:id="@+id/bar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="注册"
-            android:textColor="@android:color/white"
-            android:textSize="23sp" />
-    </android.support.v7.widget.Toolbar>
-
+        android:background="@color/app_color"
+        app:left_icon="@drawable/icon_left_arrow"
+        app:title_text="注册" />
 
     <EditText
         android:id="@+id/et_account"

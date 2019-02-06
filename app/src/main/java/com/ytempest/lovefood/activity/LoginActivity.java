@@ -62,11 +62,6 @@ public class LoginActivity extends BaseSkinActivity<LoginContract.Presenter> imp
 
     @Override
     protected void initTitle() {
-        Toolbar tooBar = findViewById(R.id.toolbar);
-        setSupportActionBar(tooBar);
-        //设置不现实自带的title文字
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
     }
 
     @Override
