@@ -19,8 +19,8 @@ public abstract class MvpFragment<Presenter extends IPresenter> extends Fragment
     private Presenter mPresenter;
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         createPresenter();
     }
 

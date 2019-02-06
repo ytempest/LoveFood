@@ -4,11 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.ytempest.baselibrary.base.mvp.IPresenter;
 import com.ytempest.baselibrary.base.mvp.MvpFragment;
@@ -32,7 +30,7 @@ public abstract class BaseFragment<Presenter extends IPresenter> extends MvpFrag
         rootView = View.inflate(mContext, getLayoutId(), null);
 
         // 加入注解
-        ButterKnife.bind(rootView);
+        ButterKnife.bind(this, rootView);
 
         return rootView;
     }
