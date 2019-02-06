@@ -4,19 +4,30 @@
     <color name="colorPrimaryDark">@color/app_color</color>
     <color name="colorAccent">#FF4081</color>
 
+    <!-- 通用颜色 -->
     <color name="app_color">#ff6360</color>
-
     <!-- 系统颜色按钮的加深版 -->
     <color name="deep_app_color">#ff5451</color>
+    <!-- 分界线颜色 -->
+    <color name="line_color">#dcdcdc</color>
+    <!-- 通用背景色 -->
+    <color name="common_bg">#f6f6f6</color>
 
 
-
+    <!-- MainActivity 颜色集合 -->
     <!-- 首页底部按钮组文字正常颜色和按下时的颜色-->
     <color name="rb_text_normal_color">#A3A3A3</color>
     <color name="rb_text_press_color">#ff6360</color>
-
     <!-- 首页底部按钮组的背景颜色-->
     <color name="rg_bg">#FFFFFF</color>
+
+
+    <!-- PersonalFragment -->
+    <!-- 条目被点击时的背景色 -->
+    <color name="base_item_normal_bg">@android:color/white</color>
+    <color name="base_item_press_bg">#eeeeee</color>
+    <!-- PersonalFragment 的文字颜色 -->
+    <color name="personal_text_color">#636363</color>
 
 
 </resources>

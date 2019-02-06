@@ -80,4 +80,10 @@
         <item name="android:orientation">horizontal</item>
     </style>
 
+    <!-- 圆形ImageView的自定义样式-->
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color|integer" />
+    </declare-styleable>
+
 </resources>

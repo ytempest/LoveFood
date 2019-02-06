@@ -1,0 +1,48 @@
+<resources>
+
+    <style name="top_bar_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- PersonalFragment 中主内容每一行的容器样式 -->
+    <style name="personal_item_row_container_style">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">80dp</item>
+    </style>
+
+    <!-- PersonalFragment 的主内容一个Item的样式 -->
+    <style name="personal_item_text_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:background">@drawable/selector_item_bg</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textColor">@color/personal_text_color</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <!-- PersonalFragment 底部问题的TextView的样式 -->
+    <style name="personal_bar_style">
+        <item name="android:background">@android:color/white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clickable">true</item>
+        <item name="android:drawableLeft">@drawable/icon_row</item>
+        <item name="android:drawablePadding">6dp</item>
+        <item name="android:drawableRight">@drawable/right_arrow_gray</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">@color/personal_text_color</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+</resources>

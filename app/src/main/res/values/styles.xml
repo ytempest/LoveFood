@@ -13,7 +13,14 @@
     <style name="gray_line">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0.3dp</item>
-        <item name="android:background">#c7c7c7</item>
+        <item name="android:background">@color/line_color</item>
+    </style>
+
+    <!-- 默认的灰色分界线，垂直方向 -->
+    <style name="gray_line_horizontal">
+        <item name="android:layout_width">0.3dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/line_color</item>
     </style>
 
     <!-- 灰色分界线 -->
