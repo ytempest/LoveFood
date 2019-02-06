@@ -5,7 +5,7 @@
     <ImageView
         android:id="@+id/iv_left_view"
         style="@style/navigation_left_view_style"
-        android:src="@drawable/icon_navigation_bar_left_icon" />
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_left_text"
