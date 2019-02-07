@@ -8,9 +8,35 @@
     android:orientation="vertical"
     tool:context="com.ytempest.lovefood.activity.AccountManageActivity">
 
-    <TextView
+
+    <com.ytempest.framelibrary.view.NavigationView
+        android:id="@+id/navigation_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="AccountManage" />
+        android:layout_height="45dp"
+        android:background="@color/app_color"
+        app:left_icon="@drawable/icon_left_arrow"
+        app:title_text="账号管理" />
+
+
+    <View
+        style="@style/gray_line"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/tv_update_user_info"
+        style="@style/personal_bar_style"
+        android:text="修改个人信息" />
+
+    <View style="@style/gray_line" />
+
+    <View
+        style="@style/gray_line"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/tv_update_pwd"
+        style="@style/personal_bar_style"
+        android:text="修改密码" />
+
+    <View style="@style/gray_line" />
 </LinearLayout>
