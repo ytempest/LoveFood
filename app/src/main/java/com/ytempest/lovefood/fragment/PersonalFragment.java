@@ -2,15 +2,18 @@ package com.ytempest.lovefood.fragment;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ytempest.baselibrary.base.BaseFragment;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
+import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.util.LogUtils;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.activity.PreviewUserActivity;
 import com.ytempest.lovefood.contract.PersonalContract;
 import com.ytempest.lovefood.data.UserInfo;
+import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.presenter.PersonalPresenter;
 import com.ytempest.lovefood.util.UserHelper;
 
@@ -27,8 +30,12 @@ public class PersonalFragment extends BaseFragment<PersonalContract.Presenter> i
 
     private static final String TAG = "PersonalFragment";
 
+    @BindView(R.id.iv_head)
+    protected ImageView mHeadIv;
+
     @BindView(R.id.tv_account_name)
     protected TextView mAccountTv;
+
     private UserInfo userInfo;
 
     @Override
@@ -39,6 +46,8 @@ public class PersonalFragment extends BaseFragment<PersonalContract.Presenter> i
     @Override
     protected void initView() {
         userInfo = getPresenter().getUserInfo();
+        String url = RetrofitClient.client().getUrl() + userInfo.getUserHeadUrl();
+        ImageLoaderManager.getInstance().showImage(mHeadIv, url, null);
         mAccountTv.setText(userInfo.getUserAccount());
     }
 

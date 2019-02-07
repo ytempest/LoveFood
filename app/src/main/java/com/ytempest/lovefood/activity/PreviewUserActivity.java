@@ -4,12 +4,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
+import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.contract.PreviewUserContract;
 import com.ytempest.lovefood.data.UserInfo;
+import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.presenter.PreviewUserPresenter;
 import com.ytempest.lovefood.util.DateUtils;
 
@@ -76,7 +78,8 @@ public class PreviewUserActivity extends BaseSkinActivity<PreviewUserContract.Pr
 
     @Override
     public void onRequestUserInfo(UserInfo data) {
-        getPresenter().showImage(data.getUserHeadUrl(), mHeadIv);
+        String url = RetrofitClient.client().getUrl() + data.getUserHeadUrl();
+        ImageLoaderManager.getInstance().showImage(mHeadIv, url, null);
         mAccountTv.setText(data.getUserAccount());
         mSexTv.setText(data.getUserSex());
         mBirthTv.setText(DateUtils.format(data.getUserBirth()));

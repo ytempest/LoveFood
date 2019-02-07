@@ -19,8 +19,6 @@ public interface PreviewUserContract extends IContract {
 
     interface Presenter extends IPresenter {
         void requestUserInfo(long userId);
-
-        void showImage(String suffixUrl, ImageView view);
     }
 
     interface PreviewUserView extends IView {

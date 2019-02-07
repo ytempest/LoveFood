@@ -1,17 +1,11 @@
 package com.ytempest.lovefood.presenter;
 
-import android.widget.ImageView;
-
 import com.ytempest.baselibrary.base.mvp.BasePresenter;
 import com.ytempest.baselibrary.base.mvp.inject.InjectModel;
-import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
-import com.ytempest.lovefood.contract.MainContract;
 import com.ytempest.lovefood.contract.PreviewUserContract;
 import com.ytempest.lovefood.data.BaseResult;
 import com.ytempest.lovefood.data.UserInfo;
-import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.observable.BaseObserver;
-import com.ytempest.lovefood.model.MainModel;
 import com.ytempest.lovefood.model.PreviewUserModel;
 import com.ytempest.lovefood.util.ResultUtils;
 
@@ -40,11 +34,5 @@ public class PreviewUserPresenter extends BasePresenter<PreviewUserContract.Prev
                         }
                     }
                 });
-    }
-
-    @Override
-    public void showImage(String suffixUrl, ImageView view) {
-        ImageLoaderManager.getInstance().showImage(view,
-                RetrofitClient.client().getUrl() + suffixUrl, null);
     }
 }
