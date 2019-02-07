@@ -69,7 +69,9 @@ public abstract class MvpFragment<Presenter extends IPresenter> extends Fragment
 
     @Override
     public void onRequestStart(String tip) {
-        mDialog = new LoadDialog(getActivity());
+        if (mDialog == null) {
+            mDialog = new LoadDialog(getActivity());
+        }
         if (!TextUtils.isEmpty(tip)) {
             mDialog.setTip(tip);
         }

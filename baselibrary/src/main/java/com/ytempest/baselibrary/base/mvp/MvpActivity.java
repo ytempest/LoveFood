@@ -75,7 +75,9 @@ public abstract class MvpActivity<Presenter extends IPresenter> extends AppCompa
         if (mDialog == null) {
             mDialog = new LoadDialog(this);
         }
-        mDialog.setTip(tip);
+        if (!TextUtils.isEmpty(tip)) {
+            mDialog.setTip(tip);
+        }
         mDialog.show();
     }
 
