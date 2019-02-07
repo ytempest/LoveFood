@@ -1,11 +1,19 @@
 package com.ytempest.lovefood.presenter;
 
+import android.widget.ImageView;
+
 import com.ytempest.baselibrary.base.mvp.BasePresenter;
 import com.ytempest.baselibrary.base.mvp.inject.InjectModel;
+import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.lovefood.contract.MainContract;
 import com.ytempest.lovefood.contract.PreviewUserContract;
+import com.ytempest.lovefood.data.BaseResult;
+import com.ytempest.lovefood.data.UserInfo;
+import com.ytempest.lovefood.http.RetrofitClient;
+import com.ytempest.lovefood.http.observable.BaseObserver;
 import com.ytempest.lovefood.model.MainModel;
 import com.ytempest.lovefood.model.PreviewUserModel;
+import com.ytempest.lovefood.util.ResultUtils;
 
 /**
  * @author ytempest
@@ -14,4 +22,29 @@ import com.ytempest.lovefood.model.PreviewUserModel;
 @InjectModel(PreviewUserModel.class)
 public class PreviewUserPresenter extends BasePresenter<PreviewUserContract.PreviewUserView, PreviewUserContract.Model>
         implements PreviewUserContract.Presenter {
+    @Override
+    public void requestUserInfo(long userId) {
+        getView().onRequestStart(null);
+
+        getModel().getUserInfo(userId)
+                .subscribe(new BaseObserver<BaseResult<UserInfo>>() {
+                    @Override
+                    public void onNext(BaseResult<UserInfo> result) {
+                        int code = result.getCode();
+                        if (code == ResultUtils.SUCCESS) {
+                            getView().onRequestUserInfo(result.getData());
+                            getView().onRequestSuccess(null);
+
+                        } else if (code == ResultUtils.ERROR) {
+                            getView().onRequestFail(result.getMsg());
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void showImage(String suffixUrl, ImageView view) {
+        ImageLoaderManager.getInstance().showImage(view,
+                RetrofitClient.client().getUrl() + suffixUrl, null);
+    }
 }

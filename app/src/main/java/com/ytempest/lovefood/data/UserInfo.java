@@ -13,6 +13,7 @@ public class UserInfo {
     private String userPhone;
     private String userEmail;
     private String userQQ;
+    private Long userRegisterTime;
 
     public UserInfo() {
     }
@@ -93,5 +94,13 @@ public class UserInfo {
                 ", userEmail='" + userEmail + '\'' +
                 ", userQQ='" + userQQ + '\'' +
                 '}';
+    }
+
+    public Long getUserRegisterTime() {
+        return userRegisterTime;
+    }
+
+    public void setUserRegisterTime(Long userRegisterTime) {
+        this.userRegisterTime = userRegisterTime;
     }
 }

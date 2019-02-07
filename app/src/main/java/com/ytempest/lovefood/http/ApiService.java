@@ -6,7 +6,9 @@ import com.ytempest.lovefood.data.UserInfo;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * @author ytempest
@@ -35,6 +37,12 @@ public interface ApiService {
     Observable<BaseResult<UserInfo>> register(@Field("account") String account,
                                               @Field("pwd") String password,
                                               @Field("phone") String phone);
+
+    /**
+     * 根据用户Id获取用户的个人信息
+     */
+    @GET("user/info")
+    Observable<BaseResult<UserInfo>> getUserInfo(@Query("userId") long userId);
 
 
 }
