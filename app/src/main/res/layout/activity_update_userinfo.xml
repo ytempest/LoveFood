@@ -53,10 +53,10 @@
                     style="@style/preview_left_text_style"
                     android:text="用户名" />
 
-                <EditText
-                    android:id="@+id/et_account"
+                <TextView
+                    android:id="@+id/tv_account"
                     style="@style/update_user_edit_text_style"
-                    android:hint="请输入用户名" />
+                    tool:text="ytempest" />
 
                 <ImageView style="@style/right_arrow_view_style" />
             </LinearLayout>
@@ -86,10 +86,9 @@
                     style="@style/preview_left_text_style"
                     android:text="出生日期" />
 
-                <EditText
-                    android:id="@+id/et_birth"
-                    style="@style/update_user_edit_text_style"
-                    android:hint="请输入出生日期" />
+                <TextView
+                    android:id="@+id/tv_birth"
+                    style="@style/update_user_edit_text_style" />
 
                 <ImageView style="@style/right_arrow_view_style" />
             </LinearLayout>

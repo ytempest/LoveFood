@@ -4,6 +4,7 @@ import com.ytempest.baselibrary.base.mvp.IContract;
 import com.ytempest.baselibrary.base.mvp.IModel;
 import com.ytempest.baselibrary.base.mvp.IPresenter;
 import com.ytempest.baselibrary.base.mvp.IView;
+import com.ytempest.lovefood.data.UserInfo;
 
 /**
  * @author ytempest
@@ -11,6 +12,7 @@ import com.ytempest.baselibrary.base.mvp.IView;
  */
 public interface UpdateUserContract extends IContract {
     interface Presenter extends IPresenter {
+        UserInfo getUserInfo();
     }
 
     interface UpdateUserView extends IView {

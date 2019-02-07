@@ -10,6 +10,7 @@ import com.ytempest.lovefood.http.observable.BaseObserver;
 import com.ytempest.lovefood.model.PreviewUserModel;
 import com.ytempest.lovefood.model.UpdateUserModel;
 import com.ytempest.lovefood.util.ResultUtils;
+import com.ytempest.lovefood.util.UserHelper;
 
 /**
  * @author ytempest
@@ -19,4 +20,8 @@ import com.ytempest.lovefood.util.ResultUtils;
 public class UpdateUserPresenter extends BasePresenter<UpdateUserContract.UpdateUserView, UpdateUserContract.Model>
         implements UpdateUserContract.Presenter {
 
+    @Override
+    public UserInfo getUserInfo() {
+        return UserHelper.getInstance().getUserInfo();
+    }
 }

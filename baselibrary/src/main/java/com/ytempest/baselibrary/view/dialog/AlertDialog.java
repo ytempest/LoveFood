@@ -196,7 +196,7 @@ public class AlertDialog extends Dialog {
          *
          * @return 具有一定功能的 Dialog
          */
-        private AlertDialog create() {
+        public AlertDialog create() {
             // Context has already been wrapped with the appropriate theme.
             final AlertDialog dialog = new AlertDialog(P.mContext, P.mThemeResId);
             P.apply(dialog.mAlertController);
