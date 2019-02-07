@@ -62,12 +62,16 @@ public class SkinAttrSupport {
      * @return 属性值对应的名称
      */
     private static String getResName(Context context, String attrValue) {
-        if (attrValue.startsWith("@")) {
-            attrValue = attrValue.substring(1);
-            // 将字符串转换成int
-            int resId = Integer.parseInt(attrValue);
-            // 获取 resId 对应的名称（如 src 引用图片的图片名）
-            return context.getResources().getResourceEntryName(resId);
+        try {
+            if (attrValue.startsWith("@")) {
+                attrValue = attrValue.substring(1);
+                // 将字符串转换成int
+                int resId = Integer.parseInt(attrValue);
+                // 获取 resId 对应的名称（如 src 引用图片的图片名）
+                return context.getResources().getResourceEntryName(resId);
+            }
+        } catch (Exception e) {
+            // TODO: 需要修复
         }
         return null;
     }
