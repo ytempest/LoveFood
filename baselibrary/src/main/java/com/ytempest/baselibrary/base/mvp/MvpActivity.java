@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.view.CustomToast;
@@ -81,12 +82,16 @@ public abstract class MvpActivity<Presenter extends IPresenter> extends AppCompa
     @Override
     public void onRequestFail(String errorMsg) {
         mDialog.dismiss();
-        CustomToast.getInstance().show(errorMsg);
+        if (!TextUtils.isEmpty(errorMsg)) {
+            CustomToast.getInstance().show(errorMsg);
+        }
     }
 
     @Override
     public void onRequestSuccess(String msg) {
         mDialog.dismiss();
-        CustomToast.getInstance().show(msg);
+        if (!TextUtils.isEmpty(msg)) {
+            CustomToast.getInstance().show(msg);
+        }
     }
 }

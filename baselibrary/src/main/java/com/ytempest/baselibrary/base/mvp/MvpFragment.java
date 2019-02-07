@@ -79,12 +79,16 @@ public abstract class MvpFragment<Presenter extends IPresenter> extends Fragment
     @Override
     public void onRequestFail(String errorMsg) {
         mDialog.dismiss();
-        CustomToast.getInstance().show(errorMsg);
+        if (!TextUtils.isEmpty(errorMsg)) {
+            CustomToast.getInstance().show(errorMsg);
+        }
     }
 
     @Override
     public void onRequestSuccess(String msg) {
         mDialog.dismiss();
-        CustomToast.getInstance().show(msg);
+        if (!TextUtils.isEmpty(msg)) {
+            CustomToast.getInstance().show(msg);
+        }
     }
 }
