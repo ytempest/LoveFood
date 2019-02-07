@@ -10,6 +10,7 @@ import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.util.LogUtils;
 import com.ytempest.lovefood.R;
+import com.ytempest.lovefood.activity.AccountManageActivity;
 import com.ytempest.lovefood.activity.PreviewUserActivity;
 import com.ytempest.lovefood.contract.PersonalContract;
 import com.ytempest.lovefood.data.UserInfo;
@@ -92,7 +93,8 @@ public class PersonalFragment extends BaseFragment<PersonalContract.Presenter> i
 
     @OnClick(R.id.item_account_manage)
     protected void onAccountManageClick(View view) {
-
+        Intent intent = new Intent(getActivity(), AccountManageActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.item_collection)
