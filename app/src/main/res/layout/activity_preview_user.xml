@@ -33,6 +33,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="16dp"
                 android:scaleType="centerCrop"
                 tool:src="@drawable/default_head" />
         </FrameLayout>
