@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg"
+    android:orientation="vertical"
+    tool:context="com.ytempest.lovefood.activity.PreviewUserActivity">
+
+    <com.ytempest.framelibrary.view.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/app_color"
+        app:left_icon="@drawable/icon_left_arrow"
+        app:right_text="保存"
+        app:title_text="编辑" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/preview_row_container_style">
+
+                <TextView
+                    style="@style/preview_left_text_style"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="left|center_vertical"
+                    android:text="头 像" />
+
+                <ImageView
+                    android:id="@+id/iv_head"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="centerCrop"
+                    tool:src="@drawable/default_head" />
+
+                <ImageView style="@style/right_arrow_view_style" />
+            </LinearLayout>
+
+            <View style="@style/gray_line" />
+
+            <LinearLayout style="@style/preview_row_container_style">
+
+                <TextView
+                    style="@style/preview_left_text_style"
+                    android:text="用户名" />
+
+                <EditText
+                    android:id="@+id/et_account"
+                    style="@style/update_user_edit_text_style"
+                    android:hint="请输入用户名" />
+
+                <ImageView style="@style/right_arrow_view_style" />
+            </LinearLayout>
+
+            <View style="@style/gray_line" />
+
+            <LinearLayout style="@style/preview_row_container_style">
+
+                <TextView
+                    style="@style/preview_left_text_style"
+                    android:text="性 别" />
+
+                <TextView
+                    android:id="@+id/tv_sex"
+                    style="@style/update_user_edit_text_style"
+                    android:clickable="true"
+                    tool:text="男" />
+
+                <ImageView style="@style/right_arrow_view_style" />
+            </LinearLayout>
+
+            <View style="@style/gray_line" />
+
+            <LinearLayout style="@style/preview_row_container_style">
+
+                <TextView
+                    style="@style/preview_left_text_style"
+                    android:text="出生日期" />
+
+                <EditText
+                    android:id="@+id/et_birth"
+                    style="@style/update_user_edit_text_style"
+                    android:hint="请输入出生日期" />
+
+                <ImageView style="@style/right_arrow_view_style" />
+            </LinearLayout>
+
+            <View style="@style/gray_line" />
+
+            <View
+                style="@style/gray_line"
+                android:layout_marginTop="20dp" />
+
+            <LinearLayout style="@style/preview_row_container_style">
+
+                <TextView
+                    style="@style/preview_left_text_style"
+                    android:text="手机号码" />
+
+
+                <EditText
+                    android:id="@+id/et_phone"
+                    style="@style/update_user_edit_text_style"
+                    android:hint="请输入手机号码" />
+
+                <ImageView style="@style/right_arrow_view_style" />
+            </LinearLayout>
+
+            <View style="@style/gray_line" />
+
+            <LinearLayout style="@style/preview_row_container_style">
+
+                <TextView
+                    style="@style/preview_left_text_style"
+                    android:text="QQ" />
+
+                <EditText
+                    android:id="@+id/et_qq"
+                    style="@style/update_user_edit_text_style"
+                    android:hint="请输入QQ" />
+
+                <ImageView style="@style/right_arrow_view_style" />
+            </LinearLayout>
+
+            <View style="@style/gray_line" />
+
+            <LinearLayout style="@style/preview_row_container_style">
+
+                <TextView
+                    style="@style/preview_left_text_style"
+                    android:text="邮 箱" />
+
+                <EditText
+                    android:id="@+id/et_email"
+                    style="@style/update_user_edit_text_style"
+                    android:hint="请输入邮箱" />
+
+                <ImageView style="@style/right_arrow_view_style" />
+            </LinearLayout>
+
+            <View style="@style/gray_line" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
+
