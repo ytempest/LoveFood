@@ -62,6 +62,8 @@
         <item name="android:paddingRight">0dp</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:gravity">right|center_vertical</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
     </style>
 
     <style name="dialog_select_sex_style">
