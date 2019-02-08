@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.ytempest.lovefood.R;
-import com.ytempest.lovefood.util.CustomThreadExecutor;
+import com.ytempest.baselibrary.util.CustomThreadExecutor;
 import com.ytempest.lovefood.util.UserHelper;
 
 /**

@@ -1,6 +1,6 @@
 package com.ytempest.lovefood.http.callback;
 
-import com.ytempest.lovefood.util.CustomThreadExecutor;
+import com.ytempest.baselibrary.util.CustomThreadExecutor;
 
 import retrofit2.Call;
 import retrofit2.Callback;

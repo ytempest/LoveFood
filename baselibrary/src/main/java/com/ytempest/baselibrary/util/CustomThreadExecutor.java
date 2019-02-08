@@ -1,4 +1,4 @@
-package com.ytempest.lovefood.util;
+package com.ytempest.baselibrary.util;
 
 import android.os.Handler;
 import android.os.Looper;

@@ -1,7 +1,8 @@
 package com.ytempest.baselibrary.util;
 
-import android.util.Log;
+import android.graphics.Bitmap;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,6 +14,8 @@ import java.nio.channels.FileChannel;
  *         Description: 文件操作辅助类
  */
 public class FileUtils {
+
+    private static final String TAG = "FileUtils";
 
     /**
      * 将 src文件复制到 dest 文件
@@ -83,5 +86,25 @@ public class FileUtils {
         }
         return true;
     }
+
+    public static void writeBitmapToFile(Bitmap bitmap, File file) {
+        CustomThreadExecutor.getInstance().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (!file.exists()) {
+                        file.mkdir();
+                    }
+                    BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 80, out);
+                    out.flush();
+                    out.close();
+                } catch (Exception e) {
+                    LogUtils.e(TAG, "run: 无法将Bitmap写到" + file.getAbsolutePath());
+                }
+            }
+        });
+    }
+
 
 }
