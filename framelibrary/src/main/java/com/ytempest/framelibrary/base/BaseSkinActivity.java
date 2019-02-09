@@ -1,6 +1,7 @@
 package com.ytempest.framelibrary.base;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -46,6 +47,8 @@ public abstract class BaseSkinActivity<Presenter extends IPresenter> extends Bas
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         // 获取系统的 LayoutInflater 对象
         LayoutInflater defaultLayoutInflater = LayoutInflater.from(this);
         // 设置拦截 View 创建的 mFactory
