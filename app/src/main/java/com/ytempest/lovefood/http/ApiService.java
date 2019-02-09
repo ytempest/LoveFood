@@ -3,11 +3,18 @@ package com.ytempest.lovefood.http;
 import com.ytempest.lovefood.data.BaseResult;
 import com.ytempest.lovefood.data.UserInfo;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
 /**
@@ -43,6 +50,14 @@ public interface ApiService {
      */
     @GET("user/info")
     Observable<BaseResult<UserInfo>> getUserInfo(@Query("userId") long userId);
+
+    /**
+     * 更新用户信息
+     */
+    @Multipart
+    @POST("user/updateInfo")
+    Observable<BaseResult<UserInfo>> updateUserInfo(@Part MultipartBody.Part headPart,
+                                                    @PartMap Map<String, RequestBody> partMap);
 
 
 }

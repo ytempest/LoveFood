@@ -18,6 +18,10 @@ import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.presenter.PersonalPresenter;
 import com.ytempest.lovefood.util.UserHelper;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -47,6 +51,11 @@ public class PersonalFragment extends BaseFragment<PersonalContract.Presenter> i
     @Override
     protected void initView() {
         userInfo = getPresenter().getUserInfo();
+        onUserInfoUpdate(userInfo);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUserInfoUpdate(UserInfo userInfo) {
         String url = RetrofitClient.client().getUrl() + userInfo.getUserHeadUrl();
         ImageLoaderManager.getInstance().showImage(mHeadIv, url, null);
         mAccountTv.setText(userInfo.getUserAccount());
@@ -54,8 +63,14 @@ public class PersonalFragment extends BaseFragment<PersonalContract.Presenter> i
 
     @Override
     protected void initData() {
+        EventBus.getDefault().register(this);
     }
 
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 
     /* Click */
 

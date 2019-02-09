@@ -1,7 +1,9 @@
 package com.ytempest.lovefood.activity;
 
 import android.app.DatePickerDialog;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
+import android.util.ArrayMap;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -11,25 +13,34 @@ import android.widget.TextView;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.view.dialog.AlertDialog;
-import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.contract.UpdateUserContract;
 import com.ytempest.lovefood.data.UserInfo;
 import com.ytempest.lovefood.http.RetrofitClient;
+import com.ytempest.lovefood.http.RetrofitUtils;
 import com.ytempest.lovefood.presenter.UpdateUserPresenter;
 import com.ytempest.lovefood.util.DateUtils;
 import com.ytempest.lovefood.util.NumberUtils;
 import com.ytempest.lovefood.util.RegexUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 @InjectPresenter(UpdateUserPresenter.class)
-public class UpdateUserActivity extends BaseSkinActivity<UpdateUserContract.Presenter>
+public class UpdateUserActivity extends SelectImageActivity<UpdateUserContract.Presenter>
         implements UpdateUserContract.UpdateUserView, UpdateUserContract {
 
     private static final String TAG = "UpdateUserActivity";
+
 
     @BindView(R.id.navigation_view)
     protected NavigationView mNavigationView;
@@ -56,6 +67,7 @@ public class UpdateUserActivity extends BaseSkinActivity<UpdateUserContract.Pres
     protected EditText mEmailEt;
 
     private UserInfo mUserInfo;
+    private File mHeadFile;
 
     private View.OnLongClickListener mLongListener = new View.OnLongClickListener() {
         @Override
@@ -136,6 +148,12 @@ public class UpdateUserActivity extends BaseSkinActivity<UpdateUserContract.Pres
         mBirthDialog.show();
     }
 
+
+    @OnClick(R.id.iv_head)
+    protected void onHeadSelectClick(View view) {
+        selectImage();
+    }
+
     private DatePickerDialog createBirthDialog(String[] birth) {
         return new DatePickerDialog(UpdateUserActivity.this, mDateListener,
                 NumberUtils.parseInteger(birth[0]),
@@ -184,7 +202,26 @@ public class UpdateUserActivity extends BaseSkinActivity<UpdateUserContract.Pres
             return;
         }
 
-        showToast("success");
+        MultipartBody.Part headPart = null;
+        if (mHeadFile != null) {
+            headPart = RetrofitUtils.createPartFromFile("userHead", mHeadFile);
+        }
+
+        Map<String, RequestBody> partMap;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            partMap = new ArrayMap<>(14);
+        } else {
+            partMap = new HashMap<>(14);
+        }
+        partMap.put("userId", RetrofitUtils.createBodyFromString(String.valueOf(mUserInfo.getUserId())));
+        partMap.put("userSex", RetrofitUtils.createBodyFromString(sex));
+        partMap.put("userBirth", RetrofitUtils.createBodyFromString(
+                String.valueOf(DateUtils.stringToLong(birth))));
+        partMap.put("userPhone", RetrofitUtils.createBodyFromString(phone));
+        partMap.put("userEmail", RetrofitUtils.createBodyFromString(email));
+        partMap.put("userQQ", RetrofitUtils.createBodyFromString(qq));
+
+        getPresenter().updateUserInfo(headPart, partMap);
     }
 
     private AlertDialog createSexDialog() {
@@ -206,4 +243,20 @@ public class UpdateUserActivity extends BaseSkinActivity<UpdateUserContract.Pres
         return dialog;
     }
 
+
+    @Override
+    protected void onSelectPhotoSuccess(Bitmap photo, File headFile) {
+        super.onSelectPhotoSuccess(photo, headFile);
+        // 设置用户头像
+        mHeadFile = headFile;
+        mHeadIv.setImageBitmap(photo);
+    }
+
+    /* MVP View */
+
+    @Override
+    public void onRequestSuccess(String msg) {
+        super.onRequestSuccess(msg);
+        finish();
+    }
 }
