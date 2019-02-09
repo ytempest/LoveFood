@@ -41,6 +41,7 @@
         <activity android:name=".activity.PreviewUserActivity" />
         <activity android:name=".activity.AccountManageActivity" />
         <activity android:name=".activity.UpdateUserActivity" />
+        <activity android:name=".activity.UpdatePasswordActivity" />
 
         <meta-data
             android:name="Mob-AppKey"

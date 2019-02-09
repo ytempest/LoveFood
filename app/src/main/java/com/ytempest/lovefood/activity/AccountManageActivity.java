@@ -51,8 +51,8 @@ public class AccountManageActivity extends BaseSkinActivity<AccountManageContrac
 
     @OnClick(R.id.tv_update_pwd)
     protected void onUpdatePwdClick(View view) {
-//        Intent intent = new Intent(AccountManageActivity.this, UpdateUserActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(AccountManageActivity.this, UpdatePasswordActivity.class);
+        startActivity(intent);
     }
 
 }
