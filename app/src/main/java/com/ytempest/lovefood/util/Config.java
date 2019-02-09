@@ -1,9 +1,5 @@
 package com.ytempest.lovefood.util;
 
-import android.os.Environment;
-
-import java.io.File;
-
 /**
  * @author ytempest
  *         Description：
@@ -15,5 +11,9 @@ public class Config {
      */
     public static final String HEAD_IMAGE_CACHE = "head_cache.png";
 
+    /**
+     * 每一个列表展示的数量
+     */
+    public static final int PAGE_SIZE = 10;
 
 }

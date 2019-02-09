@@ -1,6 +1,8 @@
 package com.ytempest.lovefood.http;
 
+import com.ytempest.lovefood.data.BaseCookbook;
 import com.ytempest.lovefood.data.BaseResult;
+import com.ytempest.lovefood.data.DataList;
 import com.ytempest.lovefood.data.UserInfo;
 
 import java.util.Map;
@@ -68,6 +70,15 @@ public interface ApiService {
                                                   @Field("oldPwd") String oldPwd,
                                                   @Field("newPwd") String newPwd,
                                                   @Field("confirmPwd") String confirmPwd);
+
+
+    /**
+     * 获取用户所有菜谱
+     */
+    @GET("user/cookList")
+    Observable<BaseResult<DataList<BaseCookbook>>> getUserCookList(@Query("userId") Long userId,
+                                                                   @Query("pageNum") Integer pageNum,
+                                                                   @Query("pageSize") Integer pageSize);
 
 
 }

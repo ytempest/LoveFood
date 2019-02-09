@@ -4,6 +4,11 @@ import com.ytempest.baselibrary.base.mvp.IContract;
 import com.ytempest.baselibrary.base.mvp.IModel;
 import com.ytempest.baselibrary.base.mvp.IPresenter;
 import com.ytempest.baselibrary.base.mvp.IView;
+import com.ytempest.lovefood.data.BaseCookbook;
+import com.ytempest.lovefood.data.BaseResult;
+import com.ytempest.lovefood.data.DataList;
+
+import io.reactivex.Observable;
 
 /**
  * @author ytempest
@@ -11,11 +16,14 @@ import com.ytempest.baselibrary.base.mvp.IView;
  */
 public interface MyCookbookContract extends IContract {
     interface Presenter extends IPresenter {
+        void getMyCookbookList(int pageNum, int pageSize);
     }
 
     interface MyCookbookView extends IView {
+        void onGetCookbookList(DataList<BaseCookbook> data);
     }
 
     interface Model extends IModel {
+        Observable<BaseResult<DataList<BaseCookbook>>> getMyCookbookList(long userId, int pageNum, int pageSize);
     }
 }
