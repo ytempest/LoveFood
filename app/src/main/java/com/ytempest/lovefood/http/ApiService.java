@@ -59,5 +59,15 @@ public interface ApiService {
     Observable<BaseResult<UserInfo>> updateUserInfo(@Part MultipartBody.Part headPart,
                                                     @PartMap Map<String, RequestBody> partMap);
 
+    /**
+     * 修改用户密码
+     */
+    @FormUrlEncoded
+    @POST("user/updatePwd")
+    Observable<BaseResult<Object>> updatePassword(@Field("userId") Long userId,
+                                                  @Field("oldPwd") String oldPwd,
+                                                  @Field("newPwd") String newPwd,
+                                                  @Field("confirmPwd") String confirmPwd);
+
 
 }
