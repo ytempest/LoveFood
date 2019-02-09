@@ -12,7 +12,8 @@ import java.util.List;
  * @author ytempest
  *         Description：通用RecyclerView适配器，对RecyclerView的Adapter进行了封装
  */
-public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<CommonViewHolder> {
+public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<CommonViewHolder>
+        implements View.OnClickListener, View.OnLongClickListener {
     /**
      * 列表数据
      */
@@ -66,8 +67,15 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<Comm
             mLayoutId = viewType;
         }
         View view = mInflater.inflate(mLayoutId, parent, false);
-        CommonViewHolder viewHolder = new CommonViewHolder(view);
-        return viewHolder;
+        CommonViewHolder holder = new CommonViewHolder(view);
+        holder.itemView.setTag(holder);
+        if (holder.isNeedClick()) {
+            holder.itemView.setOnClickListener(this);
+        }
+        if (holder.isNeedLongClick()) {
+            holder.itemView.setOnLongClickListener(this);
+        }
+        return holder;
     }
 
 
@@ -90,4 +98,59 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<Comm
      */
     protected abstract void bindViewData(CommonViewHolder holder, T item);
 
+     /* Click */
+
+    private OnItemClickListener itemClickListener;
+    private OnLongClickListener itemLongClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        itemClickListener = listener;
+    }
+
+    public void setOnItemLongClickListener(OnLongClickListener listener) {
+        itemLongClickListener = listener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        Object tag = view.getTag();
+        if (tag instanceof RecyclerView.ViewHolder) {
+            RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) tag;
+            int position = holder.getAdapterPosition();
+            if (position >= 0) {
+                onItemClick(view, position);
+            }
+        }
+    }
+
+    protected void onItemClick(View view, int position) {
+        if (itemClickListener != null) {
+            itemClickListener.onItemClick(view, position);
+        }
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        Object tag = view.getTag();
+        if (tag instanceof RecyclerView.ViewHolder) {
+            RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) tag;
+            int position = holder.getAdapterPosition();
+            if (position >= 0) {
+                return onLongItemClick(view, position);
+            }
+        }
+        return false;
+    }
+
+    private boolean onLongItemClick(View view, int position) {
+        return itemLongClickListener != null && itemLongClickListener.onItemLongClick(view, position);
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public interface OnLongClickListener {
+        boolean onItemLongClick(View view, int position);
+    }
 }

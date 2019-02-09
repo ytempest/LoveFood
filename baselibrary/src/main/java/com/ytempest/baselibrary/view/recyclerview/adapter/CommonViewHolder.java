@@ -74,6 +74,43 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
+
+    /**
+     * Description：图片加载器，通过实现 displayImage方法自定义图片加载的方式
+     */
+    public abstract static class CommonImageLoader {
+        private String mImagePath;
+
+        public CommonImageLoader(String imagePath) {
+            this.mImagePath = imagePath;
+        }
+
+        public String getImageUrl() {
+            return mImagePath;
+        }
+
+        public abstract void displayImage(Context context, ImageView imageView, String imagePath);
+    }
+
+    /* Click */
+
+    private boolean isNeedClick = true;
+    private boolean isNeedLongClick = true;
+
+    public boolean isNeedClick() {
+        return isNeedClick;
+    }
+    public void setNeedClick(boolean needClick) {
+        isNeedClick = needClick;
+    }
+
+    public boolean isNeedLongClick() {
+        return isNeedLongClick;
+    }
+    public void setNeedLongClick(boolean needLongClick) {
+        isNeedLongClick = needLongClick;
+    }
+
     /**
      * RecyclerView的条目里面的view设置点击事件
      */
@@ -93,23 +130,6 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
      */
     public void setOnItemLongClickListener(View.OnLongClickListener listener) {
         itemView.setOnLongClickListener(listener);
-    }
-
-    /**
-     * Description：图片加载器，通过实现 displayImage方法自定义图片加载的方式
-     */
-    public abstract static class CommonImageLoader {
-        private String mImagePath;
-
-        public CommonImageLoader(String imagePath) {
-            this.mImagePath = imagePath;
-        }
-
-        public String getImageUrl() {
-            return mImagePath;
-        }
-
-        public abstract void displayImage(Context context, ImageView imageView, String imagePath);
     }
 
 }
