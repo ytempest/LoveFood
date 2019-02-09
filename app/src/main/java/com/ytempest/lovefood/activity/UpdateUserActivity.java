@@ -162,7 +162,6 @@ public class UpdateUserActivity extends SelectImageActivity<UpdateUserContract.P
     }
 
     private void onSaveInfoClick() {
-        String account = mAccountTv.getText().toString().trim();
         String sex = mSexTv.getText().toString().trim();
         String birth = mBirthTv.getText().toString().trim();
         String phone = mPhoneEt.getText().toString().trim();
@@ -209,9 +208,9 @@ public class UpdateUserActivity extends SelectImageActivity<UpdateUserContract.P
 
         Map<String, RequestBody> partMap;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-            partMap = new ArrayMap<>(14);
+            partMap = new ArrayMap<>(6);
         } else {
-            partMap = new HashMap<>(14);
+            partMap = new HashMap<>(6);
         }
         partMap.put("userId", RetrofitUtils.createBodyFromString(String.valueOf(mUserInfo.getUserId())));
         partMap.put("userSex", RetrofitUtils.createBodyFromString(sex));

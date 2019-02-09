@@ -34,8 +34,6 @@ public class UpdateUserPresenter extends BasePresenter<UpdateUserContract.Update
     public void updateUserInfo(MultipartBody.Part headPart, Map<String, RequestBody> partMap) {
         getView().onRequestStart("正在修改...");
 
-        // TODO: 2019/02/09 先判断该手机号码是否已经被使用了
-
         getModel().updateUserInfo(headPart, partMap)
                 .subscribe(new BaseObserver<BaseResult<UserInfo>>() {
                     @Override
