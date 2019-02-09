@@ -2,6 +2,7 @@ package com.ytempest.lovefood.util;
 
 import android.text.TextUtils;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,7 +13,9 @@ import java.util.Date;
  */
 public class DateUtils {
 
-    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy/MM/dd");
+    public static final String DATE_SEPARATOR = "-";
+    private static final SimpleDateFormat FORMAT =
+            new SimpleDateFormat(String.format("yyyy-MM-dd", DATE_SEPARATOR, DATE_SEPARATOR));
 
     public static String format(Long timestamp) {
         if (timestamp != null) {
@@ -26,6 +29,11 @@ public class DateUtils {
             return FORMAT.format(date);
         }
         return "";
+    }
+
+    public static String format(int year, int month, int day) {
+        return String.format("%04d%s%02d%s%02d",
+                year, DATE_SEPARATOR, month, DATE_SEPARATOR, day);
     }
 
     public static Date stringToDate(String date) {

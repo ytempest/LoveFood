@@ -127,7 +127,7 @@ public class UpdateUserActivity extends SelectImageActivity<UpdateUserContract.P
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            String birth = String.format("%04d/%02d/%02d", year, (monthOfYear + 1), dayOfMonth);
+            String birth = DateUtils.format(year, (monthOfYear + 1), dayOfMonth);
             mBirthTv.setText(birth);
         }
     };
@@ -142,7 +142,7 @@ public class UpdateUserActivity extends SelectImageActivity<UpdateUserContract.P
 
     @OnClick(R.id.tv_birth)
     protected void onBirthSelectClick(View view) {
-        String[] birth = mBirthTv.getText().toString().split("/");
+        String[] birth = mBirthTv.getText().toString().split(DateUtils.DATE_SEPARATOR);
         DatePickerDialog mBirthDialog = createBirthDialog(birth);
         mBirthDialog.show();
     }
