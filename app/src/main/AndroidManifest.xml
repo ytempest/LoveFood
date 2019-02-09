@@ -42,6 +42,7 @@
         <activity android:name=".activity.personal.AccountManageActivity" />
         <activity android:name=".activity.personal.UpdateUserActivity" />
         <activity android:name=".activity.personal.UpdatePasswordActivity" />
+        <activity android:name=".activity.personal.MyCookbookActivity" />
 
         <meta-data
             android:name="Mob-AppKey"

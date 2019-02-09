@@ -10,6 +10,7 @@ import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.activity.personal.AccountManageActivity;
+import com.ytempest.lovefood.activity.personal.MyCookbookActivity;
 import com.ytempest.lovefood.activity.personal.PreviewUserActivity;
 import com.ytempest.lovefood.contract.PersonalContract;
 import com.ytempest.lovefood.data.UserInfo;
@@ -96,7 +97,8 @@ public class PersonalFragment extends BaseFragment<PersonalContract.Presenter> i
 
     @OnClick(R.id.item_cookbook)
     protected void onMyCookbookClick(View view) {
-
+        Intent intent = new Intent(getActivity(), MyCookbookActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.item_topic)
