@@ -1,4 +1,4 @@
-package com.ytempest.lovefood.activity;
+package com.ytempest.lovefood.activity.personal;
 
 import android.app.DatePickerDialog;
 import android.graphics.Bitmap;
@@ -15,6 +15,7 @@ import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.view.dialog.AlertDialog;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
+import com.ytempest.lovefood.activity.SelectImageActivity;
 import com.ytempest.lovefood.contract.UpdateUserContract;
 import com.ytempest.lovefood.data.UserInfo;
 import com.ytempest.lovefood.http.RetrofitClient;
@@ -23,8 +24,6 @@ import com.ytempest.lovefood.presenter.UpdateUserPresenter;
 import com.ytempest.lovefood.util.DateUtils;
 import com.ytempest.lovefood.util.NumberUtils;
 import com.ytempest.lovefood.util.RegexUtils;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.HashMap;

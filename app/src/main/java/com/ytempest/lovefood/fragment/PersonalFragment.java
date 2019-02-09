@@ -8,15 +8,13 @@ import android.widget.TextView;
 import com.ytempest.baselibrary.base.BaseFragment;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
-import com.ytempest.baselibrary.util.LogUtils;
 import com.ytempest.lovefood.R;
-import com.ytempest.lovefood.activity.AccountManageActivity;
-import com.ytempest.lovefood.activity.PreviewUserActivity;
+import com.ytempest.lovefood.activity.personal.AccountManageActivity;
+import com.ytempest.lovefood.activity.personal.PreviewUserActivity;
 import com.ytempest.lovefood.contract.PersonalContract;
 import com.ytempest.lovefood.data.UserInfo;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.presenter.PersonalPresenter;
-import com.ytempest.lovefood.util.UserHelper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

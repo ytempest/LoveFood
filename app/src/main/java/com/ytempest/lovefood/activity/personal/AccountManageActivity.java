@@ -1,4 +1,4 @@
-package com.ytempest.lovefood.activity;
+package com.ytempest.lovefood.activity.personal;
 
 import android.content.Intent;
 import android.view.View;

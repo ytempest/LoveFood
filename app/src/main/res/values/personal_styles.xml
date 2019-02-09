@@ -16,7 +16,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">80dp</item>
     </style>
-
     <!-- PersonalFragment 的主内容一个Item的样式 -->
     <style name="personal_item_text_style">
         <item name="android:layout_width">0dp</item>
@@ -29,8 +28,6 @@
         <item name="android:textSize">12sp</item>
         <item name="android:clickable">true</item>
     </style>
-
-
     <!-- PersonalFragment 底部问题的TextView的样式 -->
     <style name="personal_bar_style">
         <item name="android:background">@android:color/white</item>
@@ -45,14 +42,39 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <!-- UpdateUserActivity -->
 
+    <!-- PreviewUserActivity -->
+    <style name="preview_row_container_style">
+        <item name="android:background">@android:color/white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:paddingTop">6dp</item>
+    </style>
+    <style name="preview_base_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+    <style name="preview_left_text_style" parent="preview_base_text_style">
+        <item name="android:textColor">#555555</item>
+        <item name="android:layout_gravity">left|center_vertical</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="preview_right_text_style" parent="preview_base_text_style">
+        <item name="android:layout_gravity">right|center_vertical</item>
+    </style>
+
+
+    <!-- UpdateUserActivity -->
     <style name="right_arrow_view_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:src">@drawable/right_arrow_gray</item>
     </style>
-
     <style name="update_user_edit_text_style" parent="preview_base_text_style">
         <item name="android:layout_width">0dp</item>
         <item name="android:textColor">#8A000000</item>
@@ -65,7 +87,6 @@
         <item name="android:singleLine">true</item>
         <item name="android:maxLines">1</item>
     </style>
-
     <style name="dialog_select_sex_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

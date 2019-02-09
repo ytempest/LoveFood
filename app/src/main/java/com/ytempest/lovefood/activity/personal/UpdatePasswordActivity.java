@@ -1,4 +1,4 @@
-package com.ytempest.lovefood.activity;
+package com.ytempest.lovefood.activity.personal;
 
 import android.text.TextUtils;
 import android.view.View;

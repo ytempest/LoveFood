@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/common_bg"
     android:orientation="vertical"
-    tool:context="com.ytempest.lovefood.activity.PreviewUserActivity">
+    tool:context="com.ytempest.lovefood.activity.personal.PreviewUserActivity">
 
     <com.ytempest.framelibrary.view.NavigationView
         android:id="@+id/navigation_view"

@@ -1,0 +1,50 @@
+<resources>
+
+    <!-- MainActivity -->
+    <!-- 底部按钮的样式 -->
+    <style name="rb_button_style">
+        <item name="android:background">@null</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/selector_rb_text_color</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
+    <!-- LoginActivity -->
+    <style name="default_edit_text_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@null</item>
+        <item name="android:drawablePadding">16dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textCursorDrawable">@drawable/default_color_cursor</item>
+    </style>
+
+    <style name="bottom_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+
+    <!-- RegisterActivity -->
+    <style name="edit_text_padding_style" parent="default_edit_text_style">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
+</resources>
