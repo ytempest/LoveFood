@@ -1,5 +1,6 @@
 package com.ytempest.lovefood.activity.personal;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,11 +14,12 @@ import com.ytempest.baselibrary.view.recyclerview.adapter.CommonViewHolder;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
-import com.ytempest.lovefood.adapter.DefaultLoadViewCreator;
-import com.ytempest.lovefood.adapter.DefaultRefreshViewCreator;
+import com.ytempest.lovefood.activity.PreviewCookbookActivity;
+import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
+import com.ytempest.lovefood.common.adapter.DefaultRefreshViewCreator;
 import com.ytempest.lovefood.contract.MyCookbookContract;
-import com.ytempest.lovefood.data.BaseCookbook;
-import com.ytempest.lovefood.data.DataList;
+import com.ytempest.lovefood.http.data.BaseCookbook;
+import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.presenter.MyCookbookPresenter;
 import com.ytempest.lovefood.util.Config;
@@ -93,11 +95,9 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
     @Override
     public void onItemClick(View view, int position) {
         int cookId = mDataList.get(position - 1).getCookId();
-
-        showToast("cookId = " + cookId);
-//        Intent intent = new Intent(MyCookbookActivity.this, MyCookbookActivity.class);
-//        intent.putExtra(, cookId);
-//        startActivity(intent);
+        Intent intent = new Intent(MyCookbookActivity.this, PreviewCookbookActivity.class);
+        intent.putExtra(PreviewCookbookActivity.COOK_ID, cookId);
+        startActivity(intent);
     }
 
 

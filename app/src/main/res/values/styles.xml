@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- styleable -->
+    <declare-styleable name="TitleView">
+        <attr name="title_text" format="string" />
+    </declare-styleable>
+
 
     <!-- 默认的灰色分界线 -->
     <style name="gray_line">
