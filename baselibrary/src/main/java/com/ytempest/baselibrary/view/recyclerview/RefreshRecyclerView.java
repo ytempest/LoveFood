@@ -91,9 +91,14 @@ public class RefreshRecyclerView extends WrapRecyclerView {
         addRefreshView();
     }
 
-    public void addRefreshViewCreator(RefreshViewCreator creator) {
+    public void setRefreshViewCreator(RefreshViewCreator creator) {
         this.mRefreshViewCreator = creator;
         addRefreshView();
+    }
+
+    public void removeRefreshViewCreator() {
+        this.mRefreshViewCreator = null;
+        removeHeaderView(mRefreshView);
     }
 
     private void addRefreshView() {

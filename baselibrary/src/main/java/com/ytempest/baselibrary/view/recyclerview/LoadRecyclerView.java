@@ -63,10 +63,16 @@ public class LoadRecyclerView extends RefreshRecyclerView {
         addLoadView();
     }
 
-    public void addLoadViewCreator(LoadViewCreator creator) {
+    public void setLoadViewCreator(LoadViewCreator creator) {
         this.mLoadViewCreator = creator;
         addLoadView();
     }
+
+    public void removeLoadViewCreator() {
+        this.mLoadViewCreator = null;
+        removeFooterView(mLoadView);
+    }
+
 
     /**
      * 添加上拉加载更多的View
