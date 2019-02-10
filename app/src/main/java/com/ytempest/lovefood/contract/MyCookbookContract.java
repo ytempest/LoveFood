@@ -17,10 +17,18 @@ import io.reactivex.Observable;
 public interface MyCookbookContract extends IContract {
     interface Presenter extends IPresenter {
         void getMyCookbookList(int pageNum, int pageSize);
+
+        void refreshCookbookList(int pageNum, int pageSize);
+
+        void loadCookbookList(int pageNum, int pageSize);
     }
 
     interface MyCookbookView extends IView {
         void onGetCookbookList(DataList<BaseCookbook> data);
+
+        void onRefreshCookbookList(DataList<BaseCookbook> data);
+
+        void onLoadCookbookList(DataList<BaseCookbook> data);
     }
 
     interface Model extends IModel {

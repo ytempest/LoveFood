@@ -1,6 +1,5 @@
 package com.ytempest.lovefood.activity.personal;
 
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,11 +7,13 @@ import android.widget.ImageView;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.view.recyclerview.LoadRecyclerView;
+import com.ytempest.baselibrary.view.recyclerview.RefreshRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonRecyclerAdapter;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonViewHolder;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
+import com.ytempest.lovefood.adapter.DefaultLoadViewCreator;
 import com.ytempest.lovefood.adapter.DefaultRefreshViewCreator;
 import com.ytempest.lovefood.contract.MyCookbookContract;
 import com.ytempest.lovefood.data.BaseCookbook;
@@ -22,6 +23,7 @@ import com.ytempest.lovefood.presenter.MyCookbookPresenter;
 import com.ytempest.lovefood.util.Config;
 import com.ytempest.lovefood.util.DateUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,7 +31,8 @@ import butterknife.BindView;
 @InjectPresenter(MyCookbookPresenter.class)
 public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Presenter>
         implements MyCookbookContract.MyCookbookView, MyCookbookContract,
-        CommonRecyclerAdapter.OnItemClickListener {
+        CommonRecyclerAdapter.OnItemClickListener,
+        RefreshRecyclerView.OnRefreshMoreListener, LoadRecyclerView.OnLoadMoreListener {
 
     private static final String TAG = "MyCookbookActivity";
 
@@ -41,7 +44,9 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
     @BindView(R.id.recycler_view)
     protected LoadRecyclerView mRecyclerView;
 
-    private List<BaseCookbook> mDataList;
+    private List<BaseCookbook> mDataList = new ArrayList<>();
+    private CommonRecyclerAdapter<BaseCookbook> mAdapter;
+    private final DefaultLoadViewCreator LOAD_CREATOR = new DefaultLoadViewCreator();
 
     @Override
     protected int getLayoutResId() {
@@ -58,7 +63,22 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
     protected void initView() {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(MyCookbookActivity.this));
-        mRecyclerView.addRefreshViewCreator(new DefaultRefreshViewCreator());
+        mRecyclerView.setRefreshViewCreator(new DefaultRefreshViewCreator());
+        mRecyclerView.setOnRefreshMoreListener(this);
+        mAdapter = new CommonRecyclerAdapter<BaseCookbook>(
+                MyCookbookActivity.this, mDataList, R.layout.item_cook_book) {
+            @Override
+            protected void bindViewData(CommonViewHolder holder, BaseCookbook item) {
+                ImageView pictureView = holder.getView(R.id.iv_picture);
+                String url = RetrofitClient.client().getUrl() + item.getCookImageUrl();
+                ImageLoaderManager.getInstance().showImage(pictureView, url, null);
+                holder.setText(R.id.tv_name, item.getCookTitle());
+                holder.setText(R.id.tv_desc, item.getCookDesc());
+                holder.setText(R.id.tv_time, DateUtils.format(item.getCookPublishTime()));
+            }
+        };
+        mAdapter.setOnItemClickListener(this);
+        mRecyclerView.setAdapter(mAdapter);
 
         getPresenter().getMyCookbookList(mPageNum, Config.PAGE_SIZE);
     }
@@ -68,37 +88,76 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
 
     }
 
-    /* MVP View */
-
-    @Override
-    public void onGetCookbookList(DataList<BaseCookbook> data) {
-        mDataList = data.getList();
-        CommonRecyclerAdapter<BaseCookbook> adapter = new CommonRecyclerAdapter<BaseCookbook>(
-                MyCookbookActivity.this, data.getList(), R.layout.item_cook_book) {
-            @Override
-            protected void bindViewData(CommonViewHolder holder, BaseCookbook item) {
-                ImageView pictureView = holder.getView(R.id.iv_picture);
-                String url = RetrofitClient.client().getUrl() + item.getCookImageUrl();
-                ImageLoaderManager.getInstance().showImage(pictureView, url, null);
-                holder.setText(R.id.tv_name, item.getCookTitle());
-                holder.setText(R.id.tv_desc, item.getCookDesc());
-                holder.setText(R.id.tv_time, DateUtils.format(item.getCookPublishTime()));
-
-
-            }
-        };
-        adapter.setOnItemClickListener(this);
-        mRecyclerView.setAdapter(adapter);
-    }
-
+    /* Click */
 
     @Override
     public void onItemClick(View view, int position) {
-        int cookId = mDataList.get(position-1).getCookId();
+        int cookId = mDataList.get(position - 1).getCookId();
 
         showToast("cookId = " + cookId);
 //        Intent intent = new Intent(MyCookbookActivity.this, MyCookbookActivity.class);
 //        intent.putExtra(, cookId);
 //        startActivity(intent);
     }
+
+
+    /* MVP View */
+
+    @Override
+    public void onGetCookbookList(DataList<BaseCookbook> data) {
+        int lastPosition = mDataList.size();
+        mDataList.addAll(data.getList());
+
+        // 添加上拉刷新的View
+        addLoadView(data);
+
+        mAdapter.notifyItemInserted(lastPosition);
+    }
+
+    @Override
+    public void onRefreshCookbookList(DataList<BaseCookbook> data) {
+        mDataList.clear();
+        mDataList.addAll(data.getList());
+
+        // 添加上拉刷新的View
+        addLoadView(data);
+
+        mAdapter.notifyItemChanged(0);
+        mRecyclerView.stopRefresh();
+    }
+
+    private void addLoadView(DataList<BaseCookbook> data) {
+        int total = data.getTotal();
+        if (total > Config.PAGE_SIZE) {
+            mRecyclerView.removeLoadViewCreator();
+            mRecyclerView.setLoadViewCreator(LOAD_CREATOR);
+            mRecyclerView.setOnLoadMoreListener(this);
+        }
+    }
+
+    @Override
+    public void onLoadCookbookList(DataList<BaseCookbook> data) {
+        int lastPosition = mDataList.size();
+        mDataList.addAll(data.getList());
+        mAdapter.notifyItemInserted(lastPosition + 1);
+        mRecyclerView.stopLoad();
+        if (mPageNum == data.getPageCount()) {
+            mRecyclerView.removeLoadViewCreator();
+        }
+    }
+
+    /* Load */
+
+    @Override
+    public void onRefresh() {
+        mPageNum = 1;
+        getPresenter().refreshCookbookList(mPageNum, Config.PAGE_SIZE);
+    }
+
+    @Override
+    public void onLoad() {
+        mPageNum++;
+        getPresenter().loadCookbookList(mPageNum, Config.PAGE_SIZE);
+    }
+
 }

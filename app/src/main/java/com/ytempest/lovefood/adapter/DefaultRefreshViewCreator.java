@@ -20,10 +20,18 @@ public class DefaultRefreshViewCreator extends RefreshViewCreator {
      * 加载数据的ImageView
      */
     private View mRefreshIv;
+    private RotateAnimation mAnimation;
+
+    public DefaultRefreshViewCreator() {
+        mAnimation = new RotateAnimation(0, 720,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        mAnimation.setRepeatCount(-1);
+        mAnimation.setDuration(1000);
+    }
 
     @Override
     public View getRefreshView(Context context, ViewGroup parent) {
-        View refreshView = LayoutInflater.from(context).inflate(R.layout.layout_refresh_header_view, parent, false);
+        View refreshView = LayoutInflater.from(context).inflate(R.layout.view_refresh_header, parent, false);
         mRefreshIv = refreshView.findViewById(R.id.iv_refresh);
         return refreshView;
     }
@@ -38,11 +46,7 @@ public class DefaultRefreshViewCreator extends RefreshViewCreator {
     @Override
     public void onRefreshing() {
         // 刷新的时候不断旋转
-        RotateAnimation animation = new RotateAnimation(0, 720,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        animation.setRepeatCount(-1);
-        animation.setDuration(1000);
-        mRefreshIv.startAnimation(animation);
+        mRefreshIv.startAnimation(mAnimation);
     }
 
     @Override

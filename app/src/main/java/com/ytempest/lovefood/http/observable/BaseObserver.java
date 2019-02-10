@@ -22,7 +22,6 @@ public class BaseObserver<Data> implements Observer<Data> {
     @Override
     public void onError(Throwable e) {
         e.printStackTrace();
-        throw new RuntimeException("请求异常");
     }
 
     @Override
