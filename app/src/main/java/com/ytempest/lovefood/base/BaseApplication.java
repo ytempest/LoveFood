@@ -6,6 +6,7 @@ import com.mob.MobSDK;
 import com.ytempest.baselibrary.base.BaseLibrary;
 import com.ytempest.baselibrary.util.LogUtils;
 import com.ytempest.framelibrary.base.FrameLibrary;
+import com.ytempest.lovefood.util.DrawUtils;
 import com.ytempest.lovefood.util.UserHelper;
 
 
@@ -34,5 +35,7 @@ public class BaseApplication extends Application {
 
         // 初始化用户数据辅助类
         UserHelper.getInstance().init(this);
+
+        DrawUtils.init(this);
     }
 }
