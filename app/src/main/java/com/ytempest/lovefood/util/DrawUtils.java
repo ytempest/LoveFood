@@ -9,21 +9,15 @@ import android.util.TypedValue;
  */
 public class DrawUtils {
 
-    private static Context context;
-
-    public static void init(Context context) {
-        context = context.getApplicationContext();
+    public static int dpToPx(Context context, float dp) {
+        return toPx(context, TypedValue.COMPLEX_UNIT_DIP, dp);
     }
 
-    public static int dpToPx(float dp) {
-        return toPx(TypedValue.COMPLEX_UNIT_DIP, dp);
+    public static int spToPx(Context context, float sp) {
+        return toPx(context, TypedValue.COMPLEX_UNIT_SP, sp);
     }
 
-    public static int spToPx(float sp) {
-        return toPx(TypedValue.COMPLEX_UNIT_SP, sp);
-    }
-
-    public static int toPx(int type, float value) {
+    public static int toPx(Context context, int type, float value) {
         return (int) TypedValue.applyDimension(
                 type, value, context.getResources().getDisplayMetrics());
     }

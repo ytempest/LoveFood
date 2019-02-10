@@ -36,6 +36,5 @@ public class BaseApplication extends Application {
         // 初始化用户数据辅助类
         UserHelper.getInstance().init(this);
 
-        DrawUtils.init(this);
     }
 }
