@@ -1,9 +1,9 @@
 package com.ytempest.lovefood.http;
 
-import com.ytempest.lovefood.data.BaseCookbook;
-import com.ytempest.lovefood.data.BaseResult;
-import com.ytempest.lovefood.data.DataList;
-import com.ytempest.lovefood.data.UserInfo;
+import com.ytempest.lovefood.http.data.BaseCookbook;
+import com.ytempest.lovefood.http.data.BaseResult;
+import com.ytempest.lovefood.http.data.DataList;
+import com.ytempest.lovefood.http.data.UserInfo;
 
 import java.util.Map;
 

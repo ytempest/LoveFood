@@ -1,7 +1,6 @@
 package com.ytempest.lovefood.activity;
 
 import android.content.Intent;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -14,8 +13,8 @@ import com.ytempest.framelibrary.view.button.ModifiableButton;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.aop.CheckNet;
 import com.ytempest.lovefood.contract.LoginContract;
-import com.ytempest.lovefood.listener.PasswordStatusChangeListener;
-import com.ytempest.lovefood.listener.TextWatcherListener;
+import com.ytempest.lovefood.common.listener.PasswordStatusChangeListener;
+import com.ytempest.lovefood.common.listener.TextWatcherListener;
 import com.ytempest.lovefood.presenter.LoginPresenter;
 import com.ytempest.lovefood.util.RegexUtils;
 

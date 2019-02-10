@@ -2,9 +2,9 @@ package com.ytempest.lovefood.model;
 
 import com.ytempest.baselibrary.base.mvp.BaseModel;
 import com.ytempest.lovefood.contract.MyCookbookContract;
-import com.ytempest.lovefood.data.BaseCookbook;
-import com.ytempest.lovefood.data.BaseResult;
-import com.ytempest.lovefood.data.DataList;
+import com.ytempest.lovefood.http.data.BaseCookbook;
+import com.ytempest.lovefood.http.data.BaseResult;
+import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.http.RetrofitClient;
 
 import io.reactivex.Observable;

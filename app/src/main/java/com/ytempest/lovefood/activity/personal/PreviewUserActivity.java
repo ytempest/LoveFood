@@ -10,7 +10,7 @@ import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.contract.PreviewUserContract;
-import com.ytempest.lovefood.data.UserInfo;
+import com.ytempest.lovefood.http.data.UserInfo;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.presenter.PreviewUserPresenter;
 import com.ytempest.lovefood.util.DateUtils;

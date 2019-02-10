@@ -1,4 +1,4 @@
-package com.ytempest.lovefood.adapter;
+package com.ytempest.lovefood.common.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

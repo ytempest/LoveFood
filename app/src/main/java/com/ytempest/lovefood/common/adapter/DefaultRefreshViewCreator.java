@@ -1,4 +1,4 @@
-package com.ytempest.lovefood.adapter;
+package com.ytempest.lovefood.common.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

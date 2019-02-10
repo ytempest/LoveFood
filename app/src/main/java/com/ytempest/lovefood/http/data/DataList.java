@@ -1,4 +1,4 @@
-package com.ytempest.lovefood.data;
+package com.ytempest.lovefood.http.data;
 
 import java.util.List;
 

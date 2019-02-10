@@ -4,7 +4,7 @@ import com.ytempest.baselibrary.base.mvp.BasePresenter;
 import com.ytempest.baselibrary.base.mvp.inject.InjectModel;
 import com.ytempest.framelibrary.encrypt.EncryptUtils;
 import com.ytempest.lovefood.contract.UpdatePasswordContract;
-import com.ytempest.lovefood.data.BaseResult;
+import com.ytempest.lovefood.http.data.BaseResult;
 import com.ytempest.lovefood.http.observable.BaseObserver;
 import com.ytempest.lovefood.model.UpdatePasswordModel;
 import com.ytempest.lovefood.util.ResultUtils;

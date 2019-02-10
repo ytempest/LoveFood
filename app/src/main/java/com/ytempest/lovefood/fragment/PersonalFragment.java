@@ -13,7 +13,7 @@ import com.ytempest.lovefood.activity.personal.AccountManageActivity;
 import com.ytempest.lovefood.activity.personal.MyCookbookActivity;
 import com.ytempest.lovefood.activity.personal.PreviewUserActivity;
 import com.ytempest.lovefood.contract.PersonalContract;
-import com.ytempest.lovefood.data.UserInfo;
+import com.ytempest.lovefood.http.data.UserInfo;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.presenter.PersonalPresenter;
 

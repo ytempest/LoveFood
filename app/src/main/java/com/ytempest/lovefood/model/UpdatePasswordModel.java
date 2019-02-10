@@ -2,7 +2,7 @@ package com.ytempest.lovefood.model;
 
 import com.ytempest.baselibrary.base.mvp.BaseModel;
 import com.ytempest.lovefood.contract.UpdatePasswordContract;
-import com.ytempest.lovefood.data.BaseResult;
+import com.ytempest.lovefood.http.data.BaseResult;
 import com.ytempest.lovefood.http.RetrofitClient;
 
 import io.reactivex.Observable;

@@ -1,4 +1,4 @@
-package com.ytempest.lovefood.listener;
+package com.ytempest.lovefood.common.listener;
 
 import android.text.Editable;
 import android.text.TextWatcher;

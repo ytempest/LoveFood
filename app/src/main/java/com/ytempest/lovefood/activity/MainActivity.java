@@ -9,7 +9,7 @@ import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.view.NotScrollViewPager;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.lovefood.R;
-import com.ytempest.lovefood.adapter.FragmentPagerAdapter;
+import com.ytempest.lovefood.common.adapter.FragmentPagerAdapter;
 import com.ytempest.lovefood.contract.MainContract;
 import com.ytempest.lovefood.fragment.ActivityFragment;
 import com.ytempest.lovefood.fragment.CookbookFragment;

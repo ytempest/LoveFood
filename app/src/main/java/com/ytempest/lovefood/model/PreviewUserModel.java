@@ -2,8 +2,8 @@ package com.ytempest.lovefood.model;
 
 import com.ytempest.baselibrary.base.mvp.BaseModel;
 import com.ytempest.lovefood.contract.PreviewUserContract;
-import com.ytempest.lovefood.data.BaseResult;
-import com.ytempest.lovefood.data.UserInfo;
+import com.ytempest.lovefood.http.data.BaseResult;
+import com.ytempest.lovefood.http.data.UserInfo;
 import com.ytempest.lovefood.http.RetrofitClient;
 
 import io.reactivex.Observable;

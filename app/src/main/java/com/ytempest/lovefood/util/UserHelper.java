@@ -2,7 +2,7 @@ package com.ytempest.lovefood.util;
 
 import android.content.Context;
 
-import com.ytempest.lovefood.data.UserInfo;
+import com.ytempest.lovefood.http.data.UserInfo;
 
 /**
  * @author ytempest

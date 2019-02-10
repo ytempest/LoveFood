@@ -3,15 +3,13 @@ package com.ytempest.lovefood.presenter;
 import com.ytempest.baselibrary.base.mvp.BasePresenter;
 import com.ytempest.baselibrary.base.mvp.inject.InjectModel;
 import com.ytempest.lovefood.contract.MyCookbookContract;
-import com.ytempest.lovefood.data.BaseCookbook;
-import com.ytempest.lovefood.data.BaseResult;
-import com.ytempest.lovefood.data.DataList;
+import com.ytempest.lovefood.http.data.BaseCookbook;
+import com.ytempest.lovefood.http.data.BaseResult;
+import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.http.observable.BaseObserver;
 import com.ytempest.lovefood.model.MyCookbookModel;
 import com.ytempest.lovefood.util.ResultUtils;
 import com.ytempest.lovefood.util.UserHelper;
-
-import java.nio.charset.CoderMalfunctionError;
 
 /**
  * @author ytempest
