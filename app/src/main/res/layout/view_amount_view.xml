@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
@@ -7,23 +8,16 @@
 
     <TextView
         android:id="@+id/tv_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/amount_view_text_style"
         android:layout_weight="6"
-        android:background="@android:color/transparent"
-        android:padding="10dp"
-        android:text="3333"
-        android:textSize="17sp" />
+        android:textColor="#434343"
+        tool:text="八角" />
 
     <TextView
         android:id="@+id/tv_amount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/amount_view_text_style"
         android:layout_weight="5"
-        android:background="@android:color/transparent"
-        android:padding="10dp"
-        android:text="3333"
-        android:textSize="17sp" />
+        tool:text="适量" />
 
     <ImageView style="@style/right_arrow_view_style" />
 

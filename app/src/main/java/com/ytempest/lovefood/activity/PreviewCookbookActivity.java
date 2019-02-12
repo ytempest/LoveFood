@@ -46,7 +46,7 @@ public class PreviewCookbookActivity extends BaseSkinActivity<PreviewCookbookCon
 
     @Override
     protected void initData() {
-        mMainView.setData(null);
-        mAccView.setData(null);
+        mMainView.setMainData(null);
+        mAccView.setAccData(null);
     }
 }
