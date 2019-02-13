@@ -3,20 +3,23 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <TextView
+    <EditText
         android:id="@+id/tv_name"
         style="@style/amount_view_text_style"
         android:layout_weight="6"
         android:textColor="#434343"
         tool:text="八角" />
 
-    <TextView
+    <EditText
         android:id="@+id/tv_amount"
         style="@style/amount_view_text_style"
         android:layout_weight="5"
+        android:textColor="#707070"
         tool:text="适量" />
 
     <ImageView style="@style/right_arrow_view_style" />

@@ -51,6 +51,8 @@
     <!-- PreviewCookbookActivity -->
     <style name="amount_view_text_style">
         <item name="android:layout_width">0dp</item>
+        <item name="android:enabled">false</item>
+        <item name="android:background">@android:color/transparent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:paddingLeft">16dp</item>

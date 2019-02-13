@@ -69,7 +69,7 @@
             <com.ytempest.lovefood.widget.TitleView
                 style="@style/title_view_style"
                 android:layout_marginBottom="2dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="23dp"
                 app:title_text="介绍" />
 
             <TextView
@@ -85,7 +85,7 @@
             <com.ytempest.lovefood.widget.TitleView
                 style="@style/title_view_style"
                 android:layout_marginBottom="6dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="27dp"
                 app:title_text="主料" />
 
             <com.ytempest.lovefood.widget.AmountView
@@ -99,11 +99,24 @@
             <com.ytempest.lovefood.widget.TitleView
                 style="@style/title_view_style"
                 android:layout_marginBottom="6dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="27dp"
                 app:title_text="辅料" />
 
             <com.ytempest.lovefood.widget.AmountView
                 android:id="@+id/av_acc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp" />
+
+            <com.ytempest.lovefood.widget.TitleView
+                style="@style/title_view_style"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="27dp"
+                app:title_text="制作步骤" />
+
+            <com.ytempest.lovefood.widget.ProcedureView
+                android:id="@+id/procedure_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"

@@ -7,8 +7,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.http.data.CookbookInfo;
@@ -42,40 +42,50 @@ public class AmountView extends LinearLayout {
                 ViewGroup.LayoutParams.MATCH_PARENT, DrawUtils.dpToPx(context, 0.6F));
     }
 
-    public void setMainData(List<CookbookInfo.MainListBean> data) {
-//        int count = data.size();
-        addView(getLine());
-        addView(getText("八角", "适量"));
-        addView(getLine());
-        addView(getText("八角", "适量"));
-        addView(getLine());
-        addView(getText("八角", "适量"));
-        addView(getLine());
+    public void setMainData(List<CookbookInfo.MainListBean> data, boolean enable) {
+        addLine();
+        for (CookbookInfo.MainListBean bean : data) {
+            addDataText(bean.getMainName(), bean.getMainAmount(), enable);
+            addLine();
+        }
     }
 
-    public void setAccData(List<CookbookInfo.AccListBean> data) {
-//        int count = data.size();
-        addView(getLine());
-        addView(getText("八角", "适量"));
-        addView(getLine());
-        addView(getText("八角", "适量"));
-        addView(getLine());
-        addView(getText("八角", "适量"));
-        addView(getLine());
+    public void setAccData(List<CookbookInfo.AccListBean> data, boolean enable) {
+        addLine();
+        for (CookbookInfo.AccListBean bean : data) {
+            addDataText(bean.getAccName(), bean.getAccAmount(), enable);
+            addLine();
+        }
+
+    }
+
+    public void addDataText(String name, String amount, boolean enable) {
+        View view = getEditView(enable);
+        ((EditText) view.findViewById(R.id.tv_name)).setText(name);
+        ((EditText) view.findViewById(R.id.tv_amount)).setText(amount);
+        addView(view);
     }
 
 
-    private View getLine() {
+    private void addLine() {
         View line = new View(getContext());
         line.setLayoutParams(LINE_PARAMS);
         line.setBackgroundResource(R.color.line_color);
-        return line;
+        addView(line);
     }
 
-    private View getText(String name, String amount) {
+    public void addNewAmountView() {
+        addView(getEditView(true));
+    }
+
+    public void removeAmountView() {
+        removeViewAt(getChildCount() - 1);
+    }
+
+    private View getEditView(boolean enable) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.view_amount_view, this, false);
-        ((TextView) view.findViewById(R.id.tv_name)).setText(name);
-        ((TextView) view.findViewById(R.id.tv_amount)).setText(amount);
+        view.findViewById(R.id.tv_name).setEnabled(enable);
+        view.findViewById(R.id.tv_amount).setEnabled(enable);
         return view;
     }
 
