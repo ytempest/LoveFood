@@ -43,20 +43,23 @@ public class AmountView extends LinearLayout {
     }
 
     public void setMainData(List<CookbookInfo.MainListBean> data, boolean enable) {
-        addLine();
-        for (CookbookInfo.MainListBean bean : data) {
-            addDataText(bean.getMainName(), bean.getMainAmount(), enable);
+        if (data != null && data.size() > 0) {
             addLine();
+            for (CookbookInfo.MainListBean bean : data) {
+                addDataText(bean.getMainName(), bean.getMainAmount(), enable);
+                addLine();
+            }
         }
     }
 
     public void setAccData(List<CookbookInfo.AccListBean> data, boolean enable) {
-        addLine();
-        for (CookbookInfo.AccListBean bean : data) {
-            addDataText(bean.getAccName(), bean.getAccAmount(), enable);
+        if (data != null && data.size() > 0) {
             addLine();
+            for (CookbookInfo.AccListBean bean : data) {
+                addDataText(bean.getAccName(), bean.getAccAmount(), enable);
+                addLine();
+            }
         }
-
     }
 
     public void addDataText(String name, String amount, boolean enable) {

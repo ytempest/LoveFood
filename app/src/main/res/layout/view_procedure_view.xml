@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="6dp"
         android:paddingTop="6dp"
+        android:textSize="19sp"
         android:textStyle="bold"
         tool:text="第 1 步:" />
 
@@ -28,7 +29,7 @@
         android:textSize="17sp"
         tool:text="制作步骤" />
 
-    <com.ytempest.lovefood.widget.ProcedureImageView
+    <ImageView
         android:id="@+id/iv_picture"
         android:layout_width="match_parent"
         android:layout_height="170dp"

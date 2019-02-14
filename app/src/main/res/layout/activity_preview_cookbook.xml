@@ -26,45 +26,49 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/iv_product"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/default_head" />
+                tool:src="@drawable/default_head" />
 
             <View style="@style/gray_line" />
 
             <TextView
+                android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="6dp"
-                android:text="卤鸡爪"
                 android:textColor="#3f3f3f"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                tool:text="卤鸡爪" />
 
             <com.ytempest.framelibrary.view.CircleImageView
-                android:id="@+id/iv_head"
+                android:id="@+id/iv_user_head"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/default_head"
                 app:border_color="@android:color/transparent"
-                app:border_width="0dp" />
+                app:border_width="0dp"
+                tool:src="@drawable/default_head" />
 
             <TextView
+                android:id="@+id/tv_user_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="6dp"
-                android:text="ytempest"
                 android:textColor="#3f3f3f"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tool:text="ytempest" />
 
             <TextView
+                android:id="@+id/tv_collection_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="20人收藏"
-                android:textColor="#3f3f3f" />
+                android:textColor="#3f3f3f"
+                tool:text="20人收藏" />
 
             <com.ytempest.lovefood.widget.TitleView
                 style="@style/title_view_style"
@@ -73,6 +77,7 @@
                 app:title_text="介绍" />
 
             <TextView
+                android:id="@+id/tv_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="22dp"
@@ -80,7 +85,7 @@
                 android:maxLines="8"
                 android:paddingBottom="3dp"
                 android:paddingTop="3dp"
-                android:text="卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚" />
+                tool:text="卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚" />
 
             <com.ytempest.lovefood.widget.TitleView
                 style="@style/title_view_style"

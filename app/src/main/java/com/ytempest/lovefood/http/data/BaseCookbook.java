@@ -5,23 +5,23 @@ package com.ytempest.lovefood.http.data;
  *         Description：
  */
 public class BaseCookbook {
-    private int cookId;
+    private Long cookId;
     private String cookGroup;
     private String cookType;
     private String cookImageUrl;
-    private int cookUserId;
+    private Integer cookUserId;
     private String cookTitle;
     private String cookDesc;
-    private long cookPublishTime;
+    private Long cookPublishTime;
 
     public BaseCookbook() {
     }
 
-    public int getCookId() {
+    public Long getCookId() {
         return cookId;
     }
 
-    public void setCookId(int cookId) {
+    public void setCookId(Long cookId) {
         this.cookId = cookId;
     }
 
@@ -49,11 +49,11 @@ public class BaseCookbook {
         this.cookImageUrl = cookImageUrl;
     }
 
-    public int getCookUserId() {
+    public Integer getCookUserId() {
         return cookUserId;
     }
 
-    public void setCookUserId(int cookUserId) {
+    public void setCookUserId(Integer cookUserId) {
         this.cookUserId = cookUserId;
     }
 
@@ -73,11 +73,11 @@ public class BaseCookbook {
         this.cookDesc = cookDesc;
     }
 
-    public long getCookPublishTime() {
+    public Long getCookPublishTime() {
         return cookPublishTime;
     }
 
-    public void setCookPublishTime(long cookPublishTime) {
+    public void setCookPublishTime(Long cookPublishTime) {
         this.cookPublishTime = cookPublishTime;
     }
 

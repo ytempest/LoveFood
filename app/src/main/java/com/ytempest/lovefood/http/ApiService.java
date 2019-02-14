@@ -2,6 +2,7 @@ package com.ytempest.lovefood.http;
 
 import com.ytempest.lovefood.http.data.BaseCookbook;
 import com.ytempest.lovefood.http.data.BaseResult;
+import com.ytempest.lovefood.http.data.CookbookInfo;
 import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.http.data.UserInfo;
 
@@ -79,6 +80,16 @@ public interface ApiService {
     Observable<BaseResult<DataList<BaseCookbook>>> getUserCookList(@Query("userId") Long userId,
                                                                    @Query("pageNum") Integer pageNum,
                                                                    @Query("pageSize") Integer pageSize);
+
+
+    /*---------   菜谱接口   ---------*/
+
+
+    /**
+     * 获取菜谱的详细信息
+     */
+    @GET("cook/info")
+    Observable<BaseResult<CookbookInfo>> getCookbookInfo(@Query("cookId") Long cookId);
 
 
 }

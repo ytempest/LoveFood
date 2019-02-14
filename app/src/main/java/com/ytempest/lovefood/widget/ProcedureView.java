@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,8 +38,10 @@ public class ProcedureView extends LinearLayout implements View.OnClickListener 
     }
 
     public void setData(List<CookbookInfo.ProceListBean> data, boolean enable) {
-        for (CookbookInfo.ProceListBean bean : data) {
-            addNextStepView(bean, enable);
+        if (data != null && data.size() > 0) {
+            for (CookbookInfo.ProceListBean bean : data) {
+                addNextStepView(bean, enable);
+            }
         }
     }
 
@@ -68,10 +71,9 @@ public class ProcedureView extends LinearLayout implements View.OnClickListener 
         View view = LayoutInflater.from(getContext()).inflate(R.layout.view_procedure_view, this, false);
         EditText descView = view.findViewById(R.id.et_desc);
         descView.setEnabled(enable);
-        ProcedureImageView pictureView = view.findViewById(R.id.iv_picture);
+        ImageView pictureView = view.findViewById(R.id.iv_picture);
         pictureView.setEnabled(enable);
         if (enable) {
-            pictureView.setNo(getChildCount() + 1);
             pictureView.setOnClickListener(this);
         }
         return view;
@@ -80,9 +82,10 @@ public class ProcedureView extends LinearLayout implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         if (v instanceof ImageView) {
-            Integer no = (Integer) v.getTag();
             if (listener != null) {
-                listener.onClick(v, no);
+                ViewGroup view = (ViewGroup) v.getParent();
+                int no = indexOfChild(view);
+                listener.onClick(v, no + 1);
             }
         }
     }

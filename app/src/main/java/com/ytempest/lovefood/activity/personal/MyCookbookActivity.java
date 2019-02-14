@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
+import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.baselibrary.view.recyclerview.LoadRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.RefreshRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonRecyclerAdapter;
@@ -94,7 +95,7 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
 
     @Override
     public void onItemClick(View view, int position) {
-        int cookId = mDataList.get(position - 1).getCookId();
+        long cookId = mDataList.get(position - 1).getCookId();
         Intent intent = new Intent(MyCookbookActivity.this, PreviewCookbookActivity.class);
         intent.putExtra(PreviewCookbookActivity.COOK_ID, cookId);
         startActivity(intent);
