@@ -3,11 +3,13 @@ package com.ytempest.lovefood.activity.personal;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.view.CustomToast;
+import com.ytempest.baselibrary.view.dialog.AlertDialog;
 import com.ytempest.baselibrary.view.recyclerview.LoadRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.RefreshRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonRecyclerAdapter;
@@ -16,6 +18,7 @@ import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.activity.PreviewCookbookActivity;
+import com.ytempest.lovefood.aop.CheckNet;
 import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
 import com.ytempest.lovefood.common.adapter.DefaultRefreshViewCreator;
 import com.ytempest.lovefood.contract.MyCookbookContract;
@@ -35,7 +38,7 @@ import butterknife.BindView;
 public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Presenter>
         implements MyCookbookContract.MyCookbookView, MyCookbookContract,
         CommonRecyclerAdapter.OnItemClickListener,
-        RefreshRecyclerView.OnRefreshMoreListener, LoadRecyclerView.OnLoadMoreListener {
+        RefreshRecyclerView.OnRefreshMoreListener, LoadRecyclerView.OnLoadMoreListener, CommonRecyclerAdapter.OnLongClickListener {
 
     private static final String TAG = "MyCookbookActivity";
 
@@ -60,6 +63,14 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
     protected void initTitle() {
         mNavigationView.enableLeftFinish(this);
         mNavigationView.setTitleText("我的菜谱");
+        mNavigationView.setRightText("添加");
+        mNavigationView.setRightClickListener(new View.OnClickListener() {
+            @CheckNet
+            @Override
+            public void onClick(View v) {
+                // TODO: 2019/02/15 添加发布菜谱的逻辑
+            }
+        });
     }
 
     @Override
@@ -81,6 +92,7 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
             }
         };
         mAdapter.setOnItemClickListener(this);
+        mAdapter.setOnItemLongClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
 
         getPresenter().getMyCookbookList(mPageNum, Config.PAGE_SIZE);
@@ -93,12 +105,45 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
 
     /* Click */
 
+    @CheckNet
     @Override
     public void onItemClick(View view, int position) {
         long cookId = mDataList.get(position - 1).getCookId();
         Intent intent = new Intent(MyCookbookActivity.this, PreviewCookbookActivity.class);
         intent.putExtra(PreviewCookbookActivity.COOK_ID, cookId);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onItemLongClick(View view, int position) {
+        AlertDialog dialog = getDialog();
+        View edit = dialog.getView(R.id.tv_edit_cookbook);
+        edit.setTag(mDataList.get(position - 1).getCookId());
+        edit.setOnClickListener(EDIT_COOKBOOK_LISTENER);
+        dialog.show();
+        return true;
+    }
+
+    private View.OnClickListener EDIT_COOKBOOK_LISTENER = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            long cookId = (long) v.getTag();
+            CustomToast.getInstance().show("cookId = " + cookId);
+        }
+    };
+
+    private AlertDialog mDialog;
+
+    private AlertDialog getDialog() {
+        if (mDialog == null) {
+            mDialog = new AlertDialog.Builder(MyCookbookActivity.this)
+                    .setContentView(R.layout.dialog_edit_cookbook)
+                    .addDefaultAnimation()
+                    .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    .setCanceledOnTouchOutside(true)
+                    .create();
+        }
+        return mDialog;
     }
 
 
@@ -123,7 +168,7 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
         // 添加上拉刷新的View
         addLoadView(data);
 
-        mAdapter.notifyItemChanged(0);
+        mAdapter.notifyDataSetChanged();
         mRecyclerView.stopRefresh();
     }
 

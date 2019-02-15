@@ -100,7 +100,8 @@ public class PreviewCookbookActivity extends BaseSkinActivity<PreviewCookbookCon
 
         mUserAccountTv.setText(data.getUserAccount());
 
-        mCollectionCountTv.setText(String.format("%s人收藏", data.getCollectCount()));
+        long count = data.getCollectCount() != null ? data.getCollectCount() : 0;
+        mCollectionCountTv.setText(String.format("%s人收藏", count));
 
         for (TitleView titleView : mTitleViews) {
             titleView.setVisibility(View.VISIBLE);
