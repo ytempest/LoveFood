@@ -29,8 +29,7 @@
                 android:id="@+id/iv_product"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:scaleType="centerCrop"
-                tool:src="@drawable/default_head" />
+                android:scaleType="centerCrop" />
 
             <View style="@style/gray_line" />
 
@@ -49,8 +48,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 app:border_color="@android:color/transparent"
-                app:border_width="0dp"
-                tool:src="@drawable/default_head" />
+                app:border_width="0dp" />
 
             <TextView
                 android:id="@+id/tv_user_account"
@@ -71,6 +69,7 @@
                 tool:text="20人收藏" />
 
             <com.ytempest.lovefood.widget.TitleView
+                android:id="@+id/tv_title_introduce"
                 style="@style/title_view_style"
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="23dp"
@@ -88,6 +87,7 @@
                 tool:text="卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚" />
 
             <com.ytempest.lovefood.widget.TitleView
+                android:id="@+id/tv_title_main"
                 style="@style/title_view_style"
                 android:layout_marginBottom="6dp"
                 android:layout_marginTop="27dp"
@@ -102,6 +102,7 @@
 
 
             <com.ytempest.lovefood.widget.TitleView
+                android:id="@+id/tv_title_acc"
                 style="@style/title_view_style"
                 android:layout_marginBottom="6dp"
                 android:layout_marginTop="27dp"
@@ -115,6 +116,7 @@
                 android:paddingRight="20dp" />
 
             <com.ytempest.lovefood.widget.TitleView
+                android:id="@+id/tv_title_step"
                 style="@style/title_view_style"
                 android:layout_marginBottom="6dp"
                 android:layout_marginTop="27dp"
@@ -126,7 +128,6 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp" />
-
         </LinearLayout>
     </ScrollView>
 

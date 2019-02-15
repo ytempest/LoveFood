@@ -1,5 +1,6 @@
 package com.ytempest.lovefood.activity;
 
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,8 +15,10 @@ import com.ytempest.lovefood.http.data.CookbookInfo;
 import com.ytempest.lovefood.presenter.PreviewCookbookPresenter;
 import com.ytempest.lovefood.widget.AmountView;
 import com.ytempest.lovefood.widget.ProcedureView;
+import com.ytempest.lovefood.widget.TitleView;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 
 /**
  * @author ytempest
@@ -57,6 +60,9 @@ public class PreviewCookbookActivity extends BaseSkinActivity<PreviewCookbookCon
     @BindView(R.id.procedure_view)
     protected ProcedureView mProcedureView;
 
+    @BindViews({R.id.tv_title_introduce, R.id.tv_title_main, R.id.tv_title_acc, R.id.tv_title_step})
+    protected TitleView[] mTitleViews;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_preview_cookbook;
@@ -95,6 +101,10 @@ public class PreviewCookbookActivity extends BaseSkinActivity<PreviewCookbookCon
         mUserAccountTv.setText(data.getUserAccount());
 
         mCollectionCountTv.setText(String.format("%s人收藏", data.getCollectCount()));
+
+        for (TitleView titleView : mTitleViews) {
+            titleView.setVisibility(View.VISIBLE);
+        }
 
         mDescTv.setText(data.getCookDesc());
 

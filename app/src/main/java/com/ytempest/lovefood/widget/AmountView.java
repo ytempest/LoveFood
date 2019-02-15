@@ -62,7 +62,7 @@ public class AmountView extends LinearLayout {
         }
     }
 
-    public void addDataText(String name, String amount, boolean enable) {
+    private void addDataText(String name, String amount, boolean enable) {
         View view = getEditView(enable);
         ((EditText) view.findViewById(R.id.tv_name)).setText(name);
         ((EditText) view.findViewById(R.id.tv_amount)).setText(amount);
