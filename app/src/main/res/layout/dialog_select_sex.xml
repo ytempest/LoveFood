@@ -6,14 +6,14 @@
 
     <TextView
         android:id="@+id/tv_male"
-        style="@style/dialog_select_sex_style"
+        style="@style/dialog_text_style"
         android:text="男" />
 
     <View style="@style/gray_line" />
 
     <TextView
         android:id="@+id/tv_female"
-        style="@style/dialog_select_sex_style"
+        style="@style/dialog_text_style"
         android:text="女" />
 
 </LinearLayout>

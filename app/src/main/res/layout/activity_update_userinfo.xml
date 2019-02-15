@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/common_bg"
     android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tool:context="com.ytempest.lovefood.activity.personal.PreviewUserActivity">
 
     <com.ytempest.framelibrary.view.NavigationView
