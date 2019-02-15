@@ -90,6 +90,16 @@ public class NavigationView extends RelativeLayout {
         mTitleTextView.setText(text);
     }
 
+    public void setLeftText(String text) {
+        mLeftTextView.setVisibility(View.VISIBLE);
+        mLeftTextView.setText(text);
+    }
+
+    public void setRightText(String text) {
+        mRightTextView.setVisibility(View.VISIBLE);
+        mRightTextView.setText(text);
+    }
+
     public void enableLeftFinish(Context context) {
         if (context instanceof Activity) {
             setLeftClickListener(new OnClickListener() {
