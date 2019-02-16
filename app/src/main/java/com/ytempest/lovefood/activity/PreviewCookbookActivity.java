@@ -71,6 +71,12 @@ public class PreviewCookbookActivity extends BaseSkinActivity<PreviewCookbookCon
     @Override
     protected void initTitle() {
         mNavigationView.enableLeftFinish(this);
+        mNavigationView.setRightClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override

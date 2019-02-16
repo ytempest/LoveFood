@@ -124,9 +124,10 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
         return true;
     }
 
-    private View.OnClickListener EDIT_COOKBOOK_LISTENER = new View.OnClickListener() {
+    private static final View.OnClickListener EDIT_COOKBOOK_LISTENER = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            // TODO: 2019/02/16 添加编辑菜谱的逻辑
             long cookId = (long) v.getTag();
             CustomToast.getInstance().show("cookId = " + cookId);
         }
