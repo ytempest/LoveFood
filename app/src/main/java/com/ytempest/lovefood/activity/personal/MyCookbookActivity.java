@@ -109,9 +109,7 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
     @Override
     public void onItemClick(View view, int position) {
         long cookId = mDataList.get(position - 1).getCookId();
-        Intent intent = new Intent(MyCookbookActivity.this, PreviewCookbookActivity.class);
-        intent.putExtra(PreviewCookbookActivity.COOK_ID, cookId);
-        startActivity(intent);
+        PreviewCookbookActivity.startActivity(this, cookId);
     }
 
     @Override
@@ -127,9 +125,8 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
     private static final View.OnClickListener EDIT_COOKBOOK_LISTENER = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            // TODO: 2019/02/16 添加编辑菜谱的逻辑
             long cookId = (long) v.getTag();
-            CustomToast.getInstance().show("cookId = " + cookId);
+
         }
     };
 

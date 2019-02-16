@@ -1,5 +1,7 @@
 package com.ytempest.lovefood.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,6 +11,7 @@ import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
+import com.ytempest.lovefood.activity.personal.MyCookbookActivity;
 import com.ytempest.lovefood.contract.PreviewCookbookContract;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.CookbookInfo;
@@ -28,7 +31,13 @@ import butterknife.BindViews;
 public class PreviewCookbookActivity extends BaseSkinActivity<PreviewCookbookContract.Presenter>
         implements PreviewCookbookContract.PreviewCookbookView, PreviewCookbookContract {
 
-    public static final String COOK_ID = "cook_id";
+    private static final String COOK_ID = "cook_id";
+
+    public static void startActivity(Context context, long cookId) {
+        Intent intent = new Intent(context, PreviewCookbookActivity.class);
+        intent.putExtra(PreviewCookbookActivity.COOK_ID, cookId);
+        context.startActivity(intent);
+    }
 
     @BindView(R.id.navigation_view)
     protected NavigationView mNavigationView;
