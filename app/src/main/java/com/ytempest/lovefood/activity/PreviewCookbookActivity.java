@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
+import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
@@ -32,6 +33,7 @@ public class PreviewCookbookActivity extends BaseSkinActivity<PreviewCookbookCon
         implements PreviewCookbookContract.PreviewCookbookView, PreviewCookbookContract {
 
     private static final String COOK_ID = "cook_id";
+    private long mCookId;
 
     public static void startActivity(Context context, long cookId) {
         Intent intent = new Intent(context, PreviewCookbookActivity.class);
@@ -83,7 +85,7 @@ public class PreviewCookbookActivity extends BaseSkinActivity<PreviewCookbookCon
         mNavigationView.setRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                EditCookbookActivity.startActivity(PreviewCookbookActivity.this, mCookId);
             }
         });
     }
@@ -96,7 +98,13 @@ public class PreviewCookbookActivity extends BaseSkinActivity<PreviewCookbookCon
     @Override
     protected void initData() {
         long cookId = getIntent().getLongExtra(COOK_ID, -1);
-        getPresenter().getCookbookInfo(cookId);
+        if (cookId != -1) {
+            mCookId = cookId;
+            getPresenter().getCookbookInfo(cookId);
+        } else {
+            CustomToast.getInstance().show("数据异常");
+            finish();
+        }
     }
 
     /* MVP View */
