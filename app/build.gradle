@@ -68,6 +68,13 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // 指定 EventBus3.0索引的生成的包以及索引类名
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [eventBusIndex: 'com.ytempest.lovefood.MyEventBusIndex']
+            }
+        }
     }
     buildTypes {
         release {
@@ -121,4 +128,6 @@ dependencies {
 
     // EventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
+    // 索引加速
+    annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'
 }
