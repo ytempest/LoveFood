@@ -103,14 +103,4 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-
-    <!-- PreviewCookbookActivity -->
-    <style name="title_view_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingLeft">50dp</item>
-        <item name="android:paddingRight">50dp</item>
-        <item name="android:visibility">invisible</item>
-    </style>
-
 </resources>

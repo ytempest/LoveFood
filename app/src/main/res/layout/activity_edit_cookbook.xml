@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tool:context="com.ytempest.lovefood.activity.EditCookbookActivity">
+
+
+    <com.ytempest.framelibrary.view.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/app_color"
+        app:left_icon="@drawable/icon_left_arrow"
+        app:right_text="保存" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@color/common_bg">
+
+                <ImageView
+                    android:id="@+id/iv_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_add" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="添加成品图" />
+
+                </LinearLayout>
+            </FrameLayout>
+
+            <View style="@style/gray_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    style="@style/title_text_style"
+                    android:text="菜谱标题" />
+
+                <EditText
+                    style="@style/edit_text_style"
+                    android:singleLine="true"
+                    tool:text="卤鸡腿" />
+
+                <TextView
+                    style="@style/title_text_style"
+                    android:layout_marginTop="25dp"
+                    android:text="介绍" />
+
+                <EditText
+                    style="@style/edit_text_style"
+                    android:maxLines="9"
+                    tool:text="卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚" />
+
+                <com.ytempest.lovefood.widget.TitleView
+                    android:id="@+id/tv_title_main"
+                    style="@style/cookbook_title_view_style"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="30dp"
+                    app:title_text="主料"
+                    android:visibility="visible" />
+
+                <com.ytempest.lovefood.widget.AmountView
+                    android:id="@+id/av_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp" />
+
+
+                <com.ytempest.lovefood.widget.TitleView
+                    android:id="@+id/tv_title_acc"
+                    style="@style/cookbook_title_view_style"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="27dp"
+                    app:title_text="辅料" />
+
+                <com.ytempest.lovefood.widget.AmountView
+                    android:id="@+id/av_acc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp" />
+
+                <com.ytempest.lovefood.widget.TitleView
+                    android:id="@+id/tv_title_step"
+                    style="@style/cookbook_title_view_style"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="27dp"
+                    app:title_text="制作步骤" />
+
+                <com.ytempest.lovefood.widget.ProcedureView
+                    android:id="@+id/procedure_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -126,6 +126,7 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
         public void onClick(View v) {
             long cookId = (long) v.getTag();
             EditCookbookActivity.startActivity(MyCookbookActivity.this, cookId);
+            mDialog.dismiss();
         }
     };
 

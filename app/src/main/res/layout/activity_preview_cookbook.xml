@@ -71,7 +71,7 @@
 
             <com.ytempest.lovefood.widget.TitleView
                 android:id="@+id/tv_title_introduce"
-                style="@style/title_view_style"
+                style="@style/cookbook_title_view_style"
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="23dp"
                 app:title_text="介绍" />
@@ -89,7 +89,7 @@
 
             <com.ytempest.lovefood.widget.TitleView
                 android:id="@+id/tv_title_main"
-                style="@style/title_view_style"
+                style="@style/cookbook_title_view_style"
                 android:layout_marginBottom="6dp"
                 android:layout_marginTop="27dp"
                 app:title_text="主料" />
@@ -104,7 +104,7 @@
 
             <com.ytempest.lovefood.widget.TitleView
                 android:id="@+id/tv_title_acc"
-                style="@style/title_view_style"
+                style="@style/cookbook_title_view_style"
                 android:layout_marginBottom="6dp"
                 android:layout_marginTop="27dp"
                 app:title_text="辅料" />
@@ -118,7 +118,7 @@
 
             <com.ytempest.lovefood.widget.TitleView
                 android:id="@+id/tv_title_step"
-                style="@style/title_view_style"
+                style="@style/cookbook_title_view_style"
                 android:layout_marginBottom="6dp"
                 android:layout_marginTop="27dp"
                 app:title_text="制作步骤" />
