@@ -12,6 +12,7 @@
         android:id="@+id/tv_name"
         style="@style/amount_view_text_style"
         android:layout_weight="6"
+        android:hint="名称"
         android:textColor="#434343"
         tool:text="八角" />
 
@@ -19,9 +20,20 @@
         android:id="@+id/tv_amount"
         style="@style/amount_view_text_style"
         android:layout_weight="5"
+        android:hint="用量"
         android:textColor="#707070"
         tool:text="适量" />
 
-    <ImageView style="@style/right_arrow_view_style" />
+    <ImageView
+        android:id="@+id/iv_right_arrow"
+        style="@style/right_arrow_view_style"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_close"
+        style="@style/right_arrow_view_style"
+        android:src="@drawable/icon_close"
+        android:visibility="gone" />
+
 
 </LinearLayout>

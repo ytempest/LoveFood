@@ -42,28 +42,28 @@ public class AmountView extends LinearLayout {
                 ViewGroup.LayoutParams.MATCH_PARENT, DrawUtils.dpToPx(context, 0.6F));
     }
 
-    public void setMainData(List<CookbookInfo.MainListBean> data, boolean enable) {
+    public void setMainData(List<CookbookInfo.MainListBean> data, boolean editable) {
         if (data != null && data.size() > 0) {
             addLine();
             for (CookbookInfo.MainListBean bean : data) {
-                addDataText(bean.getMainName(), bean.getMainAmount(), enable);
+                addDataText(bean.getMainName(), bean.getMainAmount(), editable);
                 addLine();
             }
         }
     }
 
-    public void setAccData(List<CookbookInfo.AccListBean> data, boolean enable) {
+    public void setAccData(List<CookbookInfo.AccListBean> data, boolean editable) {
         if (data != null && data.size() > 0) {
             addLine();
             for (CookbookInfo.AccListBean bean : data) {
-                addDataText(bean.getAccName(), bean.getAccAmount(), enable);
+                addDataText(bean.getAccName(), bean.getAccAmount(), editable);
                 addLine();
             }
         }
     }
 
-    private void addDataText(String name, String amount, boolean enable) {
-        View view = getEditView(enable);
+    private void addDataText(String name, String amount, boolean editable) {
+        View view = getEditView(editable);
         ((EditText) view.findViewById(R.id.tv_name)).setText(name);
         ((EditText) view.findViewById(R.id.tv_amount)).setText(amount);
         addView(view);
@@ -79,18 +79,38 @@ public class AmountView extends LinearLayout {
 
     public void addNewAmountView() {
         addView(getEditView(true));
+        addLine();
     }
 
     public void removeAmountView() {
         removeViewAt(getChildCount() - 1);
     }
 
-    private View getEditView(boolean enable) {
+    private View getEditView(boolean editable) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.view_amount_view, this, false);
-        view.findViewById(R.id.tv_name).setEnabled(enable);
-        view.findViewById(R.id.tv_amount).setEnabled(enable);
+        view.findViewById(R.id.tv_name).setEnabled(editable);
+        view.findViewById(R.id.tv_amount).setEnabled(editable);
+        if (editable) {
+            View closeView = view.findViewById(R.id.iv_close);
+            closeView.setVisibility(VISIBLE);
+            closeView.setOnClickListener(CLOSE_LISTENER);
+
+        } else {
+            view.findViewById(R.id.iv_right_arrow).setVisibility(VISIBLE);
+        }
         return view;
     }
+
+    private final View.OnClickListener CLOSE_LISTENER = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ViewGroup view = (ViewGroup) v.getParent();
+            int index = indexOfChild(view);
+            // 移除分界线
+            removeViewAt(index + 1);
+            removeView(view);
+        }
+    };
 
 
 }
