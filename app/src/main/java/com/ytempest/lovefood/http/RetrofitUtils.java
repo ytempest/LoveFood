@@ -22,17 +22,16 @@ public class RetrofitUtils {
     private RetrofitUtils() {
     }
 
-    /**
-     * 将Bitmap封装成MultipartBody.Part类型
-     */
-    public static MultipartBody.Part createPartFromBitmap(String name, @NonNull Bitmap bitmap) {
-        int bytes = bitmap.getByteCount();
-        ByteBuffer buffer = ByteBuffer.allocate(bytes);
-        bitmap.copyPixelsToBuffer(buffer);
-        RequestBody bitmapBody = RequestBody.create(MediaType.parse("image/png"), buffer.array());
-        return MultipartBody.Part.createFormData(name, "head.png", bitmapBody);
-    }
-
+//    /**
+//     * 将Bitmap封装成MultipartBody.Part类型
+//     */
+//    public static MultipartBody.Part createPartFromBitmap(String name, @NonNull Bitmap bitmap) {
+//        int bytes = bitmap.getByteCount();
+//        ByteBuffer buffer = ByteBuffer.allocate(bytes);
+//        bitmap.copyPixelsToBuffer(buffer);
+//        RequestBody bitmapBody = RequestBody.create(MediaType.parse("image/png"), buffer.array());
+//        return MultipartBody.Part.createFormData(name, "head.png", bitmapBody);
+//    }
 
 
     /**
@@ -46,12 +45,15 @@ public class RetrofitUtils {
                 MediaType.parse("multipart/form-data"), value);
     }
 
+    public static String toFileKey(String key, String fileName) {
+        return key + "\"; filename=\"" + fileName;
+    }
+
     /**
-     * 将文件封装成MultipartBody.Part类型
+     * 将文件封装成Body
      */
-    public static MultipartBody.Part createPartFromFile(String name, @NonNull File file) {
-        RequestBody fileBody = RequestBody.create(MediaType.parse(guessMimeType(file.getAbsolutePath())), file);
-        return MultipartBody.Part.createFormData(name, file.getName(), fileBody);
+    public static RequestBody createBodyFromFile(@NonNull File file) {
+        return MultipartBody.create(MediaType.parse(guessMimeType(file.getAbsolutePath())), file);
     }
 
 

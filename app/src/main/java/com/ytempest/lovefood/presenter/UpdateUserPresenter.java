@@ -14,7 +14,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.Map;
 
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 /**
@@ -31,10 +30,10 @@ public class UpdateUserPresenter extends BasePresenter<UpdateUserContract.Update
     }
 
     @Override
-    public void updateUserInfo(MultipartBody.Part headPart, Map<String, RequestBody> partMap) {
+    public void updateUserInfo(Map<String, RequestBody> partMap) {
         getView().onRequestStart("正在修改...");
 
-        getModel().updateUserInfo(headPart, partMap)
+        getModel().updateUserInfo(partMap)
                 .subscribe(new BaseObserver<BaseResult<UserInfo>>() {
                     @Override
                     public void onNext(BaseResult<UserInfo> result) {

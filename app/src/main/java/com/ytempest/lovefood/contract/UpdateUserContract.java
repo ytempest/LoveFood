@@ -10,7 +10,6 @@ import com.ytempest.lovefood.http.data.UserInfo;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 /**
@@ -21,14 +20,14 @@ public interface UpdateUserContract extends IContract {
     interface Presenter extends IPresenter {
         UserInfo getUserInfo();
 
-        void updateUserInfo(MultipartBody.Part headPart, Map<String, RequestBody> partMap);
+        void updateUserInfo(Map<String, RequestBody> partMap);
     }
 
     interface UpdateUserView extends IView {
     }
 
     interface Model extends IModel {
-        Observable<BaseResult<UserInfo>> updateUserInfo(MultipartBody.Part headPart, Map<String, RequestBody> partMap);
+        Observable<BaseResult<UserInfo>> updateUserInfo(Map<String, RequestBody> partMap);
 
         void saveUserInfo(UserInfo data);
     }

@@ -59,8 +59,7 @@ public interface ApiService {
      */
     @Multipart
     @POST("user/updateInfo")
-    Observable<BaseResult<UserInfo>> updateUserInfo(@Part MultipartBody.Part headPart,
-                                                    @PartMap Map<String, RequestBody> partMap);
+    Observable<BaseResult<UserInfo>> updateUserInfo(@PartMap Map<String, RequestBody> partMap);
 
     /**
      * 修改用户密码

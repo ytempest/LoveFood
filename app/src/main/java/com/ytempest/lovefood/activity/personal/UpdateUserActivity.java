@@ -17,9 +17,9 @@ import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.activity.SelectImageActivity;
 import com.ytempest.lovefood.contract.UpdateUserContract;
-import com.ytempest.lovefood.http.data.UserInfo;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.RetrofitUtils;
+import com.ytempest.lovefood.http.data.UserInfo;
 import com.ytempest.lovefood.presenter.UpdateUserPresenter;
 import com.ytempest.lovefood.util.DateUtils;
 import com.ytempest.lovefood.util.NumberUtils;
@@ -200,16 +200,16 @@ public class UpdateUserActivity extends SelectImageActivity<UpdateUserContract.P
             return;
         }
 
-        MultipartBody.Part headPart = null;
-        if (mHeadFile != null) {
-            headPart = RetrofitUtils.createPartFromFile("userHead", mHeadFile);
-        }
-
         Map<String, RequestBody> partMap;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
             partMap = new ArrayMap<>(6);
         } else {
             partMap = new HashMap<>(6);
+        }
+
+        if (mHeadFile != null) {
+            partMap.put(RetrofitUtils.toFileKey("userHead", mHeadFile.getName()),
+                    RetrofitUtils.createBodyFromFile(mHeadFile));
         }
         partMap.put("userId", RetrofitUtils.createBodyFromString(String.valueOf(mUserInfo.getUserId())));
         partMap.put("userSex", RetrofitUtils.createBodyFromString(sex));
@@ -219,7 +219,7 @@ public class UpdateUserActivity extends SelectImageActivity<UpdateUserContract.P
         partMap.put("userEmail", RetrofitUtils.createBodyFromString(email));
         partMap.put("userQQ", RetrofitUtils.createBodyFromString(qq));
 
-        getPresenter().updateUserInfo(headPart, partMap);
+        getPresenter().updateUserInfo(partMap);
     }
 
     private AlertDialog createSexDialog() {

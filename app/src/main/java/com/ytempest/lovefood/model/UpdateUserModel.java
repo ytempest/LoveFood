@@ -12,7 +12,6 @@ import java.util.Map;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 /**
@@ -22,8 +21,8 @@ import okhttp3.RequestBody;
 public class UpdateUserModel extends BaseModel implements UpdateUserContract.Model {
 
     @Override
-    public Observable<BaseResult<UserInfo>> updateUserInfo(MultipartBody.Part headPart, Map<String, RequestBody> partMap) {
-        return RetrofitClient.client().getService().updateUserInfo(headPart, partMap)
+    public Observable<BaseResult<UserInfo>> updateUserInfo(Map<String, RequestBody> partMap) {
+        return RetrofitClient.client().getService().updateUserInfo(partMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
