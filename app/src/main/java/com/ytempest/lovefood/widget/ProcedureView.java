@@ -37,22 +37,20 @@ public class ProcedureView extends LinearLayout implements View.OnClickListener 
         setOrientation(VERTICAL);
     }
 
-    public void setData(List<CookbookInfo.ProceListBean> data, boolean enable) {
+    public void setData(List<CookbookInfo.ProceListBean> data, boolean editable) {
         if (data != null && data.size() > 0) {
             for (CookbookInfo.ProceListBean bean : data) {
-                addNextStepView(bean, enable);
+                addNextStepView(bean, editable);
             }
         }
     }
 
-    public void addNextStepView(CookbookInfo.ProceListBean data, boolean enable) {
-        View view = getView(enable);
+    public void addNextStepView(CookbookInfo.ProceListBean data, boolean editable) {
+        View view = getView(editable);
         addView(view);
-        TextView noView = view.findViewById(R.id.tv_no);
         EditText descView = view.findViewById(R.id.et_desc);
         ImageView pictureView = view.findViewById(R.id.iv_picture);
 
-        noView.setText(String.format("第 %s 步：", data.getProceNo()));
         descView.setText(data.getProceDesc());
         String url = RetrofitClient.client().getUrl() + data.getProceImageUrl();
         ImageLoaderManager.getInstance().showImage(pictureView, url, null);
@@ -63,17 +61,21 @@ public class ProcedureView extends LinearLayout implements View.OnClickListener 
     }
 
     public void removeNextStepView() {
-        removeViewAt(getChildCount() - 1);
+        if (getChildCount() > 0) {
+            removeViewAt(getChildCount() - 1);
+        }
     }
 
 
-    private View getView(boolean enable) {
+    private View getView(boolean editable) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.view_procedure_view, this, false);
+        TextView noView = view.findViewById(R.id.tv_no);
+        noView.setText(String.format("第 %s 步：", getChildCount() + 1));
         EditText descView = view.findViewById(R.id.et_desc);
-        descView.setEnabled(enable);
+        descView.setEnabled(editable);
         ImageView pictureView = view.findViewById(R.id.iv_picture);
-        pictureView.setEnabled(enable);
-        if (enable) {
+        pictureView.setEnabled(editable);
+        if (editable) {
             pictureView.setOnClickListener(this);
         }
         return view;

@@ -28,11 +28,11 @@
             android:name=".activity.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
 
         <activity android:name=".activity.MainActivity" />
@@ -44,13 +44,7 @@
         <activity android:name=".activity.personal.UpdatePasswordActivity" />
         <activity android:name=".activity.personal.MyCookbookActivity" />
         <activity android:name=".activity.PreviewCookbookActivity" />
-        <activity android:name=".activity.EditCookbookActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".activity.EditCookbookActivity" />
 
         <meta-data
             android:name="Mob-AppKey"

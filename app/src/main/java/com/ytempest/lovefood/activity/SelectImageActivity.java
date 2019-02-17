@@ -106,16 +106,24 @@ public abstract class SelectImageActivity<Presenter extends IPresenter> extends 
         intent.putExtra("crop", "true");
 
         // 设置裁剪的宽高比例
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
+        intent.putExtra("aspectX", getClipScaleX());
+        intent.putExtra("aspectY", getClipScaleY());
 
         // 设置剪裁后的宽度，单位：像素
-        intent.putExtra("outputX", 200);
-        intent.putExtra("outputY", 200);
+        intent.putExtra("outputX", 800);
+        intent.putExtra("outputY", getClipScaleX() / getClipScaleY() * 800);
 
         // 设置是否返回裁剪后相片的bitmap对象
         intent.putExtra("return-data", true);
         startActivityForResult(intent, CODE_REQUEST_CLIP_PHOTO);
+    }
+
+    protected float getClipScaleX() {
+        return 1.0F;
+    }
+
+    protected float getClipScaleY() {
+        return 1.0F;
     }
 
     protected void onSelectPhotoSuccess(Bitmap photo, File headFile) {

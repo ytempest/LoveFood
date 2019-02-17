@@ -32,12 +32,6 @@
                 android:layout_height="180dp"
                 android:background="@color/common_bg">
 
-                <ImageView
-                    android:id="@+id/iv_product"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop" />
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -55,8 +49,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:text="添加成品图" />
-
                 </LinearLayout>
+                
+                <ImageView
+                    android:id="@+id/iv_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
             </FrameLayout>
 
             <View style="@style/gray_line" />
@@ -72,7 +72,9 @@
                     android:text="菜谱标题" />
 
                 <EditText
+                    android:id="@+id/et_name"
                     style="@style/edit_text_style"
+                    android:hint="请输入标题"
                     android:singleLine="true"
                     tool:text="卤鸡腿" />
 
@@ -82,7 +84,9 @@
                     android:text="介绍" />
 
                 <EditText
+                    android:id="@+id/et_desc"
                     style="@style/edit_text_style"
+                    android:hint="添加该菜谱的介绍"
                     android:maxLines="9"
                     tool:text="卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚" />
 
@@ -90,45 +94,72 @@
                     android:id="@+id/tv_title_main"
                     style="@style/cookbook_title_view_style"
                     android:layout_marginBottom="6dp"
-                    android:layout_marginTop="30dp"
-                    app:title_text="主料"
-                    android:visibility="visible" />
+                    android:layout_marginTop="40dp"
+                    android:visibility="visible"
+                    app:title_text="主料" />
 
                 <com.ytempest.lovefood.widget.AmountView
                     android:id="@+id/av_main"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp" />
+                    android:layout_height="wrap_content" />
 
+                <Button
+                    android:id="@+id/bt_add_main"
+                    style="@style/round_frame_button_style"
+                    android:text="增加主料" />
 
                 <com.ytempest.lovefood.widget.TitleView
                     android:id="@+id/tv_title_acc"
                     style="@style/cookbook_title_view_style"
                     android:layout_marginBottom="6dp"
-                    android:layout_marginTop="27dp"
+                    android:layout_marginTop="40dp"
+                    android:visibility="visible"
                     app:title_text="辅料" />
 
                 <com.ytempest.lovefood.widget.AmountView
                     android:id="@+id/av_acc"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp" />
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/bt_add_acc"
+                    style="@style/round_frame_button_style"
+                    android:text="增加辅料" />
+
 
                 <com.ytempest.lovefood.widget.TitleView
                     android:id="@+id/tv_title_step"
                     style="@style/cookbook_title_view_style"
                     android:layout_marginBottom="6dp"
-                    android:layout_marginTop="27dp"
+                    android:layout_marginTop="40dp"
+                    android:visibility="visible"
                     app:title_text="制作步骤" />
 
                 <com.ytempest.lovefood.widget.ProcedureView
                     android:id="@+id/procedure_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp" />
+                    android:layout_marginBottom="-10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/bt_add_procedure"
+                        style="@style/round_frame_button_style"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="添加一步" />
+
+                    <Button
+                        android:id="@+id/bt_delete_procedure"
+                        style="@style/round_frame_button_style"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="删除一步" />
+
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

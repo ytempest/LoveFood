@@ -16,10 +16,12 @@ import io.reactivex.Observable;
 public interface EditCookbookContract extends IContract {
     interface Presenter extends IPresenter {
 
+        void getCookInfo(long cookId);
     }
 
     interface EditCookbookView extends IView {
 
+        void onGetCookbookInfo(CookbookInfo data);
     }
 
     interface Model extends IModel {
