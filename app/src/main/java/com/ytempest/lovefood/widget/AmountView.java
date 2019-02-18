@@ -14,6 +14,7 @@ import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.http.data.CookbookInfo;
 import com.ytempest.lovefood.util.DrawUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -112,5 +113,40 @@ public class AmountView extends LinearLayout {
         }
     };
 
+    public boolean isEmpty() {
+        // 没有数据View时还有一个分界线View
+        return getChildCount() == 1;
+    }
 
+
+    public List<AmountData> getAmountData() {
+        int count = getChildCount();
+        List<AmountData> mainList = new ArrayList<>(count / 2);
+        for (int i = 0; i < count; i++) {
+            // 跳过分界线View
+            if (i % 2 == 0) {
+                AmountData bean = new AmountData();
+                View container = getChildAt(i);
+                bean.name = getName(container);
+                bean.amount = getAmount(container);
+                mainList.add(bean);
+            }
+        }
+        return mainList;
+    }
+
+    public static class AmountData {
+        public String name;
+        public String amount;
+    }
+
+    private String getName(View view) {
+        EditText editText = view.findViewById(R.id.tv_name);
+        return editText.getText().toString().trim();
+    }
+
+    private String getAmount(View view) {
+        EditText editText = view.findViewById(R.id.tv_amount);
+        return editText.getText().toString().trim();
+    }
 }

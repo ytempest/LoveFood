@@ -81,6 +81,11 @@ public class ProcedureView extends LinearLayout implements View.OnClickListener 
         return view;
     }
 
+    public void getProcedureData() {
+
+    }
+
+
     @Override
     public void onClick(View v) {
         if (v instanceof ProcedureImageView) {

@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
-import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.contract.EditCookbookContract;
@@ -21,6 +20,7 @@ import com.ytempest.lovefood.widget.ProcedureImageView;
 import com.ytempest.lovefood.widget.ProcedureView;
 
 import java.io.File;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,7 +31,8 @@ import butterknife.OnClick;
  */
 @InjectPresenter(EditCookbookPresenter.class)
 public class EditCookbookActivity extends SelectImageActivity<EditCookbookContract.Presenter>
-        implements EditCookbookContract.EditCookbookView, EditCookbookContract, ProcedureView.OnPictureClickListener {
+        implements EditCookbookContract.EditCookbookView, EditCookbookContract,
+        ProcedureView.OnPictureClickListener {
 
     private static final String COOK_ID = "cook_id";
 
@@ -70,6 +71,22 @@ public class EditCookbookActivity extends SelectImageActivity<EditCookbookContra
     @Override
     protected void initTitle() {
         mNavigationView.enableLeftFinish(this);
+        mNavigationView.setRightClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveCookbookInfo();
+            }
+        });
+    }
+
+    private void saveCookbookInfo() {
+        String name = mNameEt.getText().toString().trim();
+        String desc = mDescEt.getText().toString().trim();
+        List<AmountView.AmountData> manData = mMainAmountView.getAmountData();
+        List<AmountView.AmountData> accData = mAccAmountView.getAmountData();
+        mProcedureView.getProcedureData();
+
+
     }
 
     @Override
