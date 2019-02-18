@@ -31,7 +31,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 @InjectPresenter(UpdateUserPresenter.class)
@@ -150,7 +149,7 @@ public class UpdateUserActivity extends SelectImageActivity<UpdateUserContract.P
 
     @OnClick(R.id.iv_head)
     protected void onHeadSelectClick(View view) {
-        selectImage();
+        selectImage(mHeadIv);
     }
 
     private DatePickerDialog createBirthDialog(String[] birth) {
@@ -243,10 +242,10 @@ public class UpdateUserActivity extends SelectImageActivity<UpdateUserContract.P
 
 
     @Override
-    protected void onSelectPhotoSuccess(Bitmap photo, File headFile) {
-        super.onSelectPhotoSuccess(photo, headFile);
+    protected void onSelectPhotoSuccess(View targetView, Bitmap photo, File imageFile) {
+        super.onSelectPhotoSuccess(targetView, photo, imageFile);
         // 设置用户头像
-        mHeadFile = headFile;
+        mHeadFile = imageFile;
         mHeadIv.setImageBitmap(photo);
     }
 

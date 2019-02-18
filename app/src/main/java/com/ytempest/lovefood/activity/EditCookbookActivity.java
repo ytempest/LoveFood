@@ -2,6 +2,7 @@ package com.ytempest.lovefood.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -9,19 +10,17 @@ import android.widget.ImageView;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.view.CustomToast;
-import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.contract.EditCookbookContract;
 import com.ytempest.lovefood.http.RetrofitClient;
-import com.ytempest.lovefood.http.RetrofitUtils;
 import com.ytempest.lovefood.http.data.CookbookInfo;
 import com.ytempest.lovefood.presenter.EditCookbookPresenter;
 import com.ytempest.lovefood.widget.AmountView;
+import com.ytempest.lovefood.widget.ProcedureImageView;
 import com.ytempest.lovefood.widget.ProcedureView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -32,7 +31,7 @@ import butterknife.OnClick;
  */
 @InjectPresenter(EditCookbookPresenter.class)
 public class EditCookbookActivity extends SelectImageActivity<EditCookbookContract.Presenter>
-        implements EditCookbookContract.EditCookbookView, EditCookbookContract {
+        implements EditCookbookContract.EditCookbookView, EditCookbookContract, ProcedureView.OnPictureClickListener {
 
     private static final String COOK_ID = "cook_id";
 
@@ -75,7 +74,7 @@ public class EditCookbookActivity extends SelectImageActivity<EditCookbookContra
 
     @Override
     protected void initView() {
-
+        mProcedureView.setListener(this);
     }
 
     @Override
@@ -92,7 +91,7 @@ public class EditCookbookActivity extends SelectImageActivity<EditCookbookContra
 
     @OnClick(R.id.iv_product)
     protected void onAddProductPictureClick(View view) {
-        CustomToast.getInstance().show("添加成品图");
+        selectImage(mProductIv);
     }
 
     @OnClick(R.id.bt_add_main)
@@ -113,6 +112,23 @@ public class EditCookbookActivity extends SelectImageActivity<EditCookbookContra
     @OnClick(R.id.bt_delete_procedure)
     protected void onDeleteProcedureClick(View view) {
         mProcedureView.removeNextStepView();
+    }
+
+    @Override
+    public void onImageClick(View view, int no) {
+        selectImage(view);
+    }
+
+    @Override
+    protected void onSelectPhotoSuccess(View targetView, Bitmap photo, File imageFile) {
+        super.onSelectPhotoSuccess(targetView, photo, imageFile);
+        if (targetView == mProductIv) {
+            mProductIv.setTag(imageFile);
+
+        } else if (targetView instanceof ProcedureImageView) {
+            ProcedureImageView procedureImageView = (ProcedureImageView) targetView;
+            procedureImageView.setImageFile(imageFile);
+        }
     }
 
     /* MVP View */

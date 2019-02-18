@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.view.View;
 
 import com.ytempest.baselibrary.base.mvp.IPresenter;
 import com.ytempest.baselibrary.util.CustomThreadExecutor;
@@ -14,11 +15,11 @@ import com.ytempest.baselibrary.util.LogUtils;
 import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.lovefood.util.CommonUtils;
-import com.ytempest.lovefood.util.Config;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
+import java.util.UUID;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -33,8 +34,10 @@ public abstract class SelectImageActivity<Presenter extends IPresenter> extends 
 
     private final int CODE_REQUEST_ALBUM = 100;
     private final int CODE_REQUEST_CLIP_PHOTO = 200;
+    private View mTargetView;
 
-    protected void selectImage() {
+    protected void selectImage(View targetView) {
+        mTargetView = targetView;
         requestWrite();
     }
 
@@ -62,7 +65,7 @@ public abstract class SelectImageActivity<Presenter extends IPresenter> extends 
                             CustomThreadExecutor.getInstance().execute(new Runnable() {
                                 @Override
                                 public void run() {
-                                    File headCache = new File(getCacheDir(), Config.HEAD_IMAGE_CACHE);
+                                    File headCache = new File(getCacheDir(), UUID.randomUUID() + ".png");
                                     FileOutputStream out = null;
                                     try {
                                         out = new FileOutputStream(headCache);
@@ -72,7 +75,7 @@ public abstract class SelectImageActivity<Presenter extends IPresenter> extends 
                                                 new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        onSelectPhotoSuccess(photo, headCache);
+                                                        onSelectPhotoSuccess(mTargetView, photo, headCache);
                                                     }
                                                 }
                                         );
@@ -126,7 +129,7 @@ public abstract class SelectImageActivity<Presenter extends IPresenter> extends 
         return 1.0F;
     }
 
-    protected void onSelectPhotoSuccess(Bitmap photo, File headFile) {
+    protected void onSelectPhotoSuccess(View targetView, Bitmap photo, File imageFile) {
 
     }
 

@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -49,7 +48,7 @@ public class ProcedureView extends LinearLayout implements View.OnClickListener 
         View view = getView(editable);
         addView(view);
         EditText descView = view.findViewById(R.id.et_desc);
-        ImageView pictureView = view.findViewById(R.id.iv_picture);
+        ProcedureImageView pictureView = view.findViewById(R.id.iv_picture);
 
         descView.setText(data.getProceDesc());
         String url = RetrofitClient.client().getUrl() + data.getProceImageUrl();
@@ -73,9 +72,10 @@ public class ProcedureView extends LinearLayout implements View.OnClickListener 
         noView.setText(String.format("第 %s 步：", getChildCount() + 1));
         EditText descView = view.findViewById(R.id.et_desc);
         descView.setEnabled(editable);
-        ImageView pictureView = view.findViewById(R.id.iv_picture);
+        ProcedureImageView pictureView = view.findViewById(R.id.iv_picture);
         pictureView.setEnabled(editable);
         if (editable) {
+            pictureView.setNo(getChildCount() + 1);
             pictureView.setOnClickListener(this);
         }
         return view;
@@ -83,11 +83,11 @@ public class ProcedureView extends LinearLayout implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        if (v instanceof ImageView) {
+        if (v instanceof ProcedureImageView) {
             if (listener != null) {
                 ViewGroup view = (ViewGroup) v.getParent();
                 int no = indexOfChild(view);
-                listener.onClick(v, no + 1);
+                listener.onImageClick(v, no + 1);
             }
         }
     }
@@ -101,7 +101,7 @@ public class ProcedureView extends LinearLayout implements View.OnClickListener 
     }
 
     public interface OnPictureClickListener {
-        void onClick(View view, int no);
+        void onImageClick(View view, int no);
     }
 
 
