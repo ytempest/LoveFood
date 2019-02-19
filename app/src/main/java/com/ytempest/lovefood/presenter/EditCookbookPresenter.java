@@ -5,10 +5,15 @@ import com.ytempest.baselibrary.base.mvp.inject.InjectModel;
 import com.ytempest.lovefood.contract.EditCookbookContract;
 import com.ytempest.lovefood.http.data.BaseResult;
 import com.ytempest.lovefood.http.data.CookbookInfo;
+import com.ytempest.lovefood.http.data.UserInfo;
 import com.ytempest.lovefood.http.observable.BaseObserver;
 import com.ytempest.lovefood.model.EditCookbookModel;
-import com.ytempest.lovefood.model.PreviewCookbookModel;
 import com.ytempest.lovefood.util.ResultUtils;
+import com.ytempest.lovefood.util.UserHelper;
+
+import java.util.Map;
+
+import okhttp3.RequestBody;
 
 /**
  * @author ytempest
@@ -37,5 +42,29 @@ public class EditCookbookPresenter extends BasePresenter<EditCookbookContract.Ed
                         }
                     }
                 });
+    }
+
+    @Override
+    public void saveCookbookInfo(Map<String, RequestBody> map) {
+        getView().onRequestStart("正在保存...");
+        getModel().saveCookbookInfo(map).subscribe(new BaseObserver<BaseResult<CookbookInfo>>() {
+            @Override
+            public void onNext(BaseResult<CookbookInfo> result) {
+                super.onNext(result);
+                int code = result.getCode();
+                if (code == ResultUtils.SUCCESS) {
+                    getView().onSaveCookbookInfoSuccess(result.getData());
+                    getView().onRequestSuccess(result.getMsg());
+
+                } else if (code == ResultUtils.ERROR) {
+                    getView().onRequestFail(result.getMsg());
+                }
+            }
+        });
+    }
+
+    @Override
+    public UserInfo getUserInfo() {
+        return UserHelper.getInstance().getUserInfo();
     }
 }

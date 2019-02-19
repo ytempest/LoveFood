@@ -15,6 +15,8 @@ import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.CookbookInfo;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -69,22 +71,40 @@ public class ProcedureView extends LinearLayout implements View.OnClickListener 
     private View getView(boolean editable) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.view_procedure_view, this, false);
         TextView noView = view.findViewById(R.id.tv_no);
-        noView.setText(String.format("第 %s 步：", getChildCount() + 1));
+        int no = getChildCount() + 1;
+        noView.setText(String.format("第 %s 步：", no));
         EditText descView = view.findViewById(R.id.et_desc);
         descView.setEnabled(editable);
         ProcedureImageView pictureView = view.findViewById(R.id.iv_picture);
+        pictureView.setNo(no);
         pictureView.setEnabled(editable);
         if (editable) {
-            pictureView.setNo(getChildCount() + 1);
             pictureView.setOnClickListener(this);
         }
         return view;
     }
 
-    public void getProcedureData() {
-
+    public List<ProcedureData> getProcedureData() {
+        int count = getChildCount();
+        List<ProcedureData> list = new ArrayList<>(count);
+        for (int i = 0; i < count; i++) {
+            ProcedureData data = new ProcedureData();
+            ViewGroup container = (ViewGroup) getChildAt(i);
+            TextView descView = (TextView) container.getChildAt(1);
+            data.desc = descView.getText().toString().trim();
+            ProcedureImageView imageView = (ProcedureImageView) container.getChildAt(2);
+            data.no = imageView.getNo();
+            data.imageFile = imageView.getImageFile();
+            list.add(data);
+        }
+        return list;
     }
 
+    public static class ProcedureData {
+        public int no;
+        public String desc;
+        public File imageFile;
+    }
 
     @Override
     public void onClick(View v) {

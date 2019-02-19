@@ -13,17 +13,23 @@ import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.contract.EditCookbookContract;
 import com.ytempest.lovefood.http.RetrofitClient;
+import com.ytempest.lovefood.http.RetrofitUtils;
 import com.ytempest.lovefood.http.data.CookbookInfo;
 import com.ytempest.lovefood.presenter.EditCookbookPresenter;
 import com.ytempest.lovefood.widget.AmountView;
 import com.ytempest.lovefood.widget.ProcedureImageView;
 import com.ytempest.lovefood.widget.ProcedureView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.RequestBody;
 
 /**
  * @author ytempest
@@ -35,6 +41,7 @@ public class EditCookbookActivity extends SelectImageActivity<EditCookbookContra
         ProcedureView.OnPictureClickListener {
 
     private static final String COOK_ID = "cook_id";
+    private long mCookId;
 
     public static void startActivity(Context context, long cookId) {
         Intent intent = new Intent(context, EditCookbookActivity.class);
@@ -49,7 +56,7 @@ public class EditCookbookActivity extends SelectImageActivity<EditCookbookContra
     protected ImageView mProductIv;
 
     @BindView(R.id.et_name)
-    protected EditText mNameEt;
+    protected EditText mTitleEt;
 
     @BindView(R.id.et_desc)
     protected EditText mDescEt;
@@ -80,13 +87,46 @@ public class EditCookbookActivity extends SelectImageActivity<EditCookbookContra
     }
 
     private void saveCookbookInfo() {
-        String name = mNameEt.getText().toString().trim();
-        String desc = mDescEt.getText().toString().trim();
-        List<AmountView.AmountData> manData = mMainAmountView.getAmountData();
+        String cookGroup = "小吃";
+        String cookType = "";
+        File cookImage = (File) mProductIv.getTag();
+        long cookUserId = getPresenter().getUserInfo().getUserId();
+        String cookTitle = mTitleEt.getText().toString().trim();
+        String cookDesc = mDescEt.getText().toString().trim();
+        long cookPublishTime = System.currentTimeMillis();
+        List<AmountView.AmountData> mainData = mMainAmountView.getAmountData();
         List<AmountView.AmountData> accData = mAccAmountView.getAmountData();
-        mProcedureView.getProcedureData();
+        List<ProcedureView.ProcedureData> procedureData = mProcedureView.getProcedureData();
 
-
+        Map<String, RequestBody> map = new HashMap<>(22);
+        map.put("cookId", RetrofitUtils.createBodyFromString(String.valueOf(mCookId)));
+        map.put("cookGroup", RetrofitUtils.createBodyFromString(cookGroup));
+        map.put("cookType", RetrofitUtils.createBodyFromString(cookType));
+        map.put("cookImage", RetrofitUtils.createBodyFromFile(cookImage));
+        map.put("cookUserId", RetrofitUtils.createBodyFromString(String.valueOf(cookUserId)));
+        map.put("cookTitle", RetrofitUtils.createBodyFromString(cookTitle));
+        map.put("cookDesc", RetrofitUtils.createBodyFromString(cookDesc));
+        map.put("cookPublishTime", RetrofitUtils.createBodyFromString(String.valueOf(cookPublishTime)));
+        for (int i = 0; i < mainData.size(); i++) {
+            AmountView.AmountData data = mainData.get(i);
+            int no = i + 1;
+            map.put("mainName" + no, RetrofitUtils.createBodyFromString(data.name));
+            map.put("mainAmount" + no, RetrofitUtils.createBodyFromString(data.amount));
+        }
+        for (int i = 0; i < accData.size(); i++) {
+            AmountView.AmountData data = accData.get(i);
+            int no = i + 1;
+            map.put("accName" + no, RetrofitUtils.createBodyFromString(data.name));
+            map.put("accAmount" + no, RetrofitUtils.createBodyFromString(data.amount));
+        }
+        for (int i = 0; i < procedureData.size(); i++) {
+            ProcedureView.ProcedureData data = procedureData.get(i);
+            int no = data.no;
+            map.put("proceNo" + no, RetrofitUtils.createBodyFromString(String.valueOf(no)));
+            map.put("proceDesc" + no, RetrofitUtils.createBodyFromString(data.desc));
+            map.put("proceImage" + no, RetrofitUtils.createBodyFromFile(data.imageFile));
+        }
+        getPresenter().saveCookbookInfo(map);
     }
 
     @Override
@@ -101,7 +141,15 @@ public class EditCookbookActivity extends SelectImageActivity<EditCookbookContra
             finish();
         }
 
+        mCookId = cookId;
+        EventBus.getDefault().register(this);
         getPresenter().getCookInfo(cookId);
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 
     /* Click */
@@ -154,10 +202,21 @@ public class EditCookbookActivity extends SelectImageActivity<EditCookbookContra
     public void onGetCookbookInfo(CookbookInfo data) {
         String productUrl = RetrofitClient.client().getUrl() + data.getCookImageUrl();
         ImageLoaderManager.getInstance().showImage(mProductIv, productUrl, null);
-        mNameEt.setText(data.getCookTitle());
+        mTitleEt.setText(data.getCookTitle());
         mDescEt.setText(data.getCookDesc());
         mMainAmountView.setMainData(data.getMainList(), true);
         mAccAmountView.setAccData(data.getAccList(), true);
         mProcedureView.setData(data.getProceList(), true);
+    }
+
+    @Override
+    public void onSaveCookbookInfoSuccess(CookbookInfo data) {
+        EventBus.getDefault().post(data);
+    }
+
+    @Override
+    public void onRequestSuccess(String msg) {
+        super.onRequestSuccess(msg);
+        finish();
     }
 }

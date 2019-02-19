@@ -35,4 +35,12 @@ public class ProcedureImageView extends ImageView {
     public void setImageFile(File file) {
         this.mImageFile = file;
     }
+
+    public int getNo() {
+        return mNo;
+    }
+
+    public File getImageFile() {
+        return mImageFile;
+    }
 }

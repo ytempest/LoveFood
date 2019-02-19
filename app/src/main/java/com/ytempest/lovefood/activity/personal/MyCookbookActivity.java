@@ -23,10 +23,14 @@ import com.ytempest.lovefood.common.adapter.DefaultRefreshViewCreator;
 import com.ytempest.lovefood.contract.MyCookbookContract;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.BaseCookbook;
+import com.ytempest.lovefood.http.data.CookbookInfo;
 import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.presenter.MyCookbookPresenter;
 import com.ytempest.lovefood.util.Config;
 import com.ytempest.lovefood.util.DateUtils;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +119,7 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
     public boolean onItemLongClick(View view, int position) {
         AlertDialog dialog = getDialog();
         View edit = dialog.getView(R.id.tv_edit_cookbook);
-        edit.setTag(mDataList.get(position - 1).getCookId());
+        edit.setTag(mDataList.get(position - 1));
         edit.setOnClickListener(EDIT_COOKBOOK_LISTENER);
         dialog.show();
         return true;
@@ -124,8 +128,8 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
     private final View.OnClickListener EDIT_COOKBOOK_LISTENER = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            long cookId = (long) v.getTag();
-            EditCookbookActivity.startActivity(MyCookbookActivity.this, cookId);
+            BaseCookbook cookbook = (BaseCookbook) v.getTag();
+            EditCookbookActivity.startActivity(MyCookbookActivity.this, cookbook.getCookId());
             mDialog.dismiss();
         }
     };
@@ -142,6 +146,22 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
                     .create();
         }
         return mDialog;
+    }
+
+    /**
+     * 当编辑过菜谱后更新列表
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEditCookbookInfoSuccess(CookbookInfo newCookbook) {
+        View edit = mDialog.getView(R.id.tv_edit_cookbook);
+        BaseCookbook cookbook = (BaseCookbook) edit.getTag();
+        cookbook.setCookTitle(newCookbook.getCookTitle());
+        cookbook.setCookDesc(newCookbook.getCookDesc());
+        cookbook.setCookGroup(newCookbook.getCookGroup());
+        cookbook.setCookType(newCookbook.getCookType());
+        cookbook.setCookImageUrl(newCookbook.getCookImageUrl());
+        cookbook.setCookPublishTime(newCookbook.getCookPublishTime());
+        mAdapter.notifyDataSetChanged();
     }
 
 

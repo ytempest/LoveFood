@@ -90,5 +90,10 @@ public interface ApiService {
     @GET("cook/info")
     Observable<BaseResult<CookbookInfo>> getCookbookInfo(@Query("cookId") Long cookId);
 
-
+    /**
+     * 修改菜谱
+     */
+    @Multipart
+    @POST("cook/updateCook")
+    Observable<BaseResult<CookbookInfo>> updateCookInfo(@PartMap Map<String, RequestBody> partMap);
 }

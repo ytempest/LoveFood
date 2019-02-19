@@ -21,6 +21,9 @@ import com.ytempest.lovefood.widget.AmountView;
 import com.ytempest.lovefood.widget.ProcedureView;
 import com.ytempest.lovefood.widget.TitleView;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.BindView;
 import butterknife.BindViews;
 
@@ -109,6 +112,7 @@ public class PreviewCookbookActivity extends BaseSkinActivity<PreviewCookbookCon
 
     /* MVP View */
 
+    @Subscribe(threadMode = ThreadMode.MAIN, priority = 1)
     @Override
     public void onGetCookbookInfo(CookbookInfo data) {
         mNavigationView.setTitleText(data.getCookTitle());
