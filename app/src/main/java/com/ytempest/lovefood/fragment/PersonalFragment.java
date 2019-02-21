@@ -50,7 +50,7 @@ public class PersonalFragment extends BaseFragment<PersonalContract.Presenter> i
     @Override
     protected void initView() {
         userInfo = getPresenter().getUserInfo();
-        onUserInfoUpdate(userInfo);
+//        onUserInfoUpdate(userInfo);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
