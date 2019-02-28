@@ -47,9 +47,7 @@
             <com.ytempest.framelibrary.view.CircleImageView
                 android:id="@+id/iv_user_head"
                 android:layout_width="60dp"
-                android:layout_height="60dp"
-                app:border_color="@android:color/transparent"
-                app:border_width="0dp" />
+                android:layout_height="60dp" />
 
             <TextView
                 android:id="@+id/tv_user_account"
