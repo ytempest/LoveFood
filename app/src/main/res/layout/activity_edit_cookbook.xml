@@ -50,8 +50,8 @@
                         android:layout_marginTop="6dp"
                         android:text="添加成品图" />
                 </LinearLayout>
-                
-                <ImageView
+
+                <com.ytempest.lovefood.widget.WrapImageView
                     android:id="@+id/iv_product"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

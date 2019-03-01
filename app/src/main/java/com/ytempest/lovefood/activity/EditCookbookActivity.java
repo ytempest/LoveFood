@@ -19,6 +19,7 @@ import com.ytempest.lovefood.presenter.EditCookbookPresenter;
 import com.ytempest.lovefood.widget.AmountView;
 import com.ytempest.lovefood.widget.ProcedureImageView;
 import com.ytempest.lovefood.widget.ProcedureView;
+import com.ytempest.lovefood.widget.WrapImageView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -53,7 +54,7 @@ public class EditCookbookActivity extends SelectImageActivity<EditCookbookContra
     protected NavigationView mNavigationView;
 
     @BindView(R.id.iv_product)
-    protected ImageView mProductIv;
+    protected WrapImageView mProductIv;
 
     @BindView(R.id.et_name)
     protected EditText mTitleEt;
@@ -87,9 +88,11 @@ public class EditCookbookActivity extends SelectImageActivity<EditCookbookContra
     }
 
     private void saveCookbookInfo() {
+        // TODO: 2019/03/02 等待处理保存菜谱的逻辑
+        // TODO: 2019/03/02 存在的问题：当不改变图片，只修改其他信息该如何处理
         String cookGroup = "小吃";
         String cookType = "";
-        File cookImage = (File) mProductIv.getTag();
+        File cookImage = (File) mProductIv.getHolder();
         long cookUserId = getPresenter().getUserInfo().getUserId();
         String cookTitle = mTitleEt.getText().toString().trim();
         String cookDesc = mDescEt.getText().toString().trim();
@@ -142,15 +145,9 @@ public class EditCookbookActivity extends SelectImageActivity<EditCookbookContra
         }
 
         mCookId = cookId;
-        EventBus.getDefault().register(this);
         getPresenter().getCookInfo(cookId);
     }
 
-    @Override
-    protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
-    }
 
     /* Click */
 
@@ -188,7 +185,7 @@ public class EditCookbookActivity extends SelectImageActivity<EditCookbookContra
     protected void onSelectPhotoSuccess(View targetView, Bitmap photo, File imageFile) {
         super.onSelectPhotoSuccess(targetView, photo, imageFile);
         if (targetView == mProductIv) {
-            mProductIv.setTag(imageFile);
+            mProductIv.setHolder(imageFile);
 
         } else if (targetView instanceof ProcedureImageView) {
             ProcedureImageView procedureImageView = (ProcedureImageView) targetView;
@@ -217,6 +214,5 @@ public class EditCookbookActivity extends SelectImageActivity<EditCookbookContra
     @Override
     public void onRequestSuccess(String msg) {
         super.onRequestSuccess(msg);
-        finish();
     }
 }

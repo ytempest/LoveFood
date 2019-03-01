@@ -125,12 +125,13 @@ public class AmountView extends LinearLayout {
         for (int i = 0; i < count; i++) {
             // 跳过分界线View
             if (i % 2 == 0) {
-                AmountData bean = new AmountData();
-                View container = getChildAt(i);
-                bean.name = getName(container);
-                bean.amount = getAmount(container);
-                mainList.add(bean);
+                continue;
             }
+            AmountData bean = new AmountData();
+            View container = getChildAt(i);
+            bean.name = getName(container);
+            bean.amount = getAmount(container);
+            mainList.add(bean);
         }
         return mainList;
     }
