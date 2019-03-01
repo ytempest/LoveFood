@@ -1,6 +1,7 @@
 package com.ytempest.lovefood.util;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
 /**
@@ -20,5 +21,15 @@ public class DrawUtils {
     public static int toPx(Context context, int type, float value) {
         return (int) TypedValue.applyDimension(
                 type, value, context.getResources().getDisplayMetrics());
+    }
+
+    public static int getScreenWidth(Context context) {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        return metrics.widthPixels;
+    }
+
+    public static int getScreenHeight(Context context) {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        return metrics.heightPixels;
     }
 }

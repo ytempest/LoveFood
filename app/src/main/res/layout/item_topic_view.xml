@@ -1,46 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:layout_marginBottom="0.6dp"
+    android:background="@android:color/white"
+    android:orientation="vertical"
     android:padding="16dp">
 
-    <com.ytempest.framelibrary.view.CircleImageView
-        android:id="@+id/iv_head"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginRight="10dp"
-        android:src="@drawable/default_head"
-        app:border_width="0dp" />
-
-    <TextView
-        android:id="@+id/tv_name"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/iv_head"
-        android:text="ytempest"
-        android:textColor="#000"
-        android:textSize="15sp" />
+        android:gravity="center">
 
-    <TextView
-        android:id="@+id/t_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_name"
-        android:layout_marginTop="0.5dp"
-        android:layout_toRightOf="@+id/iv_head"
-        android:text="18:33"
-        android:textColor="#777"
-        android:textSize="13sp" />
+        <com.ytempest.framelibrary.view.CircleImageView
+            android:id="@+id/iv_head"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/default_head" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:text="ytempest"
+                android:textColor="#000"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/t_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="3dp"
+                android:text="18:33"
+                android:textColor="#777"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/iv_head"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="3dp"
         android:text="说到反射，想必这里就有人觉得会不会存在性能问题，实际上，从ART以来，反射的性能影响其实已经降低了很多"
         android:textColor="#000"
         android:textSize="15sp" />
@@ -50,27 +63,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="3dp"
         android:orientation="vertical" />
 
     <TextView
         android:id="@+id/tv_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/picture_layout"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="7dp"
         android:text="17评论" />
 
-    <TextView
-        android:id="@+id/tv_zan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/picture_layout"
-        android:layout_toEndOf="@id/tv_comment"
-        android:layout_toRightOf="@id/tv_comment"
-        android:text="3赞" />
-
-</RelativeLayout>
+</LinearLayout>

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ytempest.lovefood.widget.ResizableImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/iv_show_picture"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent">
+
+    <com.ytempest.lovefood.widget.ResizableImageView
+        android:id="@+id/iv_show_picture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+
+</FrameLayout>
 

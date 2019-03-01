@@ -2,20 +2,21 @@ package com.ytempest.lovefood.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Window;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.ytempest.baselibrary.base.BaseFragment;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
+import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.view.dialog.AlertDialog;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonRecyclerAdapter;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonViewHolder;
-import com.ytempest.baselibrary.view.recyclerview.division.DividerItemDecoration;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.contract.TopicContract;
 import com.ytempest.lovefood.http.data.TopicResult;
 import com.ytempest.lovefood.presenter.TopicPresenter;
+import com.ytempest.lovefood.util.DrawUtils;
 import com.ytempest.lovefood.widget.PicturesLayout;
 
 import java.util.ArrayList;
@@ -46,18 +47,15 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
 
     @Override
     protected void initView() {
-        Random random = new Random();
-
         mTopicList = new ArrayList<>();
         TopicResult result = new TopicResult();
         result.setPictureList(new ArrayList<String>());
-        mTopicList.add(result);
         for (int i = 0; i < 10; i++) {
             TopicResult topicResult = new TopicResult();
             List<String> pictureList = new ArrayList<>();
-            int k = random.nextInt(10);
+            int k = i;
             for (; k > 0; k--) {
-                pictureList.add("http://img.my.csdn.net/uploads/201701/06/1483664940_9893.jpg");
+                pictureList.add("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2136782320,914585746&fm=26&gp=0.jpg");
             }
             topicResult.setPictureList(pictureList);
             mTopicList.add(topicResult);
@@ -65,7 +63,6 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
 
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext));
         mRecyclerView.setAdapter(new CommonRecyclerAdapter<TopicResult>(mContext, mTopicList, R.layout.item_topic_view) {
             @Override
             protected void bindViewData(CommonViewHolder holder, TopicResult item) {
@@ -74,24 +71,33 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
                 picturesLayout.setPictureUrlList(item.getPictureList());
                 picturesLayout.setCallback(new PicturesLayout.Callback() {
                     @Override
-                    public void onPictureClick(ImageView i, List<ImageView> imageGroupList, List<String> urlList) {
-                        AlertDialog dialog = new AlertDialog.Builder(mContext)
-                                .setContentView(R.layout.dialog_show_picture)
-                                .fullWidth()
-                                .show();
-                        Window mWindow = dialog.getWindow();
-                        WindowManager.LayoutParams mParams = mWindow.getAttributes();
-                        mParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-                        mParams.height = getResources().getDisplayMetrics().heightPixels / 2;
+                    public void onPictureClick(ImageView i, String url, List<ImageView> imageGroupList, List<String> urlList) {
+                        if (mImageDialog == null) {
+                            mImageDialog = new AlertDialog.Builder(mContext)
+                                    .setContentView(R.layout.dialog_show_picture)
+                                    .setWidthAndHeight(DrawUtils.getScreenWidth(getContext()), DrawUtils.getScreenHeight(getContext()))
+                                    .fullWidth()
+                                    .create();
+                            mImageDialog.setOnClickListener(R.id.container, DISMISS_IMAGE_DIALOG_LISTENER);
+                        }
 
-                        ((ImageView) dialog.getView(R.id.iv_show_picture)).setImageResource(R.drawable.default_head);
-
+                        ImageLoaderManager.getInstance().showImage(mImageDialog.getView(R.id.iv_show_picture), url, null);
+                        mImageDialog.show();
                     }
                 });
 
             }
         });
     }
+
+    private AlertDialog mImageDialog;
+
+    private View.OnClickListener DISMISS_IMAGE_DIALOG_LISTENER = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mImageDialog.dismiss();
+        }
+    };
 
     @Override
     protected void initData() {
