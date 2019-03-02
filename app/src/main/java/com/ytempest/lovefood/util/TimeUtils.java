@@ -11,16 +11,6 @@ public class TimeUtils {
     public static final long MONTH_IN_MILLIS = DAY_IN_MILLIS * 30;
     public static final long YEAR_IN_MILLIS = DAY_IN_MILLIS * 365;
 
-    public static boolean isToday(long timestamp) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        long todayStart = calendar.getTimeInMillis();
-        return timestamp > todayStart && timestamp < todayStart + DAY_IN_MILLIS;
-    }
-
     public static long getDayStart(long timeMillis) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timeMillis);
@@ -51,9 +41,17 @@ public class TimeUtils {
         return calendar.getTimeInMillis();
     }
 
+    public static boolean isToday(long timestamp) {
+        long todayStart = getTodayStart();
+        if (timestamp - todayStart >= 0) {
+            return true;
+        }
+        return false;
+    }
+
     public static boolean isYesterday(long timestamp) {
         long todayStart = getTodayStart();
-        if (todayStart - timestamp < DAY_IN_MILLIS) {
+        if (todayStart - timestamp <= DAY_IN_MILLIS && todayStart - timestamp >= 0) {
             return true;
         }
         return false;
@@ -61,7 +59,7 @@ public class TimeUtils {
 
     public static boolean isThisYear(long timestamp) {
         long todayStart = getTodayStart();
-        if (todayStart - timestamp < YEAR_IN_MILLIS) {
+        if (todayStart - timestamp <= YEAR_IN_MILLIS && todayStart - timestamp >= 0) {
             return true;
         }
         return false;
