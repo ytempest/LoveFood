@@ -21,7 +21,7 @@ import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.RetrofitUtils;
 import com.ytempest.lovefood.http.data.UserInfo;
 import com.ytempest.lovefood.presenter.UpdateUserPresenter;
-import com.ytempest.lovefood.util.DateUtils;
+import com.ytempest.lovefood.util.DateFormatUtils;
 import com.ytempest.lovefood.util.NumberUtils;
 import com.ytempest.lovefood.util.RegexUtils;
 
@@ -101,7 +101,7 @@ public class UpdateUserActivity extends SelectImageActivity<UpdateUserContract.P
         ImageLoaderManager.getInstance().showImage(mHeadIv, url, null);
         mAccountTv.setText(mUserInfo.getUserAccount());
         mSexTv.setText(mUserInfo.getUserSex());
-        mBirthTv.setText(DateUtils.format(mUserInfo.getUserBirth()));
+        mBirthTv.setText(DateFormatUtils.formatDate(mUserInfo.getUserBirth()));
         mPhoneEt.setText(mUserInfo.getUserPhone());
         mQQEt.setText(mUserInfo.getUserQQ());
         mEmailEt.setText(mUserInfo.getUserEmail());
@@ -126,7 +126,7 @@ public class UpdateUserActivity extends SelectImageActivity<UpdateUserContract.P
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            String birth = DateUtils.format(year, (monthOfYear + 1), dayOfMonth);
+            String birth = DateFormatUtils.formatDate(year, (monthOfYear + 1), dayOfMonth);
             mBirthTv.setText(birth);
         }
     };
@@ -141,7 +141,7 @@ public class UpdateUserActivity extends SelectImageActivity<UpdateUserContract.P
 
     @OnClick(R.id.tv_birth)
     protected void onBirthSelectClick(View view) {
-        String[] birth = mBirthTv.getText().toString().split(DateUtils.DATE_SEPARATOR);
+        String[] birth = mBirthTv.getText().toString().split(DateFormatUtils.DATE_SEPARATOR);
         DatePickerDialog mBirthDialog = createBirthDialog(birth);
         mBirthDialog.show();
     }
@@ -213,7 +213,7 @@ public class UpdateUserActivity extends SelectImageActivity<UpdateUserContract.P
         partMap.put("userId", RetrofitUtils.createBodyFromString(String.valueOf(mUserInfo.getUserId())));
         partMap.put("userSex", RetrofitUtils.createBodyFromString(sex));
         partMap.put("userBirth", RetrofitUtils.createBodyFromString(
-                String.valueOf(DateUtils.stringToLong(birth))));
+                String.valueOf(DateFormatUtils.stringToLong(birth))));
         partMap.put("userPhone", RetrofitUtils.createBodyFromString(phone));
         partMap.put("userEmail", RetrofitUtils.createBodyFromString(email));
         partMap.put("userQQ", RetrofitUtils.createBodyFromString(qq));

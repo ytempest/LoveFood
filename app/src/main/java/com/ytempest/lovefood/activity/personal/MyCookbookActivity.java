@@ -27,7 +27,7 @@ import com.ytempest.lovefood.http.data.CookbookInfo;
 import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.presenter.MyCookbookPresenter;
 import com.ytempest.lovefood.util.Config;
-import com.ytempest.lovefood.util.DateUtils;
+import com.ytempest.lovefood.util.DateFormatUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -91,7 +91,7 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
                 ImageLoaderManager.getInstance().showImage(pictureView, url, null);
                 holder.setText(R.id.tv_name, item.getCookTitle());
                 holder.setText(R.id.tv_desc, item.getCookDesc());
-                holder.setText(R.id.tv_time, DateUtils.format(item.getCookPublishTime()));
+                holder.setText(R.id.tv_time, DateFormatUtils.formatDate(item.getCookPublishTime()));
             }
         };
         mAdapter.setOnItemClickListener(this);

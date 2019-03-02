@@ -13,7 +13,7 @@ import com.ytempest.lovefood.contract.PreviewUserContract;
 import com.ytempest.lovefood.http.data.UserInfo;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.presenter.PreviewUserPresenter;
-import com.ytempest.lovefood.util.DateUtils;
+import com.ytempest.lovefood.util.DateFormatUtils;
 
 import butterknife.BindView;
 
@@ -82,7 +82,7 @@ public class PreviewUserActivity extends BaseSkinActivity<PreviewUserContract.Pr
         ImageLoaderManager.getInstance().showImage(mHeadIv, url, null);
         mAccountTv.setText(data.getUserAccount());
         mSexTv.setText(data.getUserSex());
-        mBirthTv.setText(DateUtils.format(data.getUserBirth()));
+        mBirthTv.setText(DateFormatUtils.formatDate(data.getUserBirth()));
 
         mPhoneTv.setText(data.getUserPhone());
         mQQTv.setText(data.getUserQQ());
