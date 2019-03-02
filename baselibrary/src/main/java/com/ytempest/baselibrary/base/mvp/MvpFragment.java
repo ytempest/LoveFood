@@ -80,7 +80,10 @@ public abstract class MvpFragment<Presenter extends IPresenter> extends Fragment
 
     @Override
     public void onRequestFail(String errorMsg) {
-        mDialog.dismiss();
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
+
         if (!TextUtils.isEmpty(errorMsg)) {
             CustomToast.getInstance().show(errorMsg);
         }
@@ -88,7 +91,9 @@ public abstract class MvpFragment<Presenter extends IPresenter> extends Fragment
 
     @Override
     public void onRequestSuccess(String msg) {
-        mDialog.dismiss();
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
         if (!TextUtils.isEmpty(msg)) {
             CustomToast.getInstance().show(msg);
         }
