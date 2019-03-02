@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.util.LogUtils;
+import com.ytempest.lovefood.http.RetrofitClient;
+import com.ytempest.lovefood.http.data.TopicResult;
 import com.ytempest.lovefood.util.DrawUtils;
 
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ public class PicturesLayout extends LinearLayout implements View.OnClickListener
 
     private final List<ImageView> mImageViewList = new ArrayList<>();
 
-    private List<String> mPictureList;
+    private List<TopicResult.ImageList.Image> mPictureList;
 
     public PicturesLayout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -39,7 +41,7 @@ public class PicturesLayout extends LinearLayout implements View.OnClickListener
 */
     }
 
-    public void setPictureUrlList(List<String> urlList) {
+    public void setPictureUrlList(List<TopicResult.ImageList.Image> urlList) {
         if (urlList != null && urlList.size() != 0) {
             setVisibility(View.VISIBLE);
             mPictureList = urlList;
@@ -67,7 +69,7 @@ public class PicturesLayout extends LinearLayout implements View.OnClickListener
                     SquareImageView imageView = (SquareImageView) rowContainerView.getChildAt(k);
                     // 为图片设置点击事件
                     imageView.setOnClickListener(this);
-                    String url = urlList.get(i);
+                    String url = RetrofitClient.client().getUrl() + urlList.get(i).getImageUrl();
                     imageView.setHolder(url);
                     ImageLoaderManager.getInstance().showImage(imageView, url, null);
                     pictureCount--;
@@ -213,6 +215,6 @@ public class PicturesLayout extends LinearLayout implements View.OnClickListener
     }
 
     public interface Callback {
-        void onPictureClick(ImageView i, String url, List<ImageView> imageGroupList, List<String> urlList);
+        void onPictureClick(ImageView i, String url, List<ImageView> imageGroupList, List<TopicResult.ImageList.Image> urlList);
     }
 }

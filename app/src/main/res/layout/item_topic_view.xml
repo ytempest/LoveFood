@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="0.6dp"
@@ -16,8 +17,7 @@
             android:id="@+id/iv_head"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/default_head" />
+            android:layout_marginRight="10dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -30,22 +30,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                android:text="ytempest"
                 android:textColor="#000"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tool:text="ytempest" />
 
             <TextView
-                android:id="@+id/t_time"
+                android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginTop="3dp"
-                android:text="18:33"
                 android:textColor="#777"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                tool:text="18:33" />
         </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="3dp"
+        android:singleLine="true"
+        android:textColor="@color/app_color"
+        android:textSize="17sp"
+        tool:text="## 美食 ##" />
 
     <TextView
         android:id="@+id/tv_content"
@@ -54,15 +66,14 @@
         android:layout_marginBottom="3dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="3dp"
-        android:text="说到反射，想必这里就有人觉得会不会存在性能问题，实际上，从ART以来，反射的性能影响其实已经降低了很多"
         android:textColor="#000"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        tool:text="内容" />
 
     <com.ytempest.lovefood.widget.PicturesLayout
         android:id="@+id/picture_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_content"
         android:layout_marginBottom="3dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="3dp"
@@ -74,6 +85,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginTop="7dp"
-        android:text="17评论" />
+        tool:text="17评论" />
 
 </LinearLayout>

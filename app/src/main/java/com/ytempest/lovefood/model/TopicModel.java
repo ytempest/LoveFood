@@ -1,10 +1,24 @@
 package com.ytempest.lovefood.model;
 
 import com.ytempest.baselibrary.base.mvp.BaseModel;
+import com.ytempest.lovefood.contract.TopicContract;
+import com.ytempest.lovefood.http.RetrofitClient;
+import com.ytempest.lovefood.http.data.BaseResult;
+import com.ytempest.lovefood.http.data.TopicResult;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author ytempest
  * @date 2019/2/1
  */
-public class TopicModel extends BaseModel {
+public class TopicModel extends BaseModel implements TopicContract.Model {
+    @Override
+    public Observable<BaseResult<TopicResult>> getTopicList(int pageNum, int pageSize) {
+        return RetrofitClient.client().getService().getTopicList(pageNum, pageSize)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

@@ -17,7 +17,7 @@
         android:background="@color/app_color"
         app:title_text="首页" />
 
-    <android.support.v7.widget.RecyclerView
+    <com.ytempest.baselibrary.view.recyclerview.LoadRecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

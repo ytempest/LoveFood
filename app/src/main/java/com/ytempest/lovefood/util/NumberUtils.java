@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 /**
  * @author ytempest
- * Description：
+ *         Description：
  */
 public class NumberUtils {
 
@@ -22,5 +22,19 @@ public class NumberUtils {
             num = Long.parseLong(val);
         }
         return num;
+    }
+
+    public static int getInt(Integer val) {
+        if (val != null) {
+            return val;
+        }
+        return 0;
+    }
+
+    public static long getLong(Long val) {
+        if (val != null) {
+            return val;
+        }
+        return 0L;
     }
 }

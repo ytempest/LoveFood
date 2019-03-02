@@ -4,19 +4,18 @@ import com.ytempest.lovefood.http.data.BaseCookbook;
 import com.ytempest.lovefood.http.data.BaseResult;
 import com.ytempest.lovefood.http.data.CookbookInfo;
 import com.ytempest.lovefood.http.data.DataList;
+import com.ytempest.lovefood.http.data.TopicResult;
 import com.ytempest.lovefood.http.data.UserInfo;
 
 import java.util.Map;
 
 import io.reactivex.Observable;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
@@ -96,4 +95,10 @@ public interface ApiService {
     @Multipart
     @POST("cook/updateCook")
     Observable<BaseResult<CookbookInfo>> updateCookInfo(@PartMap Map<String, RequestBody> partMap);
+
+
+    /*---------   话题接口   ---------*/
+
+    @GET("topic/list")
+    Observable<BaseResult<TopicResult>> getTopicList(@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
 }
