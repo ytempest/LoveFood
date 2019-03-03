@@ -191,7 +191,7 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
     }
 
     private void addLoadView(DataList<BaseCookbook> data) {
-        int total = data.getTotal();
+        long total = data.getTotal();
         if (total > Config.PAGE_SIZE) {
             mRecyclerView.removeLoadViewCreator();
             mRecyclerView.setLoadViewCreator(LOAD_CREATOR);

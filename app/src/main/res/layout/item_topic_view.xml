@@ -3,12 +3,13 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="0.6dp"
+    android:layout_marginBottom="0.8dp"
     android:background="@android:color/white"
     android:orientation="vertical"
     android:padding="16dp">
 
     <LinearLayout
+        android:id="@+id/ll_user_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center">
@@ -31,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:textColor="#000"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 tool:text="ytempest" />
 
             <TextView
@@ -41,7 +42,7 @@
                 android:layout_gravity="bottom"
                 android:layout_marginTop="3dp"
                 android:textColor="#777"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 tool:text="18:33" />
         </LinearLayout>
 
@@ -49,7 +50,7 @@
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
         android:layout_marginLeft="50dp"
@@ -61,14 +62,14 @@
 
     <TextView
         android:id="@+id/tv_content"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="3dp"
         android:textColor="#000"
         android:textSize="15sp"
-        tool:text="内容" />
+        tool:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容" />
 
     <com.ytempest.lovefood.widget.PicturesLayout
         android:id="@+id/picture_layout"

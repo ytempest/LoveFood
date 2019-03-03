@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class DataList<Data> {
 
-    private int total;
+    private long total;
     private int pageSize;
     private int currentPage;
     private int pageCount;
@@ -18,11 +18,11 @@ public class DataList<Data> {
 
     }
 
-    public int getTotal() {
+    public long getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(long total) {
         this.total = total;
     }
 

@@ -4,7 +4,7 @@ import com.ytempest.lovefood.http.data.BaseCookbook;
 import com.ytempest.lovefood.http.data.BaseResult;
 import com.ytempest.lovefood.http.data.CookbookInfo;
 import com.ytempest.lovefood.http.data.DataList;
-import com.ytempest.lovefood.http.data.TopicResult;
+import com.ytempest.lovefood.http.data.TopicInfo;
 import com.ytempest.lovefood.http.data.UserInfo;
 
 import java.util.Map;
@@ -100,5 +100,5 @@ public interface ApiService {
     /*---------   话题接口   ---------*/
 
     @GET("topic/list")
-    Observable<BaseResult<TopicResult>> getTopicList(@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
+    Observable<BaseResult<DataList<TopicInfo>>> getTopicList(@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
 }

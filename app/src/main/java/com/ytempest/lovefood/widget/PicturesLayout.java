@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.util.LogUtils;
 import com.ytempest.lovefood.http.RetrofitClient;
-import com.ytempest.lovefood.http.data.TopicResult;
+import com.ytempest.lovefood.http.data.TopicInfo;
 import com.ytempest.lovefood.util.DrawUtils;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class PicturesLayout extends LinearLayout implements View.OnClickListener
 
     private final List<ImageView> mImageViewList = new ArrayList<>();
 
-    private List<TopicResult.ImageList.Image> mPictureList;
+    private List<TopicInfo.Image> mPictureList;
 
     public PicturesLayout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -41,7 +41,7 @@ public class PicturesLayout extends LinearLayout implements View.OnClickListener
 */
     }
 
-    public void setPictureUrlList(List<TopicResult.ImageList.Image> urlList) {
+    public void setPictureUrlList(List<TopicInfo.Image> urlList) {
         if (urlList != null && urlList.size() != 0) {
             setVisibility(View.VISIBLE);
             mPictureList = urlList;
@@ -215,6 +215,6 @@ public class PicturesLayout extends LinearLayout implements View.OnClickListener
     }
 
     public interface Callback {
-        void onPictureClick(ImageView i, String url, List<ImageView> imageGroupList, List<TopicResult.ImageList.Image> urlList);
+        void onPictureClick(ImageView i, String url, List<ImageView> imageGroupList, List<TopicInfo.Image> urlList);
     }
 }

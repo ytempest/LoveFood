@@ -90,9 +90,7 @@ public class PersonalFragment extends BaseFragment<PersonalContract.Presenter> i
     }
 
     private void previewUserInfo(long userId) {
-        Intent intent = new Intent(mContext, PreviewUserActivity.class);
-        intent.putExtra(PreviewUserActivity.USER_ID, userId);
-        startActivity(intent);
+        PreviewUserActivity.startActivity(getContext(), userId);
     }
 
     @OnClick(R.id.item_cookbook)

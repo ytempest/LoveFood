@@ -1,5 +1,7 @@
 package com.ytempest.lovefood.activity.personal;
 
+import android.content.Context;
+import android.content.Intent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,7 +23,13 @@ import butterknife.BindView;
 public class PreviewUserActivity extends BaseSkinActivity<PreviewUserContract.Presenter>
         implements PreviewUserContract.PreviewUserView, PreviewUserContract {
 
-    public static final String USER_ID = "user_id";
+    private static final String USER_ID = "user_id";
+
+    public static void startActivity(Context context, long userId) {
+        Intent intent = new Intent(context, PreviewUserActivity.class);
+        intent.putExtra(PreviewUserActivity.USER_ID, userId);
+        context.startActivity(intent);
+    }
 
     @BindView(R.id.navigation_view)
     protected NavigationView mNavigationView;
@@ -44,9 +52,9 @@ public class PreviewUserActivity extends BaseSkinActivity<PreviewUserContract.Pr
     @BindView(R.id.tv_qq)
     protected TextView mQQTv;
 
+
     @BindView(R.id.tv_email)
     protected TextView mEmailTv;
-
 
     @Override
     protected int getLayoutResId() {
