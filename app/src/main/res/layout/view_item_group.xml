@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
+    android:layout_marginBottom="3dp"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginTop="3dp"
     android:layout_weight="1"
     android:background="@drawable/shape_round_frame"
     android:gravity="center"
     android:padding="6dp"
     android:singleLine="true"
-    android:text="广东"
-    android:textColor="#434343"
-    android:textSize="14sp" />
+    android:textColor="#797979"
+    android:textSize="14sp"
+    tool:text="广东" />

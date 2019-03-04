@@ -50,4 +50,12 @@ public class TitleView extends LinearLayout {
         }
         array.recycle();
     }
+
+    public void setTitle(String title) {
+        mTitleView.setText(title);
+    }
+
+    public String getTitle() {
+        return mTitleView.getText().toString();
+    }
 }

@@ -1,6 +1,7 @@
 package com.ytempest.lovefood.widget;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -18,7 +19,7 @@ import java.util.List;
  * @author ytempest
  *         Description：
  */
-public class ItemGroupView extends LinearLayout {
+public class ItemGroupView extends LinearLayout implements View.OnClickListener {
 
     private static final int ROW_ITEM_SIZE = 4;
 
@@ -46,17 +47,25 @@ public class ItemGroupView extends LinearLayout {
             }
             LinearLayout container = getRowContainer();
             for (int j = 0; j < count; j++) {
-                TextView view = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.view_item_group, this, false);
-                view.setVisibility(VISIBLE);
+                TextView view = getItemView(true);
                 view.setText(data.get(i + j));
+                view.setTag(i + j);
+                view.setOnClickListener(this);
                 container.addView(view);
             }
             for (int j1 = 0; j1 < rowCount - count; j1++) {
-                container.addView(getHolderView());
+                container.addView(getItemView(false));
             }
             addView(container);
         }
 
+    }
+
+    @NonNull
+    private TextView getItemView(boolean visible) {
+        TextView view = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.view_item_group, this, false);
+        view.setVisibility(visible ? VISIBLE : INVISIBLE);
+        return view;
     }
 
     private final LinearLayout.LayoutParams PARAMS = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -72,12 +81,26 @@ public class ItemGroupView extends LinearLayout {
         return layout;
     }
 
-    private static final LinearLayout.LayoutParams HOLD_PARAMS = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
+    /* Callback */
 
-    public View getHolderView() {
-        View view = new View(getContext());
-        view.setLayoutParams(HOLD_PARAMS);
-        return view;
+    private Callback mCallback;
+
+    public void setCallback(Callback callback) {
+        this.mCallback = callback;
+    }
+
+    public interface Callback {
+        void onItemClick(int index, String type);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (mCallback != null) {
+            TextView view = (TextView) v;
+            String content = view.getText().toString();
+            int index = (int) view.getTag();
+            mCallback.onItemClick(index, content);
+        }
     }
 
 }

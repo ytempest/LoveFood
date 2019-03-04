@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ytempest.lovefood.widget.CookClassifyView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp"
+    android:paddingTop="10dp">
 
     <com.ytempest.lovefood.widget.TitleView
+        android:id="@+id/title_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="40dp"
-        android:paddingRight="40dp"
-        app:title_text="小吃" />
+        android:paddingRight="40dp" />
 
     <com.ytempest.lovefood.widget.ItemGroupView
         android:id="@+id/item_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-
-</LinearLayout>
+</com.ytempest.lovefood.widget.CookClassifyView>
