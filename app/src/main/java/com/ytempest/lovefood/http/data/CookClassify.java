@@ -38,6 +38,9 @@ public class CookClassify {
         COOK_CLASSIFY_LIST.add(new CookClassify("小吃", typeList));
         COOK_CLASSIFY_LIST.add(new CookClassify("小吃", typeList));
         COOK_CLASSIFY_LIST.add(new CookClassify("小吃", typeList));
+        COOK_CLASSIFY_LIST.add(new CookClassify("小吃", typeList));
+        COOK_CLASSIFY_LIST.add(new CookClassify("小吃", typeList));
+        COOK_CLASSIFY_LIST.add(new CookClassify("小吃", typeList));
     }
 
     public static final List<CookClassify> getCookClassifyList() {

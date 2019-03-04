@@ -3,6 +3,12 @@ package com.ytempest.lovefood.util;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.ytempest.lovefood.R;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -13,6 +19,10 @@ import java.io.OutputStream;
  *         Description：
  */
 public class CommonUtils {
+
+    public static TextView getTipText(Context context, ViewGroup viewGroup) {
+        return (TextView) LayoutInflater.from(context).inflate(R.layout.view_list_tip, viewGroup, false);
+    }
 
     /**
      * 判断当前网络是否可用

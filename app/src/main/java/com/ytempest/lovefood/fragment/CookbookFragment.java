@@ -2,18 +2,21 @@ package com.ytempest.lovefood.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.ytempest.baselibrary.base.BaseFragment;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonRecyclerAdapter;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonViewHolder;
+import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
+import com.ytempest.lovefood.activity.CookbookListActivity;
+import com.ytempest.lovefood.aop.CheckNet;
 import com.ytempest.lovefood.contract.CookbookContract;
 import com.ytempest.lovefood.http.data.CookClassify;
 import com.ytempest.lovefood.presenter.CookbookPresenter;
 import com.ytempest.lovefood.widget.CookClassifyView;
-import com.ytempest.lovefood.widget.ItemGroupView;
 
 import butterknife.BindView;
 
@@ -25,6 +28,9 @@ import butterknife.BindView;
 public class CookbookFragment extends BaseFragment<CookbookContract.Presenter> implements CookbookContract.CookbookView, CookbookContract,
         CookClassifyView.Callback {
 
+    @BindView(R.id.navigation_view)
+    protected NavigationView mNavigationView;
+
     @BindView(R.id.recycler_view)
     protected RecyclerView mRecyclerView;
 
@@ -35,9 +41,16 @@ public class CookbookFragment extends BaseFragment<CookbookContract.Presenter> i
 
     @Override
     protected void initView() {
+        mNavigationView.setRightClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomToast.getInstance().show("发菜谱");
+            }
+        });
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(new CommonRecyclerAdapter<CookClassify>(
-                getContext(), CookClassify.getCookClassifyList(), R.layout.item_cook_group_text) {
+                getContext(), CookClassify.getCookClassifyList(), R.layout.item_cook_group) {
             @Override
             protected void bindViewData(CommonViewHolder holder, CookClassify item) {
                 CookClassifyView view = (CookClassifyView) holder.itemView;
@@ -54,8 +67,9 @@ public class CookbookFragment extends BaseFragment<CookbookContract.Presenter> i
 
     /* Click */
 
+    @CheckNet
     @Override
     public void onItemClick(int index, String classify, String type) {
-        CustomToast.getInstance().show(index + "," + classify + ", " + type);
+        CookbookListActivity.startActivity(getContext(), classify, type);
     }
 }

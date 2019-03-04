@@ -100,5 +100,17 @@ public interface ApiService {
     /*---------   话题接口   ---------*/
 
     @GET("topic/list")
-    Observable<BaseResult<DataList<TopicInfo>>> getTopicList(@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
+    Observable<BaseResult<DataList<TopicInfo>>> getTopicList(@Query("pageNum") int pageNum,
+                                                             @Query("pageSize") int pageSize);
+
+
+    /*---------   话题接口   ---------*/
+
+    @GET("cook/list")
+    Observable<BaseResult<DataList<BaseCookbook>>> getCookbookList(@Query("pageNum") int pageNum,
+                                                                @Query("pageSize") int pageSize,
+                                                                @Query("cookGroup") String group,
+                                                                @Query("cookType") String type);
+
+
 }
