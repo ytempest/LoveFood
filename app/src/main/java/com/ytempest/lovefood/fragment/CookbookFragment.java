@@ -16,7 +16,7 @@ import com.ytempest.lovefood.aop.CheckNet;
 import com.ytempest.lovefood.contract.CookbookContract;
 import com.ytempest.lovefood.http.data.CookClassify;
 import com.ytempest.lovefood.presenter.CookbookPresenter;
-import com.ytempest.lovefood.widget.CookClassifyView;
+import com.ytempest.lovefood.widget.CookGroupView;
 
 import butterknife.BindView;
 
@@ -26,7 +26,7 @@ import butterknife.BindView;
  */
 @InjectPresenter(CookbookPresenter.class)
 public class CookbookFragment extends BaseFragment<CookbookContract.Presenter> implements CookbookContract.CookbookView, CookbookContract,
-        CookClassifyView.Callback {
+        CookGroupView.Callback {
 
     @BindView(R.id.navigation_view)
     protected NavigationView mNavigationView;
@@ -53,7 +53,7 @@ public class CookbookFragment extends BaseFragment<CookbookContract.Presenter> i
                 getContext(), CookClassify.getCookClassifyList(), R.layout.item_cook_group) {
             @Override
             protected void bindViewData(CommonViewHolder holder, CookClassify item) {
-                CookClassifyView view = (CookClassifyView) holder.itemView;
+                CookGroupView view = (CookGroupView) holder.itemView;
                 view.setTitle(item.getGroup());
                 view.setItem(item.getTypeList());
                 view.setCallback(CookbookFragment.this);
@@ -69,7 +69,7 @@ public class CookbookFragment extends BaseFragment<CookbookContract.Presenter> i
 
     @CheckNet
     @Override
-    public void onItemClick(int index, String classify, String type) {
-        CookbookListActivity.startActivity(getContext(), classify, type);
+    public void onItemClick(int index, String group, String type) {
+        CookbookListActivity.startActivity(getContext(), group, type);
     }
 }

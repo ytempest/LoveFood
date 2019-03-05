@@ -19,19 +19,19 @@ import java.util.List;
  * @author ytempest
  *         Description：
  */
-public class ItemGroupView extends LinearLayout implements View.OnClickListener {
+public class ItemTypeView extends LinearLayout implements View.OnClickListener {
 
     private static final int ROW_ITEM_SIZE = 4;
 
-    public ItemGroupView(Context context) {
+    public ItemTypeView(Context context) {
         this(context, null);
     }
 
-    public ItemGroupView(Context context, @Nullable AttributeSet attrs) {
+    public ItemTypeView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ItemGroupView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public ItemTypeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setOrientation(VERTICAL);
     }
@@ -63,7 +63,7 @@ public class ItemGroupView extends LinearLayout implements View.OnClickListener 
 
     @NonNull
     private TextView getItemView(boolean visible) {
-        TextView view = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.view_item_group, this, false);
+        TextView view = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.view_item_type, this, false);
         view.setVisibility(visible ? VISIBLE : INVISIBLE);
         return view;
     }

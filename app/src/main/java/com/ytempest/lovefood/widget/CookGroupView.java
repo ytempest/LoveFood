@@ -14,17 +14,17 @@ import java.util.List;
  * @author ytempest
  * @date 2019/3/4
  */
-public class CookClassifyView extends LinearLayout implements ItemGroupView.Callback {
+public class CookGroupView extends LinearLayout implements ItemTypeView.Callback {
 
-    public CookClassifyView(Context context) {
+    public CookGroupView(Context context) {
         this(context, null);
     }
 
-    public CookClassifyView(Context context, @Nullable AttributeSet attrs) {
+    public CookGroupView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CookClassifyView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public CookGroupView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         int leftAndRight = DrawUtils.dpToPx(context, 6);
         int topAndBottom = DrawUtils.dpToPx(context, 10);
@@ -33,14 +33,14 @@ public class CookClassifyView extends LinearLayout implements ItemGroupView.Call
     }
 
     private TitleView mTitleView;
-    private ItemGroupView mItemGroupView;
+    private ItemTypeView mItemTypeView;
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         mTitleView = findViewById(R.id.title_view);
-        mItemGroupView = findViewById(R.id.item_group);
-        mItemGroupView.setCallback(this);
+        mItemTypeView = findViewById(R.id.item_group);
+        mItemTypeView.setCallback(this);
     }
 
     public void setTitle(String title) {
@@ -48,7 +48,7 @@ public class CookClassifyView extends LinearLayout implements ItemGroupView.Call
     }
 
     public void setItem(List<String> list) {
-        mItemGroupView.setItem(list);
+        mItemTypeView.setItem(list);
     }
 
     private Callback mCallback;
@@ -65,6 +65,6 @@ public class CookClassifyView extends LinearLayout implements ItemGroupView.Call
     }
 
     public interface Callback {
-        void onItemClick(int index, String classify, String type);
+        void onItemClick(int index, String group, String type);
     }
 }
