@@ -12,9 +12,12 @@ import com.ytempest.baselibrary.view.recyclerview.adapter.CommonRecyclerAdapter;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonViewHolder;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.activity.CookbookListActivity;
+import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
 import com.ytempest.lovefood.contract.ActivityContract;
 import com.ytempest.lovefood.http.RetrofitClient;
+import com.ytempest.lovefood.http.data.ActivityInfo;
 import com.ytempest.lovefood.http.data.BaseCookbook;
+import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.presenter.ActivityPresenter;
 import com.ytempest.lovefood.util.Config;
 import com.ytempest.lovefood.util.DateFormatUtils;
@@ -38,8 +41,10 @@ public class ActivityFragment extends BaseFragment<ActivityContract.Presenter> i
     protected LoadRecyclerView mRecyclerView;
 
     private int mPageNum = 1;
-    private List<String> mDataList = new ArrayList<>();
-    private CommonRecyclerAdapter<String> mAdapter;
+    private List<ActivityInfo> mDataList = new ArrayList<>();
+    private CommonRecyclerAdapter<ActivityInfo> mAdapter;
+    private final DefaultLoadViewCreator LOAD_CREATOR = new DefaultLoadViewCreator();
+
 
     @Override
     protected int getLayoutId() {
@@ -48,14 +53,11 @@ public class ActivityFragment extends BaseFragment<ActivityContract.Presenter> i
 
     @Override
     protected void initView() {
-        for (int i = 0; i < 6; i++) {
-            mDataList.add("String" + i);
-        }
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new CommonRecyclerAdapter<String>(
+        mAdapter = new CommonRecyclerAdapter<ActivityInfo>(
                 getActivity(), mDataList, R.layout.item_activity) {
             @Override
-            protected void bindViewData(CommonViewHolder holder, String item) {
+            protected void bindViewData(CommonViewHolder holder, ActivityInfo item) {
 
             }
         };
@@ -65,6 +67,7 @@ public class ActivityFragment extends BaseFragment<ActivityContract.Presenter> i
 
     @Override
     protected void initData() {
+        getPresenter().getActivityList(mPageNum, Config.ACTIVITY_PAGE_SIZE);
     }
 
     /* Click */
@@ -72,6 +75,28 @@ public class ActivityFragment extends BaseFragment<ActivityContract.Presenter> i
     @Override
     public void onItemClick(View view, int position) {
 
+    }
+
+    /* MVP View */
+
+    @Override
+    public void onGetActivityList(DataList<ActivityInfo> data) {
+        int lastPosition = mDataList.size();
+        mDataList.addAll(data.getList());
+
+        // 添加上拉刷新的View
+        addLoadView(data);
+
+        mAdapter.notifyItemInserted(lastPosition);
+    }
+
+    private void addLoadView(DataList<ActivityInfo> result) {
+        long total = result.getTotal();
+        if (total > Config.ACTIVITY_PAGE_SIZE) {
+            mRecyclerView.removeLoadViewCreator();
+            mRecyclerView.setLoadViewCreator(LOAD_CREATOR);
+            mRecyclerView.setOnLoadMoreListener(this);
+        }
     }
 
     /* Load */

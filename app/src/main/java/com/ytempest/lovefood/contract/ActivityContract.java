@@ -4,6 +4,11 @@ import com.ytempest.baselibrary.base.mvp.IContract;
 import com.ytempest.baselibrary.base.mvp.IModel;
 import com.ytempest.baselibrary.base.mvp.IPresenter;
 import com.ytempest.baselibrary.base.mvp.IView;
+import com.ytempest.lovefood.http.data.ActivityInfo;
+import com.ytempest.lovefood.http.data.BaseResult;
+import com.ytempest.lovefood.http.data.DataList;
+
+import io.reactivex.Observable;
 
 /**
  * @author ytempest
@@ -12,11 +17,15 @@ import com.ytempest.baselibrary.base.mvp.IView;
 public interface ActivityContract extends IContract {
     interface Presenter extends IPresenter {
         void loadActivityList(int pageNum, int pageSize);
+
+        void getActivityList(int pageNum, int pageSize);
     }
 
     interface ActivityView extends IView {
+        void onGetActivityList(DataList<ActivityInfo> data);
     }
 
     interface Model extends IModel {
+        Observable<BaseResult<DataList<ActivityInfo>>> getActivityList(int pageNum, int pageSize);
     }
 }
