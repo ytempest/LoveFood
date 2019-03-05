@@ -11,6 +11,7 @@ import com.ytempest.baselibrary.base.mvp.IView;
  */
 public interface ActivityContract extends IContract {
     interface Presenter extends IPresenter {
+        void loadActivityList(int pageNum, int pageSize);
     }
 
     interface ActivityView extends IView {

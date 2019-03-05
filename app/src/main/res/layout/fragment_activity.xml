@@ -9,9 +9,17 @@
     android:orientation="vertical"
     tools:context="com.ytempest.lovefood.activity.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="activity" />
+    <com.ytempest.framelibrary.view.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/app_color"
+        app:title_text="活动中心" />
+
+    <com.ytempest.baselibrary.view.recyclerview.LoadRecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white" />
 
 </LinearLayout>

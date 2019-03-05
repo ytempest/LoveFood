@@ -11,4 +11,8 @@ import com.ytempest.lovefood.model.ActivityModel;
  */
 @InjectModel(ActivityModel.class)
 public class ActivityPresenter extends BasePresenter<ActivityContract.ActivityView, ActivityContract.Model> implements ActivityContract.Presenter {
+    @Override
+    public void loadActivityList(int pageNum, int pageSize) {
+
+    }
 }
