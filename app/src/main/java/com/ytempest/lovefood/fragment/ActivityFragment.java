@@ -15,6 +15,7 @@ import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
 import com.ytempest.lovefood.common.adapter.DefaultRefreshViewCreator;
 import com.ytempest.lovefood.contract.ActivityContract;
+import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.ActivityInfo;
 import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.presenter.ActivityPresenter;
@@ -57,9 +58,7 @@ public class ActivityFragment extends BaseFragment<ActivityContract.Presenter> i
                 getActivity(), mDataList, R.layout.item_activity) {
             @Override
             protected void bindViewData(CommonViewHolder holder, ActivityInfo item) {
-                // FIXME heqidu: 2019/3/6
-                String url = item.getActImageUrl();
-//                String url = RetrofitClient.client().getUrl() + item.getActImageUrl();
+                String url = RetrofitClient.client().getUrl() + item.getActImageUrl();
                 ImageLoaderManager.getInstance().showImage(holder.getView(R.id.iv_cover), url, null);
                 holder.setText(R.id.tv_title, item.getActTitle());
                 String startTime = DateFormatUtils.formatDate(item.getActStartTime());
@@ -83,7 +82,7 @@ public class ActivityFragment extends BaseFragment<ActivityContract.Presenter> i
 
     @Override
     public void onItemClick(View view, int position) {
-        long actId = mDataList.get(position).getActId();
+        long actId = mDataList.get(position - 1).getActId();
         // TODO  heqidu: 添加活动详细信息页面
         CustomToast.getInstance().show("actId=" + actId);
     }
