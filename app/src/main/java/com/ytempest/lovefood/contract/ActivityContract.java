@@ -16,13 +16,19 @@ import io.reactivex.Observable;
  */
 public interface ActivityContract extends IContract {
     interface Presenter extends IPresenter {
-        void loadActivityList(int pageNum, int pageSize);
-
         void getActivityList(int pageNum, int pageSize);
+
+        void refreshActivityList(int pageNum, int pageSize);
+
+        void loadActivityList(int pageNum, int pageSize);
     }
 
     interface ActivityView extends IView {
         void onGetActivityList(DataList<ActivityInfo> data);
+
+        void onRefreshActivityList(DataList<ActivityInfo> data);
+
+        void onLoadActivityList(DataList<ActivityInfo> data);
     }
 
     interface Model extends IModel {

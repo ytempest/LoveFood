@@ -5,7 +5,6 @@
     android:id="@+id/course_fragment_root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     tools:context="com.ytempest.lovefood.activity.MainActivity">
 

@@ -12,8 +12,7 @@
         android:id="@+id/iv_cover"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="center"
-        android:src="@drawable/default_head" />
+        android:scaleType="centerCrop" />
 
     <View style="@style/gray_line" />
 
@@ -31,9 +30,9 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="6dp"
-            android:text="标题"
+            tools:text="标题"
             android:textColor="#454545"
-            android:textSize="17dp" />
+            android:textSize="17sp" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -44,16 +43,18 @@
             android:paddingTop="3dp">
 
             <TextView
+                android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="2017-12-12至2018-12-12" />
+                tools:text="2017-12-12至2018-12-12" />
 
             <TextView
+                android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:text="已结束" />
+                tools:text="已结束" />
         </FrameLayout>
     </LinearLayout>
 

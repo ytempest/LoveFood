@@ -18,6 +18,6 @@ public class Config {
     /**
      * 活动列表展示的数量
      */
-    public static final int ACTIVITY_PAGE_SIZE =2;
+    public static final int ACTIVITY_PAGE_SIZE =5;
 
 }

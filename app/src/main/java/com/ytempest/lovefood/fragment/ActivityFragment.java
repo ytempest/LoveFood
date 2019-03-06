@@ -2,21 +2,20 @@ package com.ytempest.lovefood.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.ytempest.baselibrary.base.BaseFragment;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
+import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.baselibrary.view.recyclerview.LoadRecyclerView;
+import com.ytempest.baselibrary.view.recyclerview.RefreshRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonRecyclerAdapter;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonViewHolder;
 import com.ytempest.lovefood.R;
-import com.ytempest.lovefood.activity.CookbookListActivity;
 import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
+import com.ytempest.lovefood.common.adapter.DefaultRefreshViewCreator;
 import com.ytempest.lovefood.contract.ActivityContract;
-import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.ActivityInfo;
-import com.ytempest.lovefood.http.data.BaseCookbook;
 import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.presenter.ActivityPresenter;
 import com.ytempest.lovefood.util.Config;
@@ -33,7 +32,7 @@ import butterknife.BindView;
  */
 @InjectPresenter(ActivityPresenter.class)
 public class ActivityFragment extends BaseFragment<ActivityContract.Presenter> implements ActivityContract.ActivityView, ActivityContract,
-        LoadRecyclerView.OnLoadMoreListener, CommonRecyclerAdapter.OnItemClickListener {
+        CommonRecyclerAdapter.OnItemClickListener, LoadRecyclerView.OnLoadMoreListener, RefreshRecyclerView.OnRefreshMoreListener {
 
     private static final String TAG = "ActivityFragment";
 
@@ -58,7 +57,17 @@ public class ActivityFragment extends BaseFragment<ActivityContract.Presenter> i
                 getActivity(), mDataList, R.layout.item_activity) {
             @Override
             protected void bindViewData(CommonViewHolder holder, ActivityInfo item) {
-
+                // FIXME heqidu: 2019/3/6
+                String url = item.getActImageUrl();
+//                String url = RetrofitClient.client().getUrl() + item.getActImageUrl();
+                ImageLoaderManager.getInstance().showImage(holder.getView(R.id.iv_cover), url, null);
+                holder.setText(R.id.tv_title, item.getActTitle());
+                String startTime = DateFormatUtils.formatDate(item.getActStartTime());
+                Long finishTime = item.getActFinishTime();
+                String finishTimeStr = DateFormatUtils.formatDate(finishTime);
+                holder.setText(R.id.tv_time, startTime + " 至 " + finishTimeStr);
+                String status = System.currentTimeMillis() > finishTime ? "已结束" : "进行中";
+                holder.setText(R.id.tv_status, status);
             }
         };
         mAdapter.setOnItemClickListener(this);
@@ -74,13 +83,18 @@ public class ActivityFragment extends BaseFragment<ActivityContract.Presenter> i
 
     @Override
     public void onItemClick(View view, int position) {
-
+        long actId = mDataList.get(position).getActId();
+        // TODO  heqidu: 添加活动详细信息页面
+        CustomToast.getInstance().show("actId=" + actId);
     }
 
     /* MVP View */
 
     @Override
     public void onGetActivityList(DataList<ActivityInfo> data) {
+        mRecyclerView.setRefreshViewCreator(new DefaultRefreshViewCreator());
+        mRecyclerView.setOnRefreshMoreListener(this);
+
         int lastPosition = mDataList.size();
         mDataList.addAll(data.getList());
 
@@ -99,11 +113,40 @@ public class ActivityFragment extends BaseFragment<ActivityContract.Presenter> i
         }
     }
 
+    @Override
+    public void onRefreshActivityList(DataList<ActivityInfo> data) {
+        mDataList.clear();
+        mDataList.addAll(data.getList());
+
+        // 添加上拉刷新的View
+        addLoadView(data);
+
+        mAdapter.notifyDataSetChanged();
+        mRecyclerView.stopRefresh();
+    }
+
+    @Override
+    public void onLoadActivityList(DataList<ActivityInfo> data) {
+        int lastPosition = mDataList.size();
+        mDataList.addAll(data.getList());
+        mAdapter.notifyItemInserted(lastPosition + 1);
+        mRecyclerView.stopLoad();
+        if (mPageNum == data.getPageCount()) {
+            mRecyclerView.removeLoadViewCreator();
+        }
+    }
+
     /* Load */
+
+    @Override
+    public void onRefresh() {
+        mPageNum = 1;
+        getPresenter().refreshActivityList(mPageNum, Config.ACTIVITY_PAGE_SIZE);
+    }
 
     @Override
     public void onLoad() {
         mPageNum++;
-        getPresenter().loadActivityList(mPageNum, Config.PAGE_SIZE);
+        getPresenter().loadActivityList(mPageNum, Config.ACTIVITY_PAGE_SIZE);
     }
 }
