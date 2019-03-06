@@ -157,19 +157,17 @@ public class LoadRecyclerView extends RefreshRecyclerView {
                     return super.onTouchEvent(e);
                 }
 
-                if (mCurrentDrag) {
-                    scrollToPosition(getAdapter().getItemCount() - 1);
-                }
-
                 // 获取手指触摸拖拽的距离
                 int distanceY = (int) ((e.getRawY() - mFingerDownY) * mDragIndex);
 
-                if (distanceY < 0) {
+                updateLoadViewStatus(-distanceY);
+
+                if (mCurrentLoadStatus != LOAD_STATUS_NORMAL) {
                     if (mLoadViewCreator != null) {
-                        updateLoadViewStatus(-distanceY);
                         mLoadViewCreator.onPull(-distanceY, mLoadViewHeight, mCurrentLoadStatus);
                     }
-                    setLoadViewBottomMargin(-distanceY);
+                    int bottomMargin = -distanceY + mLoadViewHeight;
+                    setLoadViewBottomMargin(bottomMargin);
                     mCurrentDrag = true;
                     // 返回true代表消费该触摸事件，不再传递
                     return true;
