@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tool:context="com.ytempest.lovefood.activity.EditCookbookActivity">
+    tool:context="com.ytempest.lovefood.mvp.view.EditCookbookActivity">
 
 
     <com.ytempest.framelibrary.view.NavigationView

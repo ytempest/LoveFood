@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="30dp"
     android:orientation="vertical"
-    tools:context="com.ytempest.lovefood.activity.MainActivity">
+    tools:context="com.ytempest.lovefood.mvp.view.MainActivity">
 
     <ImageView
         android:id="@+id/iv_cover"

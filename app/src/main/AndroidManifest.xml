@@ -25,7 +25,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activity.WelcomeActivity"
+            android:name=".mvp.view.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
             <intent-filter>
@@ -35,23 +35,23 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".mvp.view.MainActivity">
             <!--        <intent-filter>
                         <action android:name="android.intent.action.MAIN" />
 
                         <category android:name="android.intent.category.LAUNCHER" />
                     </intent-filter>-->
         </activity>
-        <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.personal.PreviewUserActivity" />
-        <activity android:name=".activity.personal.AccountManageActivity" />
-        <activity android:name=".activity.personal.UpdateUserActivity" />
-        <activity android:name=".activity.personal.UpdatePasswordActivity" />
-        <activity android:name=".activity.personal.MyCookbookActivity" />
-        <activity android:name=".activity.PreviewCookbookActivity" />
-        <activity android:name=".activity.EditCookbookActivity" />
-        <activity android:name=".activity.CookbookListActivity" />
+        <activity android:name=".mvp.view.LoginActivity" />
+        <activity android:name=".mvp.view.RegisterActivity" />
+        <activity android:name=".mvp.view.personal.PreviewUserActivity" />
+        <activity android:name=".mvp.view.personal.AccountManageActivity" />
+        <activity android:name=".mvp.view.personal.UpdateUserActivity" />
+        <activity android:name=".mvp.view.personal.UpdatePasswordActivity" />
+        <activity android:name=".mvp.view.personal.MyCookbookActivity" />
+        <activity android:name=".mvp.view.PreviewCookbookActivity" />
+        <activity android:name=".mvp.view.EditCookbookActivity" />
+        <activity android:name=".mvp.view.CookbookListActivity" />
 
         <meta-data
             android:name="Mob-AppKey"

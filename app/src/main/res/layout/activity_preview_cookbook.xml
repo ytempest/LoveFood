@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tool:context="com.ytempest.lovefood.activity.personal.PreviewUserActivity">
+    tool:context="com.ytempest.lovefood.mvp.view.personal.PreviewUserActivity">
 
 
     <com.ytempest.framelibrary.view.NavigationView
