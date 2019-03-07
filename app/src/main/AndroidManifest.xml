@@ -44,11 +44,15 @@
         </activity>
         <activity android:name=".mvp.view.LoginActivity" />
         <activity android:name=".mvp.view.RegisterActivity" />
+
         <activity android:name=".mvp.view.personal.PreviewUserActivity" />
         <activity android:name=".mvp.view.personal.AccountManageActivity" />
         <activity android:name=".mvp.view.personal.UpdateUserActivity" />
         <activity android:name=".mvp.view.personal.UpdatePasswordActivity" />
         <activity android:name=".mvp.view.personal.MyCookbookActivity" />
+
+        <activity android:name=".mvp.view.topic.TopicDetailActivity" />
+
         <activity android:name=".mvp.view.PreviewCookbookActivity" />
         <activity android:name=".mvp.view.EditCookbookActivity" />
         <activity android:name=".mvp.view.CookbookListActivity" />

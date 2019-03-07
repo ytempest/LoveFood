@@ -79,9 +79,9 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
                 titleView.setText(String.format("## %s ##", item.getTopicTitle()));
                 TextView contentView = holder.getView(R.id.tv_content);
                 contentView.setText(item.getTopicContent());
-                titleView.setTag(item.getTopicId());
+                titleView.setTag(item);
                 titleView.setOnClickListener(OPEN_TOPIC_DETAIL_LISTENER);
-                contentView.setTag(item.getTopicId());
+                contentView.setTag(item);
                 contentView.setOnClickListener(OPEN_TOPIC_DETAIL_LISTENER);
 
                 PicturesLayout picturesLayout = holder.getView(R.id.picture_layout);
@@ -108,9 +108,8 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
     private final View.OnClickListener OPEN_TOPIC_DETAIL_LISTENER = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            long topicId = (long) v.getTag();
-            // TODO: 2019/03/03 等待加入打开话题详情页的逻辑
-            CustomToast.getInstance().show("topicId=" + topicId);
+            TopicInfo info = (TopicInfo) v.getTag();
+            TopicDetailActivity.startActivity(getActivity(), info);
         }
     };
 
