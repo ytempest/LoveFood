@@ -2,11 +2,8 @@ package com.ytempest.lovefood.mvp.view.topic;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,7 +13,6 @@ import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.view.dialog.AlertDialog;
 import com.ytempest.baselibrary.view.recyclerview.LoadRecyclerView;
-import com.ytempest.baselibrary.view.recyclerview.RefreshRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonRecyclerAdapter;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonViewHolder;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
@@ -24,22 +20,18 @@ import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.aop.CheckNet;
 import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
-import com.ytempest.lovefood.common.adapter.DefaultRefreshViewCreator;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.BaseCookbook;
 import com.ytempest.lovefood.http.data.CommentInfo;
 import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.http.data.TopicInfo;
-import com.ytempest.lovefood.mvp.contract.CookbookListContract;
 import com.ytempest.lovefood.mvp.contract.TopicDetailContract;
-import com.ytempest.lovefood.mvp.presenter.CookbookListPresenter;
 import com.ytempest.lovefood.mvp.presenter.TopicDetailPresenter;
 import com.ytempest.lovefood.mvp.view.EditCookbookActivity;
-import com.ytempest.lovefood.mvp.view.PreviewCookbookActivity;
-import com.ytempest.lovefood.util.CommonUtils;
 import com.ytempest.lovefood.util.Config;
 import com.ytempest.lovefood.util.DateFormatUtils;
 import com.ytempest.lovefood.util.JSON;
+import com.ytempest.lovefood.widget.PicturesLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +42,7 @@ import butterknife.BindView;
 public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Presenter>
         implements TopicDetailContract.TopicDetailView, TopicDetailContract,
         CommonRecyclerAdapter.OnItemClickListener,
-       LoadRecyclerView.OnLoadMoreListener, CommonRecyclerAdapter.OnLongClickListener {
+        LoadRecyclerView.OnLoadMoreListener, CommonRecyclerAdapter.OnLongClickListener {
 
     private static final String TAG = "TopicDetailActivity";
 
@@ -66,8 +58,8 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
 
     private int mPageNum = 1;
 
-//    @BindView(R.id.navigation_view)
-//    protected NavigationView mNavigationView;
+    @BindView(R.id.navigation_view)
+    protected NavigationView mNavigationView;
 
     @BindView(R.id.recycler_view)
     protected LoadRecyclerView mRecyclerView;
@@ -79,7 +71,7 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_topic_detail;
+        return R.layout.activity_list;
     }
 
     @Override
@@ -87,8 +79,8 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
         String json = getIntent().getStringExtra(KEY_TOPIC_INFO);
         mTopicInfo = JSON.from(json, TopicInfo.class);
 
-//        mNavigationView.enableLeftFinish(this);
-//        mNavigationView.setTitleText(mType);
+        mNavigationView.enableLeftFinish(this);
+        mNavigationView.setTitleText("话题详情");
     }
 
     @Override
@@ -108,6 +100,30 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnItemLongClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addHeaderView(getTopicHeadView(mRecyclerView, mTopicInfo));
+    }
+
+    private View getTopicHeadView(ViewGroup viewGroup, TopicInfo info) {
+        View view = LayoutInflater.from(this).inflate(R.layout.view_head_topic_detail, viewGroup, false);
+        ImageView headView = view.findViewById(R.id.iv_head);
+        TextView nameView = view.findViewById(R.id.tv_name);
+        TextView timeView = view.findViewById(R.id.tv_time);
+        TextView titleView = view.findViewById(R.id.tv_title);
+        TextView contentView = view.findViewById(R.id.tv_content);
+        PicturesLayout picturesLayout = view.findViewById(R.id.picture_layout);
+        view.findViewById(R.id.tv_comment).setVisibility(View.GONE);
+        TextView commentView = view.findViewById(R.id.tv_comment_count);
+
+        String url = RetrofitClient.client().getUrl() + info.getUserHeadUrl();
+        ImageLoaderManager.getInstance().showImage(headView, url, null);
+        nameView.setText(info.getUserAccount());
+        timeView.setText(DateFormatUtils.formatTime(info.getTopicPublishTime()));
+        titleView.setText(String.format("## %s ##", info.getTopicTitle()));
+        contentView.setText(info.getTopicContent());
+        picturesLayout.setPictureUrlList(info.getTopicImage());
+        long count = info.getCommentCount() != null ? info.getCommentCount() : 0;
+        commentView.setText("评论 " + count);
+        return view;
     }
 
     @Override
