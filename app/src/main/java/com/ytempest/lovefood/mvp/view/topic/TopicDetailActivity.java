@@ -50,7 +50,7 @@ import butterknife.BindView;
 public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Presenter>
         implements TopicDetailContract.TopicDetailView, TopicDetailContract,
         CommonRecyclerAdapter.OnItemClickListener,
-        RefreshRecyclerView.OnRefreshMoreListener, LoadRecyclerView.OnLoadMoreListener, CommonRecyclerAdapter.OnLongClickListener {
+       LoadRecyclerView.OnLoadMoreListener, CommonRecyclerAdapter.OnLongClickListener {
 
     private static final String TAG = "TopicDetailActivity";
 
@@ -76,8 +76,6 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
     private CommonRecyclerAdapter<CommentInfo> mAdapter;
     private final DefaultLoadViewCreator LOAD_CREATOR = new DefaultLoadViewCreator();
 
-    private String mGroup;
-    private String mType;
 
     @Override
     protected int getLayoutResId() {
@@ -89,15 +87,6 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
         String json = getIntent().getStringExtra(KEY_TOPIC_INFO);
         mTopicInfo = JSON.from(json, TopicInfo.class);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-        collapsingToolbarLayout.setTitle("蕾米莉亚");
-
 //        mNavigationView.enableLeftFinish(this);
 //        mNavigationView.setTitleText(mType);
     }
@@ -107,6 +96,8 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
         for (int i = 0; i < 10; i++) {
             mDataList.add(new CommentInfo());
         }
+        mRecyclerView.setLoadViewCreator(LOAD_CREATOR);
+        mRecyclerView.setOnLoadMoreListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(TopicDetailActivity.this));
         mAdapter = new CommonRecyclerAdapter<CommentInfo>(
                 TopicDetailActivity.this, mDataList, R.layout.item_cook_book) {
@@ -117,7 +108,6 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnItemLongClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
-
     }
 
     @Override
@@ -222,12 +212,6 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
 //    }
 
     /* Load */
-
-    @Override
-    public void onRefresh() {
-        mPageNum = 1;
-//        getPresenter().refreshCookbookList(mPageNum, Config.PAGE_SIZE, mGroup, mType);
-    }
 
     @Override
     public void onLoad() {
