@@ -20,6 +20,7 @@ import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.aop.CheckNet;
 import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
+import com.ytempest.lovefood.common.adapter.DefaultRefreshViewCreator;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.BaseCookbook;
 import com.ytempest.lovefood.http.data.CommentInfo;
@@ -28,6 +29,7 @@ import com.ytempest.lovefood.http.data.TopicInfo;
 import com.ytempest.lovefood.mvp.contract.TopicDetailContract;
 import com.ytempest.lovefood.mvp.presenter.TopicDetailPresenter;
 import com.ytempest.lovefood.mvp.view.EditCookbookActivity;
+import com.ytempest.lovefood.util.CommonUtils;
 import com.ytempest.lovefood.util.Config;
 import com.ytempest.lovefood.util.DateFormatUtils;
 import com.ytempest.lovefood.util.JSON;
@@ -85,16 +87,19 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
 
     @Override
     protected void initView() {
-        for (int i = 0; i < 10; i++) {
-            mDataList.add(new CommentInfo());
-        }
-        mRecyclerView.setLoadViewCreator(LOAD_CREATOR);
-        mRecyclerView.setOnLoadMoreListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(TopicDetailActivity.this));
         mAdapter = new CommonRecyclerAdapter<CommentInfo>(
-                TopicDetailActivity.this, mDataList, R.layout.item_cook_book) {
+                TopicDetailActivity.this, mDataList, R.layout.item_comment) {
             @Override
             protected void bindViewData(CommonViewHolder holder, CommentInfo item) {
+                String url = RetrofitClient.client().getUrl() + item.getUserHeadUrl();
+                ImageView headView = holder.getView(R.id.iv_head);
+                ImageLoaderManager.getInstance().showImage(headView, url, null);
+                holder.setText(R.id.tv_name, item.getUserAccount());
+                holder.setText(R.id.tv_time, DateFormatUtils.formatTime(item.getCommentTime()));
+                holder.setText(R.id.tv_content, item.getCommentContent());
+                long count = item.getReplyCount() != null ? item.getReplyCount() : 0;
+                holder.setText(R.id.tv_comment_count, String.format("共%s条回复", count));
             }
         };
         mAdapter.setOnItemClickListener(this);
@@ -128,7 +133,7 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
 
     @Override
     protected void initData() {
-//        getPresenter().getCookbookList(mPageNum, Config.PAGE_SIZE, mGroup, mType);
+        getPresenter().getCommentList(mTopicInfo.getTopicId(), mPageNum, Config.PAGE_SIZE);
     }
 
     /* Click */
@@ -174,40 +179,18 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
 
     /* MVP View */
 
-//    @Override
-//    public void onGetCookbookList(DataList<BaseCookbook> data) {
-//        mRecyclerView.setRefreshViewCreator(new DefaultRefreshViewCreator());
-//        mRecyclerView.setOnRefreshMoreListener(this);
-//
-//        int lastPosition = mDataList.size();
-//        mDataList.addAll(data.getList());
-//
-//        // 添加上拉刷新的View
-//        addLoadView(data);
-//
-//        mAdapter.notifyItemInserted(lastPosition);
-//    }
+    @Override
+    public void onGetCommentListSuccess(DataList<CommentInfo> data) {
+        int lastPosition = mDataList.size();
+        mDataList.addAll(data.getList());
 
-//    @Override
-//    public void onFailGetCookbookList(String msg) {
-//        TextView tipText = CommonUtils.getTipText(getContext(), mRecyclerView);
-//        tipText.setText(msg);
-//        mRecyclerView.addHeaderView(tipText);
-//    }
+        // 添加上拉刷新的View
+        addLoadView(data);
 
-//    @Override
-//    public void onRefreshCookbookList(DataList<BaseCookbook> data) {
-//        mDataList.clear();
-//        mDataList.addAll(data.getList());
-//
-//        // 添加上拉刷新的View
-//        addLoadView(data);
-//
-//        mAdapter.notifyDataSetChanged();
-//        mRecyclerView.stopRefresh();
-//    }
+        mAdapter.notifyItemInserted(lastPosition + 1);
+    }
 
-    private void addLoadView(DataList<BaseCookbook> data) {
+    private void addLoadView(DataList<CommentInfo> data) {
         long total = data.getTotal();
         if (total > Config.PAGE_SIZE) {
             mRecyclerView.removeLoadViewCreator();
@@ -215,6 +198,15 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
             mRecyclerView.setOnLoadMoreListener(this);
         }
     }
+
+    @Override
+    public void onGetCommentListFail(String msg) {
+        // TODO: 2019/03/10 无评论时的错误没有展示
+        TextView tipText = CommonUtils.getTipText(getContext(), mRecyclerView);
+        tipText.setText(msg);
+        mRecyclerView.addHeaderView(tipText);
+    }
+
 
 //    @Override
 //    public void onLoadCookbookList(DataList<BaseCookbook> data) {

@@ -3,6 +3,7 @@ package com.ytempest.lovefood.http;
 import com.ytempest.lovefood.http.data.ActivityInfo;
 import com.ytempest.lovefood.http.data.BaseCookbook;
 import com.ytempest.lovefood.http.data.BaseResult;
+import com.ytempest.lovefood.http.data.CommentInfo;
 import com.ytempest.lovefood.http.data.CookbookInfo;
 import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.http.data.TopicInfo;
@@ -105,7 +106,12 @@ public interface ApiService {
                                                              @Query("pageSize") int pageSize);
 
 
-    /*---------   话题接口   ---------*/
+    @GET("topic/info")
+    Observable<BaseResult<DataList<CommentInfo>>> getCommentList(@Query("topicId") long topicId,
+                                                                 @Query("pageNum") int pageNum,
+                                                                 @Query("pageSize") int pageSize);
+
+    /*---------   菜谱接口   ---------*/
 
     @GET("cook/list")
     Observable<BaseResult<DataList<BaseCookbook>>> getCookbookList(@Query("pageNum") int pageNum,
@@ -113,10 +119,9 @@ public interface ApiService {
                                                                    @Query("cookGroup") String group,
                                                                    @Query("cookType") String type);
 
-    /*---------   话题接口   ---------*/
+    /*---------   活动接口   ---------*/
 
     @GET("activity/list")
     Observable<BaseResult<DataList<ActivityInfo>>> getActivityList(@Query("pageNum") int pageNum,
                                                                    @Query("pageSize") int pageSize);
-
 }

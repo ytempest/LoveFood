@@ -5,8 +5,8 @@ import com.ytempest.baselibrary.base.mvp.IModel;
 import com.ytempest.baselibrary.base.mvp.IPresenter;
 import com.ytempest.baselibrary.base.mvp.IView;
 import com.ytempest.lovefood.http.data.BaseResult;
+import com.ytempest.lovefood.http.data.CommentInfo;
 import com.ytempest.lovefood.http.data.DataList;
-import com.ytempest.lovefood.http.data.TopicInfo;
 
 import io.reactivex.Observable;
 
@@ -17,13 +17,18 @@ import io.reactivex.Observable;
 public interface TopicDetailContract extends IContract {
     interface Presenter extends IPresenter {
 
+        void getCommentList(long topicId, int pageNum, int pageSize);
     }
 
     interface TopicDetailView extends IView {
 
+        void onGetCommentListSuccess(DataList<CommentInfo> data);
+
+        void onGetCommentListFail(String msg);
     }
 
     interface Model extends IModel {
 
+        Observable<BaseResult<DataList<CommentInfo>>> getCommentList(long topicId, int pageNum, int pageSize);
     }
 }
