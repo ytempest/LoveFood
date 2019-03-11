@@ -4,7 +4,6 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -71,7 +70,8 @@
             android:layout_marginLeft="50dp"
             android:layout_marginTop="7dp"
             android:autoLink="all"
-            android:background="@color/common_bg"
+            android:background="@drawable/selector_comment_bg"
+            android:clickable="true"
             android:padding="6dp"
             tool:text="共20条回复" />
 

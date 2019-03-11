@@ -18,6 +18,8 @@ public interface TopicDetailContract extends IContract {
     interface Presenter extends IPresenter {
 
         void getCommentList(long topicId, int pageNum, int pageSize);
+
+        void loadCommentList(Long topicId, int pageNum, int pageSize);
     }
 
     interface TopicDetailView extends IView {
@@ -25,6 +27,8 @@ public interface TopicDetailContract extends IContract {
         void onGetCommentListSuccess(DataList<CommentInfo> data);
 
         void onGetCommentListFail(String msg);
+
+        void onLoadCommentList(DataList<CommentInfo> data);
     }
 
     interface Model extends IModel {

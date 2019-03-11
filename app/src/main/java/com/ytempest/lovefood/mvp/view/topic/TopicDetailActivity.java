@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
@@ -20,7 +21,6 @@ import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.aop.CheckNet;
 import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
-import com.ytempest.lovefood.common.adapter.DefaultRefreshViewCreator;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.BaseCookbook;
 import com.ytempest.lovefood.http.data.CommentInfo;
@@ -29,6 +29,7 @@ import com.ytempest.lovefood.http.data.TopicInfo;
 import com.ytempest.lovefood.mvp.contract.TopicDetailContract;
 import com.ytempest.lovefood.mvp.presenter.TopicDetailPresenter;
 import com.ytempest.lovefood.mvp.view.EditCookbookActivity;
+import com.ytempest.lovefood.mvp.view.personal.PreviewUserActivity;
 import com.ytempest.lovefood.util.CommonUtils;
 import com.ytempest.lovefood.util.Config;
 import com.ytempest.lovefood.util.DateFormatUtils;
@@ -39,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 @InjectPresenter(TopicDetailPresenter.class)
 public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Presenter>
@@ -73,7 +75,7 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_list;
+        return R.layout.activity_topic_detail;
     }
 
     @Override
@@ -82,7 +84,6 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
         mTopicInfo = JSON.from(json, TopicInfo.class);
 
         mNavigationView.enableLeftFinish(this);
-        mNavigationView.setTitleText("话题详情");
     }
 
     @Override
@@ -95,11 +96,19 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
                 String url = RetrofitClient.client().getUrl() + item.getUserHeadUrl();
                 ImageView headView = holder.getView(R.id.iv_head);
                 ImageLoaderManager.getInstance().showImage(headView, url, null);
+                View userView = holder.getView(R.id.ll_user_container);
+                userView.setTag(item.getCommentFromUser());
+                userView.setOnClickListener(PREVIEW_USER_INFO);
                 holder.setText(R.id.tv_name, item.getUserAccount());
                 holder.setText(R.id.tv_time, DateFormatUtils.formatTime(item.getCommentTime()));
                 holder.setText(R.id.tv_content, item.getCommentContent());
-                long count = item.getReplyCount() != null ? item.getReplyCount() : 0;
-                holder.setText(R.id.tv_comment_count, String.format("共%s条回复", count));
+                Long count = item.getReplyCount();
+                if (count == null) {
+                    holder.setViewVisibility(R.id.tv_comment_count, View.GONE);
+
+                } else {
+                    holder.setText(R.id.tv_comment_count, String.format("共%s条回复", count));
+                }
             }
         };
         mAdapter.setOnItemClickListener(this);
@@ -131,6 +140,14 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
         return view;
     }
 
+    private final View.OnClickListener PREVIEW_USER_INFO = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            long userId = (long) v.getTag();
+            PreviewUserActivity.startActivity(TopicDetailActivity.this, userId);
+        }
+    };
+
     @Override
     protected void initData() {
         getPresenter().getCommentList(mTopicInfo.getTopicId(), mPageNum, Config.PAGE_SIZE);
@@ -142,6 +159,24 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
     @Override
     public void onItemClick(View view, int position) {
 
+    }
+
+    private AlertDialog mCommentDialog;
+
+    @CheckNet
+    @OnClick(R.id.ll_comment)
+    protected void onCommentClick(View view) {
+        if (mCommentDialog == null) {
+            mCommentDialog = new AlertDialog.Builder(TopicDetailActivity.this, R.style.comment_dialog)
+                    .setContentView(R.layout.dialog_comment_frame)
+                    .addDefaultAnimation()
+                    .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    .fullWidth()
+                    .formBottom(true)
+                    .setCanceledOnTouchOutside(true)
+                    .create();
+        }
+        mCommentDialog.show();
     }
 
     @Override
@@ -201,30 +236,30 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
 
     @Override
     public void onGetCommentListFail(String msg) {
-        // TODO: 2019/03/10 无评论时的错误没有展示
-        TextView tipText = CommonUtils.getTipText(getContext(), mRecyclerView);
+        // TODO: 2019/03/11
+        TextView tipText = CommonUtils.getTipText(TopicDetailActivity.this, mRecyclerView);
         tipText.setText(msg);
         mRecyclerView.addHeaderView(tipText);
     }
 
 
-//    @Override
-//    public void onLoadCookbookList(DataList<BaseCookbook> data) {
-//        int lastPosition = mDataList.size();
-//        mDataList.addAll(data.getList());
-//        mAdapter.notifyItemInserted(lastPosition + 1);
-//        mRecyclerView.stopLoad();
-//        if (mPageNum == data.getPageCount()) {
-//            mRecyclerView.removeLoadViewCreator();
-//        }
-//    }
+    @Override
+    public void onLoadCommentList(DataList<CommentInfo> data) {
+        int lastPosition = mDataList.size();
+        mDataList.addAll(data.getList());
+        mAdapter.notifyItemInserted(lastPosition + 1);
+        mRecyclerView.stopLoad();
+        if (mPageNum == data.getPageCount()) {
+            mRecyclerView.removeLoadViewCreator();
+        }
+    }
 
     /* Load */
 
     @Override
     public void onLoad() {
         mPageNum++;
-//        getPresenter().loadCookbookList(mPageNum, Config.PAGE_SIZE, mGroup, mType);
+        getPresenter().loadCommentList(mTopicInfo.getTopicId(), mPageNum, Config.PAGE_SIZE);
     }
 
 }

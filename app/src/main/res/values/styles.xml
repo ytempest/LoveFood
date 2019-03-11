@@ -52,5 +52,16 @@
         <item name="android:visibility">invisible</item>
     </style>
 
+    <!-- 评论对话框的样式 -->
+    <style name="comment_dialog">
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 弹出dialog后允许背景变暗 -->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+    </style>
 
 </resources>

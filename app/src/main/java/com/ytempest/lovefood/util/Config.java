@@ -14,7 +14,7 @@ public class Config {
     /**
      * 每一个列表展示的数量
      */
-    public static final int PAGE_SIZE = 10;
+    public static final int PAGE_SIZE = 3;
     /**
      * 活动列表展示的数量
      */

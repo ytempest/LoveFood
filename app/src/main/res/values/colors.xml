@@ -30,4 +30,8 @@
     <color name="personal_text_color">#636363</color>
 
 
+    <!-- TopicDetailActivity -->
+    <color name="common_normal_bg">@color/common_bg</color>
+    <color name="common_press_bg">#eeeeee</color>
+
 </resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_rectangle_frame"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <EditText
+        style="@style/edit_text_padding_style"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:hint="说点什么吧。"
+        android:textColor="#636363"
+        android:textSize="16sp" />
+
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="6dp"
+        android:textColor="#616161"
+        android:background="@drawable/selector_round_corner_common_bg"
+        android:text="发送" />
+</LinearLayout>

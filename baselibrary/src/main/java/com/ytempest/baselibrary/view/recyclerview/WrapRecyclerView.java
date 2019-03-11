@@ -99,6 +99,7 @@ public class WrapRecyclerView extends RecyclerView {
         }
         if (mWrapRecyclerAdapter != null) {
             mWrapRecyclerAdapter.addHeaderView(headerView);
+            mWrapRecyclerAdapter.notifyDataSetChanged();
         }
     }
 

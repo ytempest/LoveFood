@@ -36,4 +36,19 @@ public class TopicDetailPresenter extends BasePresenter<TopicDetailContract.Topi
                     }
                 });
     }
+
+    @Override
+    public void loadCommentList(Long topicId, int pageNum, int pageSize) {
+        getModel().getCommentList(topicId, pageNum, pageSize)
+                .subscribe(new BaseObserver<BaseResult<DataList<CommentInfo>>>() {
+                    @Override
+                    public void onNext(BaseResult<DataList<CommentInfo>> result) {
+                        super.onNext(result);
+                        int code = result.getCode();
+                        if (code == ResultUtils.SUCCESS) {
+                            getView().onLoadCommentList(result.getData());
+                        }
+                    }
+                });
+    }
 }
