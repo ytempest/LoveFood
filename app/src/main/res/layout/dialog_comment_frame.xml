@@ -9,20 +9,22 @@
     android:orientation="horizontal">
 
     <EditText
-        style="@style/edit_text_padding_style"
+        android:id="@+id/et_comment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@android:color/transparent"
-        android:hint="说点什么吧。"
+        android:hint="说点什么吧..."
+        android:padding="10dp"
         android:textColor="#636363"
         android:textSize="16sp" />
 
     <Button
+        android:id="@+id/bt_send"
         android:layout_width="60dp"
         android:layout_height="30dp"
         android:layout_marginRight="6dp"
-        android:textColor="#616161"
         android:background="@drawable/selector_round_corner_common_bg"
-        android:text="发送" />
+        android:text="发送"
+        android:textColor="#616161" />
 </LinearLayout>

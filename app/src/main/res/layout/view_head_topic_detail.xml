@@ -26,4 +26,6 @@
 
     <View style="@style/gray_line" />
 
+    <include layout="@layout/view_list_tip" />
+
 </LinearLayout>

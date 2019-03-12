@@ -4,7 +4,7 @@ package com.ytempest.lovefood.http.data;
  * @author ytempest
  *         Description：
  */
-public class CommentInfo {
+public class CommentDetailInfo {
     private Long commentId;
     private Long commentFromUser;
     private String userHeadUrl;
@@ -71,7 +71,7 @@ public class CommentInfo {
 
     @Override
     public String toString() {
-        return "CommentInfo{" +
+        return "CommentDetailInfo{" +
                 "commentId=" + commentId +
                 ", commentFromUser=" + commentFromUser +
                 ", userHeadUrl='" + userHeadUrl + '\'' +

@@ -37,4 +37,13 @@ public class NumberUtils {
         }
         return 0L;
     }
+
+    public static boolean isEmpty(Integer count) {
+        return count == null || count == 0;
+    }
+
+    public static boolean isEmpty(Long count) {
+        return count == null || count == 0;
+    }
+
 }

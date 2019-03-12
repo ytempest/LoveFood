@@ -3,11 +3,11 @@ package com.ytempest.lovefood.mvp.view.topic;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
@@ -22,10 +22,12 @@ import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.aop.CheckNet;
 import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
 import com.ytempest.lovefood.http.RetrofitClient;
+import com.ytempest.lovefood.http.data.BaseComment;
 import com.ytempest.lovefood.http.data.BaseCookbook;
-import com.ytempest.lovefood.http.data.CommentInfo;
+import com.ytempest.lovefood.http.data.CommentDetailInfo;
 import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.http.data.TopicInfo;
+import com.ytempest.lovefood.http.data.UserInfo;
 import com.ytempest.lovefood.mvp.contract.TopicDetailContract;
 import com.ytempest.lovefood.mvp.presenter.TopicDetailPresenter;
 import com.ytempest.lovefood.mvp.view.EditCookbookActivity;
@@ -34,6 +36,8 @@ import com.ytempest.lovefood.util.CommonUtils;
 import com.ytempest.lovefood.util.Config;
 import com.ytempest.lovefood.util.DateFormatUtils;
 import com.ytempest.lovefood.util.JSON;
+import com.ytempest.lovefood.util.NumberUtils;
+import com.ytempest.lovefood.util.UserHelper;
 import com.ytempest.lovefood.widget.PicturesLayout;
 
 import java.util.ArrayList;
@@ -68,8 +72,8 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
     @BindView(R.id.recycler_view)
     protected LoadRecyclerView mRecyclerView;
 
-    private List<CommentInfo> mDataList = new ArrayList<>();
-    private CommonRecyclerAdapter<CommentInfo> mAdapter;
+    private List<CommentDetailInfo> mDataList = new ArrayList<>();
+    private CommonRecyclerAdapter<CommentDetailInfo> mAdapter;
     private final DefaultLoadViewCreator LOAD_CREATOR = new DefaultLoadViewCreator();
 
 
@@ -89,10 +93,10 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
     @Override
     protected void initView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(TopicDetailActivity.this));
-        mAdapter = new CommonRecyclerAdapter<CommentInfo>(
+        mAdapter = new CommonRecyclerAdapter<CommentDetailInfo>(
                 TopicDetailActivity.this, mDataList, R.layout.item_comment) {
             @Override
-            protected void bindViewData(CommonViewHolder holder, CommentInfo item) {
+            protected void bindViewData(CommonViewHolder holder, CommentDetailInfo item) {
                 String url = RetrofitClient.client().getUrl() + item.getUserHeadUrl();
                 ImageView headView = holder.getView(R.id.iv_head);
                 ImageLoaderManager.getInstance().showImage(headView, url, null);
@@ -103,7 +107,7 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
                 holder.setText(R.id.tv_time, DateFormatUtils.formatTime(item.getCommentTime()));
                 holder.setText(R.id.tv_content, item.getCommentContent());
                 Long count = item.getReplyCount();
-                if (count == null) {
+                if (NumberUtils.isEmpty(count)) {
                     holder.setViewVisibility(R.id.tv_comment_count, View.GONE);
 
                 } else {
@@ -137,7 +141,14 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
         picturesLayout.setPictureUrlList(info.getTopicImage());
         long count = info.getCommentCount() != null ? info.getCommentCount() : 0;
         commentView.setText("评论 " + count);
+        setTipView(view);
         return view;
+    }
+
+    private void setTipView(View view) {
+        TextView tipText = view.findViewById(R.id.tv_tip_text);
+        tipText.setText("正在加载...");
+        mLoadingView = tipText;
     }
 
     private final View.OnClickListener PREVIEW_USER_INFO = new View.OnClickListener() {
@@ -167,16 +178,34 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
     @OnClick(R.id.ll_comment)
     protected void onCommentClick(View view) {
         if (mCommentDialog == null) {
-            mCommentDialog = new AlertDialog.Builder(TopicDetailActivity.this, R.style.comment_dialog)
-                    .setContentView(R.layout.dialog_comment_frame)
-                    .addDefaultAnimation()
-                    .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    .fullWidth()
-                    .formBottom(true)
-                    .setCanceledOnTouchOutside(true)
-                    .create();
+            mCommentDialog = getCommentDialog();
         }
         mCommentDialog.show();
+    }
+
+    private AlertDialog getCommentDialog() {
+        AlertDialog dialog = new AlertDialog.Builder(TopicDetailActivity.this, R.style.comment_dialog)
+                .setContentView(R.layout.dialog_comment_frame)
+                .addDefaultAnimation()
+                .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                .fullWidth()
+                .formBottom(true)
+                .setCanceledOnTouchOutside(true)
+                .create();
+        dialog.setOnClickListener(R.id.bt_send, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView contentView = dialog.getView(R.id.et_comment);
+                String content = contentView.getText().toString();
+                if (!TextUtils.isEmpty(content)) {
+                    long topicId = mTopicInfo.getTopicId();
+                    long fromUser = UserHelper.getInstance().getUserInfo().getUserId();
+                    long toUser = mTopicInfo.getUserId();
+                    getPresenter().addComment(topicId, content, fromUser, toUser);
+                }
+            }
+        });
+        return dialog;
     }
 
     @Override
@@ -215,7 +244,10 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
     /* MVP View */
 
     @Override
-    public void onGetCommentListSuccess(DataList<CommentInfo> data) {
+    public void onGetCommentListSuccess(DataList<CommentDetailInfo> data) {
+
+        mLoadingView.setVisibility(View.GONE);
+
         int lastPosition = mDataList.size();
         mDataList.addAll(data.getList());
 
@@ -225,7 +257,7 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
         mAdapter.notifyItemInserted(lastPosition + 1);
     }
 
-    private void addLoadView(DataList<CommentInfo> data) {
+    private void addLoadView(DataList<CommentDetailInfo> data) {
         long total = data.getTotal();
         if (total > Config.PAGE_SIZE) {
             mRecyclerView.removeLoadViewCreator();
@@ -236,15 +268,12 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
 
     @Override
     public void onGetCommentListFail(String msg) {
-        // TODO: 2019/03/11
-        TextView tipText = CommonUtils.getTipText(TopicDetailActivity.this, mRecyclerView);
-        tipText.setText(msg);
-        mRecyclerView.addHeaderView(tipText);
+        mLoadingView.setText(msg);
     }
 
 
     @Override
-    public void onLoadCommentList(DataList<CommentInfo> data) {
+    public void onLoadCommentList(DataList<CommentDetailInfo> data) {
         int lastPosition = mDataList.size();
         mDataList.addAll(data.getList());
         mAdapter.notifyItemInserted(lastPosition + 1);
@@ -252,6 +281,22 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
         if (mPageNum == data.getPageCount()) {
             mRecyclerView.removeLoadViewCreator();
         }
+    }
+
+    @Override
+    public void onSendCommentSuccess(BaseComment comment) {
+        mCommentDialog.dismiss();
+        UserInfo user = UserHelper.getInstance().getUserInfo();
+        CommentDetailInfo info = new CommentDetailInfo();
+        info.setCommentId(-1L);
+        info.setCommentFromUser(comment.getCommentFromUser());
+        info.setUserHeadUrl(user.getUserHeadUrl());
+        info.setUserAccount(user.getUserAccount());
+        info.setCommentContent(comment.getCommentContent());
+        info.setCommentTime(comment.getCommentTime());
+        info.setReplyCount(0L);
+        mDataList.add(0, info);
+        mAdapter.notifyItemInserted(0);
     }
 
     /* Load */
@@ -262,4 +307,8 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
         getPresenter().loadCommentList(mTopicInfo.getTopicId(), mPageNum, Config.PAGE_SIZE);
     }
 
+
+    /* Extra */
+
+    private TextView mLoadingView;
 }

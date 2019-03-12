@@ -1,9 +1,10 @@
 package com.ytempest.lovefood.http;
 
 import com.ytempest.lovefood.http.data.ActivityInfo;
+import com.ytempest.lovefood.http.data.BaseComment;
 import com.ytempest.lovefood.http.data.BaseCookbook;
 import com.ytempest.lovefood.http.data.BaseResult;
-import com.ytempest.lovefood.http.data.CommentInfo;
+import com.ytempest.lovefood.http.data.CommentDetailInfo;
 import com.ytempest.lovefood.http.data.CookbookInfo;
 import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.http.data.TopicInfo;
@@ -107,9 +108,18 @@ public interface ApiService {
 
 
     @GET("topic/info")
-    Observable<BaseResult<DataList<CommentInfo>>> getCommentList(@Query("topicId") long topicId,
-                                                                 @Query("pageNum") int pageNum,
-                                                                 @Query("pageSize") int pageSize);
+    Observable<BaseResult<DataList<CommentDetailInfo>>> getCommentList(@Query("topicId") long topicId,
+                                                                       @Query("pageNum") int pageNum,
+                                                                       @Query("pageSize") int pageSize);
+
+    @FormUrlEncoded
+    @POST("topic/addComment")
+    Observable<BaseResult<BaseComment>> addComment(@Field("topicId") long topicId,
+                                                   @Field("content") String content,
+                                                   @Field("fromUser") long fromUser,
+                                                   @Field("toUser") long toUser);
+
+
 
     /*---------   菜谱接口   ---------*/
 
