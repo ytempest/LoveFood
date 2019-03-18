@@ -128,7 +128,6 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
         TextView titleView = view.findViewById(R.id.tv_title);
         TextView contentView = view.findViewById(R.id.tv_content);
         PicturesLayout picturesLayout = view.findViewById(R.id.picture_layout);
-        view.findViewById(R.id.tv_comment).setVisibility(View.GONE);
         TextView commentView = view.findViewById(R.id.tv_comment_count);
 
         String url = RetrofitClient.client().getUrl() + info.getUserHeadUrl();
