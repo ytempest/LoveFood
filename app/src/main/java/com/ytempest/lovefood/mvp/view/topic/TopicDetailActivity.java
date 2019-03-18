@@ -32,7 +32,6 @@ import com.ytempest.lovefood.mvp.contract.TopicDetailContract;
 import com.ytempest.lovefood.mvp.presenter.TopicDetailPresenter;
 import com.ytempest.lovefood.mvp.view.EditCookbookActivity;
 import com.ytempest.lovefood.mvp.view.personal.PreviewUserActivity;
-import com.ytempest.lovefood.util.CommonUtils;
 import com.ytempest.lovefood.util.Config;
 import com.ytempest.lovefood.util.DateFormatUtils;
 import com.ytempest.lovefood.util.JSON;
@@ -141,14 +140,7 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
         picturesLayout.setPictureUrlList(info.getTopicImage());
         long count = info.getCommentCount() != null ? info.getCommentCount() : 0;
         commentView.setText("评论 " + count);
-        setTipView(view);
         return view;
-    }
-
-    private void setTipView(View view) {
-        TextView tipText = view.findViewById(R.id.tv_tip_text);
-        tipText.setText("正在加载...");
-        mLoadingView = tipText;
     }
 
     private final View.OnClickListener PREVIEW_USER_INFO = new View.OnClickListener() {
@@ -246,8 +238,6 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
     @Override
     public void onGetCommentListSuccess(DataList<CommentDetailInfo> data) {
 
-        mLoadingView.setVisibility(View.GONE);
-
         int lastPosition = mDataList.size();
         mDataList.addAll(data.getList());
 
@@ -268,9 +258,8 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
 
     @Override
     public void onGetCommentListFail(String msg) {
-        mLoadingView.setText(msg);
+        // TODO: 2019/03/18 如果评论数为0如何处理
     }
-
 
     @Override
     public void onLoadCommentList(DataList<CommentDetailInfo> data) {
@@ -282,6 +271,7 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
             mRecyclerView.removeLoadViewCreator();
         }
     }
+
 
     @Override
     public void onSendCommentSuccess(BaseComment comment) {
@@ -306,9 +296,4 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
         mPageNum++;
         getPresenter().loadCommentList(mTopicInfo.getTopicId(), mPageNum, Config.PAGE_SIZE);
     }
-
-
-    /* Extra */
-
-    private TextView mLoadingView;
 }
