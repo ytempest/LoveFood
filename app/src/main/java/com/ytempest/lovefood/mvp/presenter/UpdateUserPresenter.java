@@ -2,10 +2,10 @@ package com.ytempest.lovefood.mvp.presenter;
 
 import com.ytempest.baselibrary.base.mvp.BasePresenter;
 import com.ytempest.baselibrary.base.mvp.inject.InjectModel;
-import com.ytempest.lovefood.mvp.contract.UpdateUserContract;
 import com.ytempest.lovefood.http.data.BaseResult;
 import com.ytempest.lovefood.http.data.UserInfo;
 import com.ytempest.lovefood.http.observable.BaseObserver;
+import com.ytempest.lovefood.mvp.contract.UpdateUserContract;
 import com.ytempest.lovefood.mvp.model.UpdateUserModel;
 import com.ytempest.lovefood.util.ResultUtils;
 import com.ytempest.lovefood.util.UserHelper;
@@ -47,7 +47,7 @@ public class UpdateUserPresenter extends BasePresenter<UpdateUserContract.Update
                             EventBus.getDefault().post(result.getData());
 
                             getView().onRequestSuccess(result.getMsg());
-                        } else {
+                        } else if (code == ResultUtils.ERROR) {
                             getView().onRequestFail(result.getMsg());
                         }
                     }

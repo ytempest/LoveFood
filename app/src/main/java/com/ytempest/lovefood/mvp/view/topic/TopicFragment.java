@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.ytempest.baselibrary.base.BaseFragment;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
-import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.baselibrary.view.dialog.AlertDialog;
 import com.ytempest.baselibrary.view.recyclerview.LoadRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.RefreshRecyclerView;
@@ -151,13 +150,11 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
 
     @Override
     public void onGetTopicList(DataList<TopicInfo> result) {
-        int lastPosition = mDataList.size();
         mDataList.addAll(result.getList());
+        mAdapter.notifyDataSetChanged();
 
         // 添加上拉刷新的View
         addLoadView(result);
-
-        mAdapter.notifyItemInserted(lastPosition);
     }
 
     private void addLoadView(DataList<TopicInfo> result) {
