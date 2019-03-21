@@ -83,8 +83,7 @@ public class ActivityFragment extends BaseFragment<ActivityContract.Presenter> i
     @Override
     public void onItemClick(View view, int position) {
         long actId = mDataList.get(position - 1).getActId();
-        // TODO  heqidu: 添加活动详细信息页面
-        CustomToast.getInstance().show("actId=" + actId);
+        ActivityDetailActivity.startActivity(getContext(), actId);
     }
 
     /* MVP View */

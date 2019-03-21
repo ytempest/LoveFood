@@ -1,11 +1,12 @@
 package com.ytempest.lovefood.mvp.view.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
@@ -13,14 +14,21 @@ import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.mvp.contract.ActivityDetailContract;
-import com.ytempest.lovefood.mvp.presenter.CookbookListPresenter;
+import com.ytempest.lovefood.mvp.presenter.ActivityDetailPresenter;
 
 import butterknife.BindView;
 
-@InjectPresenter(CookbookListPresenter.class)
+@InjectPresenter(ActivityDetailPresenter.class)
 public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContract.Presenter>
         implements ActivityDetailContract.ActivityDetailView {
 
+    private static final String ACT_ID = "act_id";
+
+    public static void startActivity(Context context, long actId) {
+        Intent intent = new Intent(context, ActivityDetailActivity.class);
+        intent.putExtra(ACT_ID, actId);
+        context.startActivity(intent);
+    }
 
     @BindView(R.id.navigation_view)
     protected NavigationView mNavigationView;
