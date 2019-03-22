@@ -4,12 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ytempest.baselibrary.base.mvp.IPresenter;
-import com.ytempest.baselibrary.base.mvp.MvpFragment;
 import com.ytempest.baselibrary.view.CustomToast;
 
 import butterknife.ButterKnife;
@@ -18,7 +17,7 @@ import butterknife.ButterKnife;
 /**
  * @author ytempest
  */
-public abstract class BaseFragment<Presenter extends IPresenter> extends MvpFragment<Presenter> {
+public abstract class BaseFragment extends Fragment {
 
     protected View rootView;
     protected Context mContext;

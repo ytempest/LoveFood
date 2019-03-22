@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ytempest.baselibrary.base.BaseFragment;
+import com.ytempest.baselibrary.base.mvp.MvpFragment;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.view.dialog.AlertDialog;
@@ -14,14 +14,14 @@ import com.ytempest.baselibrary.view.recyclerview.RefreshRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonRecyclerAdapter;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonViewHolder;
 import com.ytempest.lovefood.R;
-import com.ytempest.lovefood.mvp.view.personal.PreviewUserActivity;
 import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
 import com.ytempest.lovefood.common.adapter.DefaultRefreshViewCreator;
-import com.ytempest.lovefood.mvp.contract.TopicContract;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.http.data.TopicInfo;
+import com.ytempest.lovefood.mvp.contract.TopicContract;
 import com.ytempest.lovefood.mvp.presenter.TopicPresenter;
+import com.ytempest.lovefood.mvp.view.personal.PreviewUserActivity;
 import com.ytempest.lovefood.util.Config;
 import com.ytempest.lovefood.util.DateFormatUtils;
 import com.ytempest.lovefood.util.DrawUtils;
@@ -39,7 +39,7 @@ import butterknife.BindView;
  *         Description：
  */
 @InjectPresenter(TopicPresenter.class)
-public class TopicFragment extends BaseFragment<TopicPresenter> implements TopicContract.TopicView, TopicContract,
+public class TopicFragment extends MvpFragment<TopicPresenter> implements TopicContract.TopicView,
         RefreshRecyclerView.OnRefreshMoreListener, CommonRecyclerAdapter.OnItemClickListener, LoadRecyclerView.OnLoadMoreListener {
 
     private static final String TAG = "TopicFragment";

@@ -5,16 +5,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ytempest.baselibrary.base.BaseFragment;
+import com.ytempest.baselibrary.base.mvp.MvpFragment;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.lovefood.R;
-import com.ytempest.lovefood.mvp.view.personal.AccountManageActivity;
-import com.ytempest.lovefood.mvp.view.personal.MyCookbookActivity;
-import com.ytempest.lovefood.mvp.view.personal.PreviewUserActivity;
-import com.ytempest.lovefood.mvp.contract.PersonalContract;
-import com.ytempest.lovefood.http.data.UserInfo;
 import com.ytempest.lovefood.http.RetrofitClient;
+import com.ytempest.lovefood.http.data.UserInfo;
+import com.ytempest.lovefood.mvp.contract.PersonalContract;
 import com.ytempest.lovefood.mvp.presenter.PersonalPresenter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -30,7 +27,7 @@ import butterknife.OnClick;
  *         Description：
  */
 @InjectPresenter(PersonalPresenter.class)
-public class PersonalFragment extends BaseFragment<PersonalContract.Presenter> implements PersonalContract.PersonalView, PersonalContract {
+public class PersonalFragment extends MvpFragment<PersonalContract.Presenter> implements PersonalContract.PersonalView, PersonalContract {
 
     private static final String TAG = "PersonalFragment";
 

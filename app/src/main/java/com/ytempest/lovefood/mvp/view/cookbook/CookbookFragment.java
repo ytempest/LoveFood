@@ -4,18 +4,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.ytempest.baselibrary.base.BaseFragment;
+import com.ytempest.baselibrary.base.mvp.MvpFragment;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonRecyclerAdapter;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonViewHolder;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
-import com.ytempest.lovefood.mvp.view.CookbookListActivity;
 import com.ytempest.lovefood.aop.CheckNet;
-import com.ytempest.lovefood.mvp.contract.CookbookContract;
 import com.ytempest.lovefood.http.data.CookClassify;
+import com.ytempest.lovefood.mvp.contract.CookbookContract;
 import com.ytempest.lovefood.mvp.presenter.CookbookPresenter;
+import com.ytempest.lovefood.mvp.view.CookbookListActivity;
 import com.ytempest.lovefood.widget.CookGroupView;
 
 import butterknife.BindView;
@@ -25,7 +25,7 @@ import butterknife.BindView;
  *         Description：
  */
 @InjectPresenter(CookbookPresenter.class)
-public class CookbookFragment extends BaseFragment<CookbookContract.Presenter> implements CookbookContract.CookbookView, CookbookContract,
+public class CookbookFragment extends MvpFragment<CookbookContract.Presenter> implements CookbookContract.CookbookView, CookbookContract,
         CookGroupView.Callback {
 
     @BindView(R.id.navigation_view)

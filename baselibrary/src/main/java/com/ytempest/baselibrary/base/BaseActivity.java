@@ -3,6 +3,7 @@ package com.ytempest.baselibrary.base;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 
 import com.ytempest.baselibrary.base.mvp.IPresenter;
 import com.ytempest.baselibrary.base.mvp.MvpActivity;
@@ -14,7 +15,7 @@ import butterknife.ButterKnife;
 /**
  * @author ytempest
  */
-public abstract class BaseActivity<Presenter extends IPresenter> extends MvpActivity<Presenter> {
+public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

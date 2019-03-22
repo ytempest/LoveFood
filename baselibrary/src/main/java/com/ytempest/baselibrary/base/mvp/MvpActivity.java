@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
+import com.ytempest.baselibrary.base.BaseActivity;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.baselibrary.view.load.LoadDialog;
@@ -14,15 +15,14 @@ import com.ytempest.baselibrary.view.load.LoadDialog;
  * @author ytempest
  *         Description：
  */
-public abstract class MvpActivity<Presenter extends IPresenter> extends AppCompatActivity implements IView, IContract {
+public abstract class MvpActivity<Presenter extends IPresenter> extends BaseActivity implements IView, IContract {
 
     private Presenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         createPresenter();
+        super.onCreate(savedInstanceState);
     }
 
 

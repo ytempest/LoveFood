@@ -3,10 +3,9 @@ package com.ytempest.lovefood.mvp.view.activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-import com.ytempest.baselibrary.base.BaseFragment;
+import com.ytempest.baselibrary.base.mvp.MvpFragment;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
-import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.baselibrary.view.recyclerview.LoadRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.RefreshRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonRecyclerAdapter;
@@ -14,10 +13,10 @@ import com.ytempest.baselibrary.view.recyclerview.adapter.CommonViewHolder;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
 import com.ytempest.lovefood.common.adapter.DefaultRefreshViewCreator;
-import com.ytempest.lovefood.mvp.contract.ActivityContract;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.ActivityInfo;
 import com.ytempest.lovefood.http.data.DataList;
+import com.ytempest.lovefood.mvp.contract.ActivityContract;
 import com.ytempest.lovefood.mvp.presenter.ActivityPresenter;
 import com.ytempest.lovefood.util.Config;
 import com.ytempest.lovefood.util.DateFormatUtils;
@@ -32,7 +31,7 @@ import butterknife.BindView;
  *         Description：
  */
 @InjectPresenter(ActivityPresenter.class)
-public class ActivityFragment extends BaseFragment<ActivityContract.Presenter> implements ActivityContract.ActivityView, ActivityContract,
+public class ActivityFragment extends MvpFragment<ActivityContract.Presenter> implements ActivityContract.ActivityView,
         CommonRecyclerAdapter.OnItemClickListener, LoadRecyclerView.OnLoadMoreListener, RefreshRecyclerView.OnRefreshMoreListener {
 
     private static final String TAG = "ActivityFragment";

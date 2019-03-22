@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
+import com.ytempest.baselibrary.base.BaseFragment;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.baselibrary.view.load.LoadDialog;
@@ -14,7 +15,7 @@ import com.ytempest.baselibrary.view.load.LoadDialog;
 /**
  * @author ytempest
  */
-public abstract class MvpFragment<Presenter extends IPresenter> extends Fragment implements IView, IContract {
+public abstract class MvpFragment<Presenter extends IPresenter> extends BaseFragment implements IView, IContract {
 
     private Presenter mPresenter;
 

@@ -16,8 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import com.ytempest.baselibrary.base.BaseActivity;
 import com.ytempest.baselibrary.base.mvp.IPresenter;
+import com.ytempest.baselibrary.base.mvp.MvpActivity;
 import com.ytempest.framelibrary.skin.SkinManager;
 import com.ytempest.framelibrary.skin.SkinResource;
 import com.ytempest.framelibrary.skin.attr.SkinAttr;
@@ -35,7 +35,7 @@ import java.util.List;
  *         使用该类时要先在业务层自定义一个Application类，然后在其中初始化
  *         使用方法：需要在Application进行注册
  */
-public abstract class BaseSkinActivity<Presenter extends IPresenter> extends BaseActivity<Presenter> implements LayoutInflaterFactory, ISkinChangeListener {
+public abstract class BaseSkinActivity<Presenter extends IPresenter> extends MvpActivity<Presenter> implements LayoutInflaterFactory, ISkinChangeListener {
 
     private static final String TAG = "BaseSkinActivity";
 
