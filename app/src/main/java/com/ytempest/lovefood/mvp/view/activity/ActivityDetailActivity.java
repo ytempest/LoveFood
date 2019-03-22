@@ -2,12 +2,10 @@ package com.ytempest.lovefood.mvp.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.widget.Toast;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
@@ -39,7 +37,7 @@ public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContr
     @BindView(R.id.view_pager)
     protected ViewPager mViewPager;
 
-    private String[] mItems = {"one", "Two"};
+    private String[] mItems = {"首页", "菜谱作品"};
 
     @Override
     protected int getLayoutResId() {
@@ -73,9 +71,7 @@ public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContr
         // 使用默认的 TabLayout 条目
         for (int i = 0; i < mItems.length; i++) {
             TabLayout.Tab tab = mTabLayout.getTabAt(i);
-            tab.setIcon(R.mipmap.ic_launcher);
             tab.setText(mItems[i]);
-
         }
 
 
@@ -87,7 +83,6 @@ public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContr
              */
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                setSelectedTab(tab, Color.RED, true);
                 mViewPager.setCurrentItem(tab.getPosition());
 
             }
@@ -98,7 +93,6 @@ public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContr
              */
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                setSelectedTab(tab, Color.BLACK, false);
             }
 
             /**
@@ -107,7 +101,6 @@ public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContr
              */
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                Toast.makeText(ActivityDetailActivity.this, "you click the " + mItems[tab.getPosition()], Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -115,18 +108,5 @@ public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContr
     @Override
     protected void initData() {
 
-    }
-
-    /**
-     * 设置 tab 的状态
-     *
-     * @param tab      要设置的tab
-     * @param color    设置的颜色
-     * @param selected 是否设置选择
-     */
-    private void setSelectedTab(TabLayout.Tab tab, int color, boolean selected) {
-//        TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tab_text);
-//        textView.setTextColor(color);
-//        textView.setSelected(selected);
     }
 }
