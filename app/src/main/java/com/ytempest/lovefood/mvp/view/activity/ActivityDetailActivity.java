@@ -14,6 +14,9 @@ import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.mvp.contract.ActivityDetailContract;
 import com.ytempest.lovefood.mvp.presenter.ActivityDetailPresenter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 
 @InjectPresenter(ActivityDetailPresenter.class)
@@ -51,15 +54,18 @@ public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContr
 
     @Override
     protected void initView() {
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new PageDetailFragment());
+        fragments.add(new PageListFragment());
         FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return ItemFragment.newInstance(mItems[position]);
+                return fragments.get(position);
             }
 
             @Override
             public int getCount() {
-                return mItems.length;
+                return fragments.size();
             }
         };
         // 设置 ViewPager的适配器
@@ -84,7 +90,6 @@ public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContr
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
-
             }
 
             /**
