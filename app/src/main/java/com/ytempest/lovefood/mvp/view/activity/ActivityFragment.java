@@ -70,6 +70,8 @@ public class ActivityFragment extends MvpFragment<ActivityContract.Presenter> im
         };
         mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setRefreshViewCreator(new DefaultRefreshViewCreator());
+        mRecyclerView.setOnRefreshMoreListener(this);
     }
 
     @Override
@@ -89,9 +91,6 @@ public class ActivityFragment extends MvpFragment<ActivityContract.Presenter> im
 
     @Override
     public void onGetActivityList(DataList<ActivityInfo> data) {
-        mRecyclerView.setRefreshViewCreator(new DefaultRefreshViewCreator());
-        mRecyclerView.setOnRefreshMoreListener(this);
-
         int lastPosition = mDataList.size();
         mDataList.addAll(data.getList());
 

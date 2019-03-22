@@ -17,7 +17,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="190dp"
         android:scaleType="centerCrop"
         android:src="@drawable/default_head" />
 
@@ -37,7 +37,6 @@
         app:tabMaxWidth="80dp"
         app:tabMinWidth="80dp"
         app:tabMode="fixed"
-        app:tabPaddingBottom="5dp"
         app:tabSelectedTextColor="@color/app_color"
         app:tabTextColor="@android:color/darker_gray" />
 
