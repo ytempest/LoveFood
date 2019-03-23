@@ -4,22 +4,16 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tool:context=".mvp.view.activity.ActivityDetailActivity">
 
-    <com.ytempest.framelibrary.view.NavigationView
-        android:id="@+id/navigation_view"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/app_color"
-        app:left_icon="@drawable/icon_left_arrow"
-        app:title_text="活动详情" />
-
     <ImageView
+        android:id="@+id/iv_cover"
         android:layout_width="match_parent"
         android:layout_height="190dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/default_head" />
+        android:fitsSystemWindows="true"
+        android:scaleType="centerCrop" />
 
 
     <!--   使用默认的 TabLayout 条目-->
@@ -44,6 +38,5 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 
 </LinearLayout>

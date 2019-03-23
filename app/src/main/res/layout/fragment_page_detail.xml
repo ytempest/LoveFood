@@ -21,7 +21,7 @@
             <TextView
                 android:id="@+id/tv_desc"
                 style="@style/text_content_style"
-                android:text="\t\t\t\t古人谚语 人情似纸张张薄,世事如棋局局新。贫居闹市无人问,富在深山有远亲 不信但看宴中酒,杯杯先敬富贵人。门前拴上高头马,不是亲来也是亲。" />
+                tools:text="\t\t\t\t古人谚语 人情似纸张张薄,世事如棋局局新。贫居闹市无人问,富在深山有远亲 不信但看宴中酒,杯杯先敬富贵人。门前拴上高头马,不是亲来也是亲。" />
 
             <TextView
                 style="@style/text_title_style"
@@ -29,9 +29,9 @@
                 android:text="【活动时间】" />
 
             <TextView
-                android:id="@+id/tv_time"
+                android:id="@+id/tv_date"
                 style="@style/text_content_style"
-                android:text="2018年12月12日 - 2019年01月01日" />
+                tools:text="2018年12月12日 - 2019年01月01日" />
 
             <TextView
                 style="@style/text_title_style"
@@ -41,7 +41,7 @@
             <TextView
                 android:id="@+id/tv_request"
                 style="@style/text_content_style"
-                android:text="参赛作品必须涉及厨房相关的技巧内容，文字描述完整，不得抄袭" />
+                tools:text="参赛作品必须涉及厨房相关的技巧内容，文字描述完整，不得抄袭" />
 
             <TextView
                 style="@style/text_title_style"
@@ -52,7 +52,7 @@
                 android:id="@+id/tv_prize"
                 style="@style/text_content_style"
                 android:layout_marginBottom="50dp"
-                android:text="第一名" />
+                tools:text="第一名" />
 
         </LinearLayout>
 
@@ -66,5 +66,5 @@
         android:layout_gravity="bottom"
         android:layout_margin="10dp"
         android:background="@drawable/selector_round_corner_bg"
-        android:text="已参加" />
+        android:enabled="false" />
 </FrameLayout>

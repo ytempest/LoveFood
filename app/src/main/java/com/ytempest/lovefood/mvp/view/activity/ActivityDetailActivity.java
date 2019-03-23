@@ -6,11 +6,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.widget.ImageView;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
+import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
+import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
-import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
+import com.ytempest.lovefood.http.RetrofitClient;
+import com.ytempest.lovefood.http.data.ActivityDetailInfo;
 import com.ytempest.lovefood.mvp.contract.ActivityDetailContract;
 import com.ytempest.lovefood.mvp.presenter.ActivityDetailPresenter;
 
@@ -24,6 +28,8 @@ public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContr
         implements ActivityDetailContract.ActivityDetailView {
 
     private static final String ACT_ID = "act_id";
+    private PageDetailFragment mPageDetailFragment;
+    private PageListFragment mPageListFragment;
 
     public static void startActivity(Context context, long actId) {
         Intent intent = new Intent(context, ActivityDetailActivity.class);
@@ -31,8 +37,11 @@ public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContr
         context.startActivity(intent);
     }
 
-    @BindView(R.id.navigation_view)
-    protected NavigationView mNavigationView;
+//    @BindView(R.id.navigation_view)
+//    protected NavigationView mNavigationView;
+
+    @BindView(R.id.iv_cover)
+    protected ImageView mCoverView;
 
     @BindView(R.id.tab_layout)
     protected TabLayout mTabLayout;
@@ -40,7 +49,8 @@ public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContr
     @BindView(R.id.view_pager)
     protected ViewPager mViewPager;
 
-    private String[] mItems = {"首页", "菜谱作品"};
+    private long mActId;
+    private String[] mItems = {"首页", "参赛菜谱"};
 
     @Override
     protected int getLayoutResId() {
@@ -49,14 +59,20 @@ public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContr
 
     @Override
     protected void initTitle() {
-        mNavigationView.enableLeftFinish(this);
+        mActId = getIntent().getLongExtra(ACT_ID, -1);
+        if (mActId == -1) {
+            CustomToast.getInstance().show("数据异常，请稍后重试");
+            finish();
+        }
     }
 
     @Override
     protected void initView() {
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new PageDetailFragment());
-        fragments.add(new PageListFragment());
+        mPageDetailFragment = new PageDetailFragment();
+        mPageListFragment = new PageListFragment();
+        fragments.add(mPageDetailFragment);
+        fragments.add(mPageListFragment);
         FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -112,6 +128,17 @@ public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContr
 
     @Override
     protected void initData() {
+        getPresenter().getActivityDetail(mActId);
+    }
+
+    /* MVP View */
+
+    @Override
+    public void onGetActivityDetailSuccess(ActivityDetailInfo data, boolean isUserPartakeActivity) {
+        String url = RetrofitClient.client().getUrl() + data.getActImageUrl();
+        ImageLoaderManager.getInstance().showImage(mCoverView, url, null);
+        mPageDetailFragment.setData(data, isUserPartakeActivity);
+
 
     }
 }

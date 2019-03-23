@@ -1,5 +1,6 @@
 package com.ytempest.lovefood.http;
 
+import com.ytempest.lovefood.http.data.ActivityDetailInfo;
 import com.ytempest.lovefood.http.data.ActivityInfo;
 import com.ytempest.lovefood.http.data.BaseComment;
 import com.ytempest.lovefood.http.data.BaseCookbook;
@@ -134,4 +135,15 @@ public interface ApiService {
     @GET("activity/list")
     Observable<BaseResult<DataList<ActivityInfo>>> getActivityList(@Query("pageNum") int pageNum,
                                                                    @Query("pageSize") int pageSize);
+
+    @GET("activity/info")
+    Observable<BaseResult<ActivityDetailInfo>> getActivityDetail(@Query("actId") long actId);
+
+    /**
+     * 判断用户是否参与了活动
+     */
+    @FormUrlEncoded
+    @POST("activity/isPartake")
+    Observable<BaseResult<Boolean>> isPartakeActivity(@Field("userId") long userId,
+                                                      @Field("actId") long actId);
 }
