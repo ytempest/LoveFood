@@ -106,6 +106,9 @@ public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContr
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == mItems.length - 1) {
+                    mPageListFragment.setData(mActId);
+                }
             }
 
             /**
@@ -122,6 +125,7 @@ public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContr
              */
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
     }
@@ -138,7 +142,6 @@ public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContr
         String url = RetrofitClient.client().getUrl() + data.getActImageUrl();
         ImageLoaderManager.getInstance().showImage(mCoverView, url, null);
         mPageDetailFragment.setData(data, isUserPartakeActivity);
-
 
     }
 }

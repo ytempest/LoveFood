@@ -146,4 +146,9 @@ public interface ApiService {
     @POST("activity/isPartake")
     Observable<BaseResult<Boolean>> isPartakeActivity(@Field("userId") long userId,
                                                       @Field("actId") long actId);
+
+    @GET("activity/getPartakeCookList")
+    Observable<BaseResult<DataList<BaseCookbook>>> getPartakeCookList(@Query("actId") long actId,
+                                                                      @Query("pageNum") int pageNum,
+                                                                      @Query("pageSize") int pageSize);
 }

@@ -15,6 +15,7 @@
         android:fitsSystemWindows="true"
         android:scaleType="centerCrop" />
 
+    <View style="@style/gray_line" />
 
     <!--   使用默认的 TabLayout 条目-->
     <!-- @style/CompatTabLayoutTextAppearance：该样式用于解决字体大小写以及字体大小问题 -->
