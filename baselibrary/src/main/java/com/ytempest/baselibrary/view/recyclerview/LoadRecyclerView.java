@@ -137,6 +137,18 @@ public class LoadRecyclerView extends RefreshRecyclerView {
         mCurrentDrag = false;
     }
 
+    public void startLoad() {
+        mCurrentLoadStatus = LOAD_STATUS_LOADING;
+        mCurrentDrag = false;
+        setLoadViewBottomMargin(0);
+        if (mLoadViewCreator != null) {
+            mLoadViewCreator.onLoading();
+        }
+        if (mLoadMoreListener != null) {
+            mLoadMoreListener.onLoad();
+        }
+    }
+
     public void setLoadViewBottomMargin(int bottomMargin) {
 
         ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) mLoadView.getLayoutParams();

@@ -170,6 +170,17 @@ public class RefreshRecyclerView extends WrapRecyclerView {
         mCurrentDrag = false;
     }
 
+    public void startRefresh() {
+        mCurrentRefreshStatus = REFRESH_STATUS_REFRESHING;
+        mCurrentDrag = false;
+        setRefreshViewTopMargin(0);
+        if (mRefreshViewCreator != null) {
+            mRefreshViewCreator.onRefreshing();
+        }
+        if (mRefreshMoreListener != null) {
+            mRefreshMoreListener.onRefresh();
+        }
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent e) {
