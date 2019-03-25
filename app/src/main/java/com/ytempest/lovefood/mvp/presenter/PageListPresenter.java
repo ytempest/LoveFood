@@ -31,10 +31,28 @@ public class PageListPresenter extends BasePresenter<PageListContract.PageListVi
 
                                    } else if (code == ResultUtils.ERROR) {
                                        getView().onGetPartakeCookListFail(result.getMsg());
-
                                    }
                                }
                            }
                 );
+    }
+
+    @Override
+    public void loadPartakeCookList(Long actId, int pageNum, int pageSize) {
+        getModel().getPartakeCookList(actId, pageNum, pageSize)
+                .subscribe(new BaseObserver<BaseResult<DataList<BaseCookbook>>>() {
+                    @Override
+                    public void onNext(BaseResult<DataList<BaseCookbook>> result) {
+                        super.onNext(result);
+                        int code = result.getCode();
+                        if (code == ResultUtils.SUCCESS) {
+                            getView().onLoadPartakeCookList(result.getData());
+
+                        } else if (code == ResultUtils.ERROR) {
+                            getView().onGetPartakeCookListFail(result.getMsg());
+                        }
+                    }
+                });
+
     }
 }

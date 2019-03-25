@@ -17,12 +17,16 @@ import io.reactivex.Observable;
 public interface PageListContract extends IContract {
     interface Presenter extends IPresenter {
         void refreshPartakeCookList(long actId, int pageNum, int pageSize);
+
+        void loadPartakeCookList(Long actId, int pageNum, int pageSize);
     }
 
     interface PageListView extends IView {
         void onGetPartakeCookListSuccess(DataList<BaseCookbook> data);
 
         void onGetPartakeCookListFail(String msg);
+
+        void onLoadPartakeCookList(DataList<BaseCookbook> data);
     }
 
     interface Model extends IModel {

@@ -8,10 +8,12 @@ import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.baselibrary.view.recyclerview.LoadRecyclerView;
+import com.ytempest.baselibrary.view.recyclerview.LoadViewCreator;
 import com.ytempest.baselibrary.view.recyclerview.RefreshRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonRecyclerAdapter;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonViewHolder;
 import com.ytempest.lovefood.R;
+import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
 import com.ytempest.lovefood.common.adapter.DefaultRefreshViewCreator;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.BaseCookbook;
@@ -32,14 +34,16 @@ import butterknife.BindView;
 @InjectPresenter(PageListPresenter.class)
 public class PageListFragment extends MvpFragment<PageListContract.Presenter>
         implements PageListContract.PageListView,
-        RefreshRecyclerView.OnRefreshMoreListener {
+        RefreshRecyclerView.OnRefreshMoreListener, LoadRecyclerView.OnLoadMoreListener {
 
     @BindView(R.id.recycler_view)
     protected LoadRecyclerView mRecyclerView;
 
     private int mPageNum = 1;
-    private long mActId;
-    private ArrayList<BaseCookbook> mDataList = new ArrayList<>();
+    private Long mActId;
+    private final ArrayList<BaseCookbook> mDataList = new ArrayList<>();
+    private static LoadViewCreator LOAD_CREATOR = new DefaultLoadViewCreator();
+    private CommonRecyclerAdapter<BaseCookbook> mAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -51,7 +55,7 @@ public class PageListFragment extends MvpFragment<PageListContract.Presenter>
         mRecyclerView.setRefreshViewCreator(new DefaultRefreshViewCreator());
         mRecyclerView.setOnRefreshMoreListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(new CommonRecyclerAdapter<BaseCookbook>(
+        mAdapter = new CommonRecyclerAdapter<BaseCookbook>(
                 getContext(), mDataList, R.layout.item_cook_book) {
             @Override
             protected void bindViewData(CommonViewHolder holder, BaseCookbook item) {
@@ -62,7 +66,8 @@ public class PageListFragment extends MvpFragment<PageListContract.Presenter>
                 holder.setText(R.id.tv_desc, item.getCookDesc());
                 holder.setText(R.id.tv_time, DateFormatUtils.formatDate(item.getCookPublishTime()));
             }
-        });
+        };
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -71,16 +76,24 @@ public class PageListFragment extends MvpFragment<PageListContract.Presenter>
     }
 
     public void setData(long actId) {
-        this.mActId = actId;
-        mRecyclerView.startRefresh();
+        if (mActId == null) {
+            this.mActId = actId;
+            mRecyclerView.startRefresh();
+        }
     }
 
-    /* Refresh */
+    /* Refresh Load */
 
     @Override
     public void onRefresh() {
         mPageNum = 1;
         getPresenter().refreshPartakeCookList(mActId, mPageNum, Config.PAGE_SIZE);
+    }
+
+    @Override
+    public void onLoad() {
+        mPageNum++;
+        getPresenter().loadPartakeCookList(mActId, mPageNum, Config.PAGE_SIZE);
     }
 
     /* View MVP */
@@ -89,11 +102,35 @@ public class PageListFragment extends MvpFragment<PageListContract.Presenter>
     public void onGetPartakeCookListSuccess(DataList<BaseCookbook> data) {
         mDataList.clear();
         mDataList.addAll(data.getList());
+
+        addLoadView(data);
+
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void addLoadView(DataList<BaseCookbook> data) {
+        long total = data.getTotal();
+        if (total > Config.PAGE_SIZE) {
+            mRecyclerView.removeLoadViewCreator();
+            mRecyclerView.setLoadViewCreator(LOAD_CREATOR);
+            mRecyclerView.setOnLoadMoreListener(this);
+        }
     }
 
     @Override
     public void onGetPartakeCookListFail(String msg) {
         mRecyclerView.stopRefresh();
         CustomToast.getInstance().show(msg);
+    }
+
+    @Override
+    public void onLoadPartakeCookList(DataList<BaseCookbook> data) {
+        int lastPosition = mDataList.size();
+        mDataList.addAll(data.getList());
+        mAdapter.notifyItemInserted(lastPosition + 1);
+        mRecyclerView.stopLoad();
+        if (mPageNum == data.getPageCount()) {
+            mRecyclerView.removeLoadViewCreator();
+        }
     }
 }
