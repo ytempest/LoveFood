@@ -28,19 +28,56 @@ public class CookClassify {
     public static final List<CookClassify> COOK_CLASSIFY_LIST = new ArrayList<>();
 
     static {
-        List<String> typeList = new ArrayList<>();
-        typeList.add("广东小吃");
-        typeList.add("广西小吃");
-        typeList.add("福建小吃");
-        typeList.add("北京小吃");
-        typeList.add("上海小吃");
-        typeList.add("四川小吃");
-        COOK_CLASSIFY_LIST.add(new CookClassify("小吃", typeList));
-        COOK_CLASSIFY_LIST.add(new CookClassify("小吃", typeList));
-        COOK_CLASSIFY_LIST.add(new CookClassify("小吃", typeList));
-        COOK_CLASSIFY_LIST.add(new CookClassify("小吃", typeList));
-        COOK_CLASSIFY_LIST.add(new CookClassify("小吃", typeList));
-        COOK_CLASSIFY_LIST.add(new CookClassify("小吃", typeList));
+        List<String> list1 = new ArrayList<>();
+        list1.add("广东小吃");
+        list1.add("四川小吃");
+        list1.add("重庆小吃");
+        list1.add("陕西小吃");
+        list1.add("湖南小吃");
+        list1.add("福建小吃");
+        list1.add("北京小吃");
+        list1.add("天津小吃");
+        list1.add("山东小吃");
+        list1.add("江浙小吃");
+        list1.add("其他小吃");
+        COOK_CLASSIFY_LIST.add(new CookClassify("小吃", list1));
+
+        List<String> list2 = new ArrayList<>();
+        list2.add("糖水");
+        list2.add("果汁");
+        list2.add("布丁");
+        list2.add("果冻");
+        list2.add("酸奶");
+        list2.add("其他");
+        COOK_CLASSIFY_LIST.add(new CookClassify("甜品", list2));
+
+        List<String> list3 = new ArrayList<>();
+        list3.add("粤菜");
+        list3.add("川菜");
+        list3.add("鲁菜");
+        list3.add("闽菜");
+        list3.add("湘菜");
+        list3.add("苏菜");
+        list3.add("豫菜");
+        list3.add("潮汕菜");
+        list3.add("北京菜");
+        list3.add("上海菜");
+        list3.add("东北菜");
+        list3.add("云南菜");
+        list3.add("其他");
+        COOK_CLASSIFY_LIST.add(new CookClassify("菜系", list3));
+
+        List<String> list4 = new ArrayList<>();
+        list4.add("蛋糕");
+        list4.add("面包");
+        list4.add("饼干");
+        list4.add("蛋挞");
+        list4.add("曲奇");
+        list4.add("派");
+        list4.add("卷");
+        list4.add("吐司");
+        list4.add("其他");
+        COOK_CLASSIFY_LIST.add(new CookClassify("烘焙", list4));
     }
 
     public static final List<CookClassify> getCookClassifyList() {

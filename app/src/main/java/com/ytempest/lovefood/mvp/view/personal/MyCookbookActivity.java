@@ -68,7 +68,6 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
         mNavigationView.setTitleText("我的菜谱");
         mNavigationView.setRightText("添加");
         mNavigationView.setRightClickListener(new View.OnClickListener() {
-            @CheckNet
             @Override
             public void onClick(View v) {
                 // TODO: 2019/02/15 添加发布菜谱的逻辑

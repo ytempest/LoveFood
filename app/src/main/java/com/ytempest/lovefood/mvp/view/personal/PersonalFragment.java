@@ -13,6 +13,8 @@ import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.UserInfo;
 import com.ytempest.lovefood.mvp.contract.PersonalContract;
 import com.ytempest.lovefood.mvp.presenter.PersonalPresenter;
+import com.ytempest.lovefood.mvp.view.LoginActivity;
+import com.ytempest.lovefood.util.UserHelper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -123,5 +125,11 @@ public class PersonalFragment extends MvpFragment<PersonalContract.Presenter> im
 
     }
 
-
+    @OnClick(R.id.tv_login_out)
+    protected void onLoginOutClick(View view) {
+        UserHelper.getInstance().clearUserInfo();
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
+        getActivity().finish();
+    }
 }
