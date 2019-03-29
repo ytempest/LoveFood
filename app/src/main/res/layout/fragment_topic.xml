@@ -1,25 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/course_fragment_root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_bg"
-    android:gravity="center"
-    android:orientation="vertical"
     tools:context="com.ytempest.lovefood.mvp.view.MainActivity">
 
-    <com.ytempest.framelibrary.view.NavigationView
-        android:id="@+id/navigation_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/app_color"
-        app:title_text="首页" />
+        android:layout_height="match_parent"
+        android:background="@color/common_bg"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <com.ytempest.baselibrary.view.recyclerview.LoadRecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <com.ytempest.framelibrary.view.NavigationView
+            android:id="@+id/navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/app_color"
+            app:title_text="首页" />
 
-</LinearLayout>
+        <com.ytempest.baselibrary.view.recyclerview.LoadRecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_release"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:clickable="true"
+        android:src="@drawable/icon_release"
+        app:backgroundTint="@color/app_color"
+        app:elevation="3dp"
+        app:fabSize="auto"
+        app:pressedTranslationZ="3dp"
+        app:rippleColor="#ff8987" />
+
+</FrameLayout>
