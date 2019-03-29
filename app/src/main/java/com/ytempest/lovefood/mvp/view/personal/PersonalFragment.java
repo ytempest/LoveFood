@@ -14,6 +14,7 @@ import com.ytempest.lovefood.http.data.UserInfo;
 import com.ytempest.lovefood.mvp.contract.PersonalContract;
 import com.ytempest.lovefood.mvp.presenter.PersonalPresenter;
 import com.ytempest.lovefood.mvp.view.LoginActivity;
+import com.ytempest.lovefood.mvp.view.TestActivity;
 import com.ytempest.lovefood.util.UserHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -122,7 +123,7 @@ public class PersonalFragment extends MvpFragment<PersonalContract.Presenter> im
 
     @OnClick(R.id.item_help)
     protected void onHelpClick(View view) {
-
+        startActivity(new Intent(getActivity(), TestActivity.class));
     }
 
     @OnClick(R.id.tv_login_out)

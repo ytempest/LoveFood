@@ -14,4 +14,7 @@
 
     <!-- LoadDialog的颜色集合 -->
     <color name="loading_dialog_bg">#767676</color>
+
+    <color name="media_choose_op_btn_disabled">#ffffffff</color>
+    <color name="media_choose_op_btn_enabled">#ffff819f</color>
 </resources>

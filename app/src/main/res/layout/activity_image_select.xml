@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_image_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ff261f1f" />
+
+    <RelativeLayout
+        android:id="@+id/op_bar"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_gravity="bottom"
+        android:background="#99050505">
+
+        <TextView
+            android:id="@+id/tv_select_preview"
+            style="@style/media_choose_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:enabled="false"
+            android:paddingLeft="20.0dip"
+            android:text="预览" />
+
+        <TextView
+            android:id="@+id/tv_select_num"
+            style="@style/media_choose_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+        <TextView
+            android:id="@+id/tv_select_finish"
+            style="@style/media_choose_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:paddingRight="20.0dip"
+            android:text="确定" />
+    </RelativeLayout>
+</FrameLayout>
