@@ -51,6 +51,7 @@
         <activity android:name=".mvp.view.personal.MyCookbookActivity" />
 
         <activity android:name=".mvp.view.topic.TopicDetailActivity" />
+        <activity android:name=".mvp.view.topic.TopicReleaseActivity" />
 
         <activity android:name=".mvp.view.PreviewCookbookActivity" />
         <activity android:name=".mvp.view.EditCookbookActivity" />

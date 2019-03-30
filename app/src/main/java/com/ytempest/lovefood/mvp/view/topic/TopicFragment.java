@@ -1,5 +1,6 @@
 package com.ytempest.lovefood.mvp.view.topic;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
 /**
@@ -143,6 +145,12 @@ public class TopicFragment extends MvpFragment<TopicPresenter> implements TopicC
     @Override
     public void onItemClick(View view, int position) {
 
+    }
+
+    @OnClick(R.id.fab_release)
+    protected void onReleaseTopicClick(View view) {
+        Intent intent = new Intent(getContext(), TopicReleaseActivity.class);
+        startActivity(intent);
     }
 
     /* MVP View */
