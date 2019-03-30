@@ -78,10 +78,9 @@ public class TopicFragment extends MvpFragment<TopicPresenter> implements TopicC
                 titleView.setText(String.format("## %s ##", item.getTopicTitle()));
                 TextView contentView = holder.getView(R.id.tv_content);
                 contentView.setText(item.getTopicContent());
-                titleView.setTag(item);
-                titleView.setOnClickListener(OPEN_TOPIC_DETAIL_LISTENER);
-                contentView.setTag(item);
-                contentView.setOnClickListener(OPEN_TOPIC_DETAIL_LISTENER);
+
+                holder.getView(R.id.ll_container).setTag(item);
+                holder.getView(R.id.ll_container).setOnClickListener(OPEN_TOPIC_DETAIL_LISTENER);
 
                 PicturesLayout picturesLayout = holder.getView(R.id.picture_layout);
                 picturesLayout.setPictureUrlList(item.getTopicImage());
