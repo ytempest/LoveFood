@@ -68,6 +68,7 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<Comm
         }
         View view = mInflater.inflate(mLayoutId, parent, false);
         CommonViewHolder holder = new CommonViewHolder(view);
+        prepareViewHolder(holder);
         holder.itemView.setTag(holder);
         if (holder.isNeedClick()) {
             holder.itemView.setOnClickListener(this);
@@ -76,6 +77,10 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<Comm
             holder.itemView.setOnLongClickListener(this);
         }
         return holder;
+    }
+
+    protected void prepareViewHolder(CommonViewHolder holder) {
+
     }
 
 
