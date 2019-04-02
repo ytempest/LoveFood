@@ -15,9 +15,7 @@ import java.util.Map;
 public class FlowLayout extends ViewGroup {
 
     private static final String TAG = "TabLayout";
-    private static final int ROW_SIZE = 4;
-
-    private Map<String, View> mViewMap;
+    private int mRowSize = 4;
 
     public FlowLayout(Context context) {
         this(context, null);
@@ -29,8 +27,6 @@ public class FlowLayout extends ViewGroup {
 
     public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
-        mViewMap = new HashMap<>();
     }
 
     @Override
@@ -41,10 +37,10 @@ public class FlowLayout extends ViewGroup {
         int surplusWidth = realWidth - getPaddingLeft() - getPaddingRight();
         // 计算父布局默认拥有的高度大小
         int parentHeight = getPaddingTop() + getPaddingBottom();
-        int perViewWidth = surplusWidth / ROW_SIZE;
+        int perViewWidth = surplusWidth / mRowSize;
 
         for (int i = 0, len = getChildCount(); i < len; i++) {
-            if (i % ROW_SIZE == 0) {
+            if (i % mRowSize == 0) {
                 parentHeight += perViewWidth;
             }
             View view = getChildAt(i);
@@ -67,12 +63,12 @@ public class FlowLayout extends ViewGroup {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         int curTop = getPaddingTop();
         int count = getChildCount();
-        int rowCount = count % ROW_SIZE == 0 ? count / ROW_SIZE : count / ROW_SIZE + 1;
+        int rowCount = count % mRowSize == 0 ? count / mRowSize : count / mRowSize + 1;
         for (int i = 0; i < rowCount; i++) {
             int curLeft = getPaddingLeft();
             int viewHeight = 0;
-            for (int k = 0; k < ROW_SIZE; k++) {
-                int index = i * ROW_SIZE + k;
+            for (int k = 0; k < mRowSize; k++) {
+                int index = i * mRowSize + k;
                 if (index < count) {
                     View view = getChildAt(index);
                     MarginLayoutParams params = (MarginLayoutParams) view.getLayoutParams();
@@ -99,6 +95,10 @@ public class FlowLayout extends ViewGroup {
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new MarginLayoutParams(getContext(), attrs);
+    }
+
+    public void setRowSize(int size) {
+        mRowSize = size;
     }
 
 }
