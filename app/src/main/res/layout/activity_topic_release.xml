@@ -50,7 +50,7 @@
             <com.ytempest.lovefood.widget.FlowLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp">
+                android:padding="16dp">
 
                 <ImageView
 

@@ -5,10 +5,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ytempest.baselibrary.util.LogUtils;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author ytempest
@@ -17,7 +15,9 @@ import java.util.List;
 public class FlowLayout extends ViewGroup {
 
     private static final String TAG = "TabLayout";
-    private List<List<View>> mViewLine;
+    private static final int ROW_SIZE = 4;
+
+    private Map<String, View> mViewMap;
 
     public FlowLayout(Context context) {
         this(context, null);
@@ -30,130 +30,66 @@ public class FlowLayout extends ViewGroup {
     public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        mViewLine = new ArrayList<>();
+        mViewMap = new HashMap<>();
     }
-
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        // 检测一下，因为 onMeasure()方法有可能会调用多次
-        if (mViewLine != null) {
-            mViewLine.clear();
-            mViewLine.add(new ArrayList<View>());
-        }
-
         // 计算父布局能提供的宽度大小
-        int containerWidth = MeasureSpec.getSize(widthMeasureSpec) - getPaddingLeft() - getPaddingRight();
+        int realWidth = MeasureSpec.getSize(widthMeasureSpec);
+        int surplusWidth = realWidth - getPaddingLeft() - getPaddingRight();
         // 计算父布局默认拥有的高度大小
         int parentHeight = getPaddingTop() + getPaddingBottom();
-        // 当前行的宽度
-        int lineWidth = 0;
-        // 一行View中的最大高度
-        int lineViewMaxHeight = -1;
-        // 是否转到下一行
-        boolean isNewLine = false;
+        int perViewWidth = surplusWidth / ROW_SIZE;
 
-        int count = getChildCount();
-        for (int i = 0; i < count; i++) {
-            View childView = getChildAt(i);
-
+        for (int i = 0, len = getChildCount(); i < len; i++) {
+            if (i % ROW_SIZE == 0) {
+                parentHeight += perViewWidth;
+            }
+            View view = getChildAt(i);
             // 如果父布局要获取子View的宽高，就要先调用measureChild()方法测量子View的宽高
             // 在测量子View之后才可以获取子View的宽高
-            measureChild(childView, widthMeasureSpec, heightMeasureSpec);
+            measureChild(view, widthMeasureSpec, heightMeasureSpec);
 
-            // 检测View，保证该View的 marginLeft 和 marginRight值都能生效
-            checkViewWidth(childView, widthMeasureSpec, heightMeasureSpec);
-
-            MarginLayoutParams params = (MarginLayoutParams) childView.getLayoutParams();
-
-            // 计算一个子View占据的真实宽度
-            int childRealWidth = childView.getMeasuredWidth() + params.leftMargin + params.rightMargin;
-
-            // 计算一个子View占据的真实高度
-            int childRealHeight = childView.getMeasuredHeight() + params.topMargin + params.bottomMargin;
-
-            // 判断当前行是否能容纳下这一个View
-            if (lineWidth + childRealWidth > containerWidth) {
-                List<View> viewList = new ArrayList<>();
-                mViewLine.add(viewList);
-                viewList.add(childView);
-
-                // 如果当前行已经容纳不下子View，那么就更新高度，这个高度是这一行View中高度最大的
-                parentHeight += lineViewMaxHeight;
-                // 新一行先默认选择第一个View的高度作为lineViewMaxHeight
-                lineViewMaxHeight = childRealHeight;
-                lineWidth = childRealWidth;
-                isNewLine = true;
-
-            } else {
-                mViewLine.get(mViewLine.size() - 1).add(childView);
-                lineWidth += childRealWidth;
-                lineViewMaxHeight = Math.max(lineViewMaxHeight, childRealHeight);
-            }
-
-            if (isNewLine || mViewLine.size() == 1) {
-                parentHeight += lineViewMaxHeight;
-                isNewLine = false;
-            }
+            MarginLayoutParams params = (MarginLayoutParams) view.getLayoutParams();
+            int viewWidth = perViewWidth - params.leftMargin - params.rightMargin;
+            int viewHeight = perViewWidth - params.topMargin - params.bottomMargin;
+            params.width = viewWidth;
+            params.height = viewHeight;
+            view.setLayoutParams(params);
         }
 
-        setMeasuredDimension(containerWidth, parentHeight);
-    }
-
-    /**
-     * 检测View的宽度加上margin值后是否超过父布局的的宽度减去padding值，如果超过就重新测量该View
-     * 传入一个新的父布局宽度去测量子View
-     *
-     * @param childView         要检测的子View
-     * @param widthMeasureSpec  父布局的宽度测量规格
-     * @param heightMeasureSpec 父布局的高度测量规格
-     */
-    private void checkViewWidth(View childView, int widthMeasureSpec, int heightMeasureSpec) {
-        MarginLayoutParams params = (MarginLayoutParams) childView.getLayoutParams();
-        final int viewWidth = childView.getMeasuredWidth() + params.leftMargin + params.rightMargin;
-
-        // 判断该View是否超过了父布局的宽度
-        if (viewWidth > getMeasuredWidth() - getPaddingLeft() - getPaddingRight()) {
-            int mode = MeasureSpec.getMode(widthMeasureSpec);
-            int height = MeasureSpec.getSize(widthMeasureSpec);
-
-            // 计算父布局能给子View的最大宽度
-            measureChild(childView,
-                    MeasureSpec.makeMeasureSpec(height - params.leftMargin - params.rightMargin, mode), heightMeasureSpec);
-
-        }
+        setMeasuredDimension(realWidth, parentHeight);
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        int curLeft;
         int curTop = getPaddingTop();
-        int lineViewMaxHeight;
-        for (List<View> viewList : mViewLine) {
+        int count = getChildCount();
+        int rowCount = count % ROW_SIZE == 0 ? count / ROW_SIZE : count / ROW_SIZE + 1;
+        for (int i = 0; i < rowCount; i++) {
+            int curLeft = getPaddingLeft();
+            int viewHeight = 0;
+            for (int k = 0; k < ROW_SIZE; k++) {
+                int index = i * ROW_SIZE + k;
+                if (index < count) {
+                    View view = getChildAt(index);
+                    MarginLayoutParams params = (MarginLayoutParams) view.getLayoutParams();
 
-            curLeft = getPaddingLeft();
-            lineViewMaxHeight = 0;
+                    // 摆放子View的时候只需要关注摆放子View的内容部分，同时子View的padding值也不需要关注
+                    int curViewLeft = curLeft + params.leftMargin;
+                    int curViewTop = curTop + params.topMargin;
+                    int curViewRight = curViewLeft + view.getMeasuredWidth() + params.rightMargin;
+                    int curViewBottom = curViewTop + view.getMeasuredHeight() + params.bottomMargin;
 
-            for (View view : viewList) {
-                MarginLayoutParams params = (MarginLayoutParams) view.getLayoutParams();
+                    view.layout(curViewLeft, curViewTop, curViewRight, curViewBottom);
 
-                // 摆放子View的时候只需要关注摆放子View的内容部分，同时子View的padding值也不需要关注
-                int curViewLeft = curLeft + params.leftMargin;
-                int curViewTop = curTop + params.topMargin;
-                int curViewRight = curViewLeft + view.getMeasuredWidth();
-                int curViewBottom = curViewTop + view.getMeasuredHeight();
-
-                view.layout(curViewLeft, curViewTop, curViewRight, curViewBottom);
-
-                // 在更新父布局的宽度和高度的时候要关注子View的整个宽高（包括测量宽高和margin值）
-                int curViewHeight = view.getMeasuredHeight() + +params.topMargin + params.bottomMargin;
-                curLeft = curViewRight + params.rightMargin;
-                // 计算当前行的View的最大高度
-                lineViewMaxHeight = Math.max(lineViewMaxHeight, curViewHeight);
+                    curLeft = curViewRight;
+                    viewHeight = view.getMeasuredHeight() + params.topMargin + params.bottomMargin;
+                }
             }
-            curTop += lineViewMaxHeight;
-
+            curTop += viewHeight;
         }
     }
 
