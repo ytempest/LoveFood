@@ -5,9 +5,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author ytempest
  *         Description：一个实现流式布局的ViewGroup
@@ -76,13 +73,15 @@ public class FlowLayout extends ViewGroup {
                     // 摆放子View的时候只需要关注摆放子View的内容部分，同时子View的padding值也不需要关注
                     int curViewLeft = curLeft + params.leftMargin;
                     int curViewTop = curTop + params.topMargin;
-                    int curViewRight = curViewLeft + view.getMeasuredWidth() + params.rightMargin;
-                    int curViewBottom = curViewTop + view.getMeasuredHeight() + params.bottomMargin;
+                    int curViewRight = curViewLeft + view.getMeasuredWidth();
+                    int curViewBottom = curViewTop + view.getMeasuredHeight();
 
                     view.layout(curViewLeft, curViewTop, curViewRight, curViewBottom);
 
-                    curLeft = curViewRight;
-                    viewHeight = view.getMeasuredHeight() + params.topMargin + params.bottomMargin;
+                    curLeft = curLeft + view.getMeasuredWidth() + params.leftMargin + params.rightMargin;
+                    // 选出一行中最高的View的高度
+                    int curViewWidth = view.getMeasuredHeight() + params.topMargin + params.bottomMargin;
+                    viewHeight = Math.max(viewHeight, curViewWidth);
                 }
             }
             curTop += viewHeight;
