@@ -36,22 +36,27 @@ public class FlowLayout extends ViewGroup {
         int parentHeight = getPaddingTop() + getPaddingBottom();
         int perViewWidth = surplusWidth / mRowSize;
 
+        int visibleViewCount = 0;
         for (int i = 0, len = getChildCount(); i < len; i++) {
-            if (i % mRowSize == 0) {
-                parentHeight += perViewWidth;
-            }
             View view = getChildAt(i);
-            // 如果父布局要获取子View的宽高，就要先调用measureChild()方法测量子View的宽高
-            // 在测量子View之后才可以获取子View的宽高
-            measureChild(view, widthMeasureSpec, heightMeasureSpec);
+            if (view.getVisibility() != GONE) {
+                visibleViewCount++;
+                // 如果父布局要获取子View的宽高，就要先调用measureChild()方法测量子View的宽高
+                // 在测量子View之后才可以获取子View的宽高
+                measureChild(view, widthMeasureSpec, heightMeasureSpec);
 
-            MarginLayoutParams params = (MarginLayoutParams) view.getLayoutParams();
-            int viewWidth = perViewWidth - params.leftMargin - params.rightMargin;
-            int viewHeight = perViewWidth - params.topMargin - params.bottomMargin;
-            params.width = viewWidth;
-            params.height = viewHeight;
-            view.setLayoutParams(params);
+                MarginLayoutParams params = (MarginLayoutParams) view.getLayoutParams();
+                int viewWidth = perViewWidth - params.leftMargin - params.rightMargin;
+                int viewHeight = perViewWidth - params.topMargin - params.bottomMargin;
+                params.width = viewWidth;
+                params.height = viewHeight;
+                view.setLayoutParams(params);
+            }
         }
+
+        int column = visibleViewCount % mRowSize == 0 ?
+                visibleViewCount / mRowSize : visibleViewCount / mRowSize + 1;
+        parentHeight = parentHeight + perViewWidth * column;
 
         setMeasuredDimension(realWidth, parentHeight);
     }
@@ -68,20 +73,22 @@ public class FlowLayout extends ViewGroup {
                 int index = i * mRowSize + k;
                 if (index < count) {
                     View view = getChildAt(index);
-                    MarginLayoutParams params = (MarginLayoutParams) view.getLayoutParams();
+                    if (view.getVisibility() != GONE) {
+                        MarginLayoutParams params = (MarginLayoutParams) view.getLayoutParams();
 
-                    // 摆放子View的时候只需要关注摆放子View的内容部分，同时子View的padding值也不需要关注
-                    int curViewLeft = curLeft + params.leftMargin;
-                    int curViewTop = curTop + params.topMargin;
-                    int curViewRight = curViewLeft + view.getMeasuredWidth();
-                    int curViewBottom = curViewTop + view.getMeasuredHeight();
+                        // 摆放子View的时候只需要关注摆放子View的内容部分，同时子View的padding值也不需要关注
+                        int curViewLeft = curLeft + params.leftMargin;
+                        int curViewTop = curTop + params.topMargin;
+                        int curViewRight = curViewLeft + view.getMeasuredWidth();
+                        int curViewBottom = curViewTop + view.getMeasuredHeight();
 
-                    view.layout(curViewLeft, curViewTop, curViewRight, curViewBottom);
+                        view.layout(curViewLeft, curViewTop, curViewRight, curViewBottom);
 
-                    curLeft = curLeft + view.getMeasuredWidth() + params.leftMargin + params.rightMargin;
-                    // 选出一行中最高的View的高度
-                    int curViewWidth = view.getMeasuredHeight() + params.topMargin + params.bottomMargin;
-                    viewHeight = Math.max(viewHeight, curViewWidth);
+                        curLeft = curLeft + view.getMeasuredWidth() + params.leftMargin + params.rightMargin;
+                        // 选出一行中最高的View的高度
+                        int curViewWidth = view.getMeasuredHeight() + params.topMargin + params.bottomMargin;
+                        viewHeight = Math.max(viewHeight, curViewWidth);
+                    }
                 }
             }
             curTop += viewHeight;
