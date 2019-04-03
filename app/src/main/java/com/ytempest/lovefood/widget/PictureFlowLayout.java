@@ -19,8 +19,12 @@ import java.util.Map;
  */
 public class PictureFlowLayout extends FlowLayout {
 
+    private static final int MAX_VIEW = 9;
+    private static final int ROW_SIZE = 3;
+
     private Map<String, View> mViewMap;
     private LayoutInflater mInflater;
+    private View mSelectView;
 
     public PictureFlowLayout(Context context) {
         this(context, null);
@@ -35,13 +39,35 @@ public class PictureFlowLayout extends FlowLayout {
 
         mInflater = LayoutInflater.from(getContext());
         mViewMap = new HashMap<>();
+        setRowSize(ROW_SIZE);
+        addSelectPictureView();
     }
 
+    private void addSelectPictureView() {
+        mSelectView = mInflater.inflate(R.layout.view_picture_add, this, false);
+        addView(mSelectView);
+    }
 
     public void addPictureList(List<String> paths) {
         for (int i = 0, len = DataUtils.getSize(paths); i < len; i++) {
             String imagePath = paths.get(i);
             addPicture(imagePath);
+        }
+    }
+
+    @Override
+    public void onViewAdded(View child) {
+        super.onViewAdded(child);
+        if (getChildCount() >= MAX_VIEW && mSelectView.getVisibility() == VISIBLE) {
+            mSelectView.setVisibility(GONE);
+        }
+    }
+
+    @Override
+    public void onViewRemoved(View child) {
+        super.onViewRemoved(child);
+        if (getChildCount() <= MAX_VIEW && mSelectView.getVisibility() == GONE) {
+            mSelectView.setVisibility(VISIBLE);
         }
     }
 
