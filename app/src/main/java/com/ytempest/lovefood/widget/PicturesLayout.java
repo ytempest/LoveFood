@@ -58,9 +58,10 @@ public class PicturesLayout extends LinearLayout implements View.OnClickListener
             }
 
             // 添加所有ImageView后，为ImageView设置相应的事件
-            int newChildCount = getChildCount();
             int pictureCount = mPictureList.size();
-            for (int i = 0; i < newChildCount; i++) {
+            int rowCount = pictureCount % MAX_ROW_COUNT == 0 ?
+                    pictureCount / MAX_ROW_COUNT : pictureCount / MAX_ROW_COUNT + 1;
+            for (int i = 0; i < rowCount; i++) {
                 LinearLayout rowContainerView = (LinearLayout) getChildAt(i);
                 for (int k = 0; k < MAX_ROW_COUNT; k++) {
                     if (pictureCount == 0) {
@@ -69,8 +70,10 @@ public class PicturesLayout extends LinearLayout implements View.OnClickListener
                     SquareImageView imageView = (SquareImageView) rowContainerView.getChildAt(k);
                     // 为图片设置点击事件
                     imageView.setOnClickListener(this);
-                    String url = RetrofitClient.client().getUrl() + urlList.get(i).getImageUrl();
+                    String url = RetrofitClient.client().getUrl()
+                            + urlList.get(i * MAX_ROW_COUNT + k).getImageUrl();
                     imageView.setHolder(url);
+                    LogUtils.e(TAG, "setPictureUrlList:  url = " + url);
                     ImageLoaderManager.getInstance().showImage(imageView, url, null);
                     pictureCount--;
                 }
@@ -150,10 +153,10 @@ public class PicturesLayout extends LinearLayout implements View.OnClickListener
         int pictureCount = mPictureList.size();
         // 放置图片列表需要的行数
         int rowCount = getRowCount(pictureCount);
-        LogUtils.e(TAG, "useCacheRowView: -------------------------");
-        LogUtils.e(TAG, "useCacheRowView: 使用缓存View，RowContainer数量=" + rowContainerCount);
-        LogUtils.e(TAG, "useCacheRowView: 图片列表数=" + pictureCount);
-        LogUtils.e(TAG, "useCacheRowView: 放置图片列表需要的行数=" + rowCount);
+        LogUtils.d(TAG, "useCacheRowView: -------------------------");
+        LogUtils.d(TAG, "useCacheRowView: 使用缓存View，RowContainer数量=" + rowContainerCount);
+        LogUtils.d(TAG, "useCacheRowView: 图片列表数=" + pictureCount);
+        LogUtils.d(TAG, "useCacheRowView: 放置图片列表需要的行数=" + rowCount);
 
         // 清空缓存的ImageView的资源和点击事件
         for (int i = 0; i < rowContainerCount; i++) {
