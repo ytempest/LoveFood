@@ -89,6 +89,10 @@ public class PictureFlowLayout extends FlowLayout {
     }
 
     public int getCapacity() {
+        return mPathList.size() > 0 ? mPathList.size() - 1 : 0;
+    }
+
+    public int getMaxCapacity() {
         return MAX_VIEW;
     }
 

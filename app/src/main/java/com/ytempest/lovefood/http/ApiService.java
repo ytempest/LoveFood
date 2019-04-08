@@ -121,6 +121,14 @@ public interface ApiService {
                                                    @Field("toUser") long toUser);
 
 
+    /**
+     * 发布话题
+     */
+    @Multipart
+    @POST("topic/addTopic")
+    Observable<BaseResult<Object>> releaseTopic(@PartMap Map<String, RequestBody> partMap);
+
+
 
     /*---------   菜谱接口   ---------*/
 
