@@ -18,6 +18,7 @@ import com.ytempest.lovefood.mvp.contract.TopicReleaseContract;
 import com.ytempest.lovefood.mvp.presenter.TopicReleasePresenter;
 import com.ytempest.lovefood.mvp.view.imageSelect.ImageSelectActivity;
 import com.ytempest.lovefood.mvp.view.imageSelect.ImageSelector;
+import com.ytempest.lovefood.util.Config;
 import com.ytempest.lovefood.util.DataUtils;
 import com.ytempest.lovefood.util.UserHelper;
 import com.ytempest.lovefood.widget.PictureFlowLayout;
@@ -49,6 +50,8 @@ public class TopicReleaseActivity extends BaseSkinActivity<TopicReleaseContract.
 
     @BindView(R.id.tv_content)
     protected EditText mContentTv;
+
+    private File mCacheImageDir;
 
     @Override
     protected int getLayoutResId() {
@@ -88,6 +91,10 @@ public class TopicReleaseActivity extends BaseSkinActivity<TopicReleaseContract.
 
     @Override
     protected void initData() {
+        mCacheImageDir = new File(Config.EXTERNAL_CACHE_TOPIC_IMAGE_DIR);
+        if (!mCacheImageDir.exists()) {
+            mCacheImageDir.mkdir();
+        }
     }
 
     @Override
@@ -106,24 +113,27 @@ public class TopicReleaseActivity extends BaseSkinActivity<TopicReleaseContract.
         String title = mTitleTv.getText().toString();
         if (TextUtils.isEmpty(title)) {
             CustomToast.getInstance().show("标题不能为空");
+            return;
         }
 
         String content = mContentTv.getText().toString();
         if (TextUtils.isEmpty(content)) {
             CustomToast.getInstance().show("内容不能为空");
+            return;
         }
 
         Map<String, RequestBody> partMap;
+        int pictureCount = mPictureContainer.getCapacity();
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-            partMap = new ArrayMap<>(mPictureContainer.getMaxCapacity() + 3);
+            partMap = new ArrayMap<>(pictureCount + 3);
         } else {
-            partMap = new HashMap<>(mPictureContainer.getMaxCapacity() + 3);
+            partMap = new HashMap<>(pictureCount + 3);
         }
 
-        if (mPictureContainer.getCapacity() > 0) {
+        if (pictureCount > 0) {
             ArrayList<String> pictureList = mPictureContainer.getPictureList();
             for (int i = 0, len = DataUtils.getSize(pictureList); i < len; i++) {
-                File picture = new File(pictureList.get(i));
+                File picture = getPictureFile(pictureList.get(i));
                 partMap.put(RetrofitUtils.toFileKey("topicImage" + i, picture.getName()),
                         RetrofitUtils.createBodyFromFile(picture));
             }
@@ -134,6 +144,13 @@ public class TopicReleaseActivity extends BaseSkinActivity<TopicReleaseContract.
         partMap.put("topicContent", RetrofitUtils.createBodyFromString(content));
 
         getPresenter().releaseTopic(partMap);
+    }
+
+    private File getPictureFile(String path) {
+        // TODO: 2019/04/09 加入话题图片压缩功能
+//        String destPath = mCacheImageDir.getAbsolutePath() + File.separator + new File(path).getName();
+//        ImageUtils.compressImage(path, destPath);
+        return new File(path);
     }
 
     /* MVP View */

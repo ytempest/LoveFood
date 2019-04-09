@@ -33,7 +33,6 @@ public class RetrofitClient {
 
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(URL)
-                .callbackExecutor(ThreadExecutor.getExecutor())
                 .client(okHttpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())

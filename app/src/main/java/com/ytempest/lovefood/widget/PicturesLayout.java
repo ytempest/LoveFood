@@ -30,15 +30,20 @@ public class PicturesLayout extends LinearLayout implements View.OnClickListener
 
     private List<TopicInfo.Image> mPictureList;
 
-    public PicturesLayout(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        division = DrawUtils.dpToPx(context, 1);
+    public PicturesLayout(Context context) {
+        this(context, null);
+    }
 
-/*
-        DisplayMetrics mDisplayMetrics = context.getResources().getDisplayMetrics();
-        mSingleMaxSize = (int) (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 216, mDisplayMetrics) + 0.5f);
-        mSpace = (int) (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, mDisplayMetrics) + 0.5f);
-*/
+    public PicturesLayout(Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public PicturesLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        division = DrawUtils.dpToPx(context, division);
+//        DisplayMetrics mDisplayMetrics = context.getResources().getDisplayMetrics();
+//        mSingleMaxSize = (int) (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 216, mDisplayMetrics) + 0.5f);
+//        mSpace = (int) (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, mDisplayMetrics) + 0.5f);
     }
 
     public void setPictureUrlList(List<TopicInfo.Image> urlList) {
@@ -73,7 +78,6 @@ public class PicturesLayout extends LinearLayout implements View.OnClickListener
                     String url = RetrofitClient.client().getUrl()
                             + urlList.get(i * MAX_ROW_COUNT + k).getImageUrl();
                     imageView.setHolder(url);
-                    LogUtils.e(TAG, "setPictureUrlList:  url = " + url);
                     ImageLoaderManager.getInstance().showImage(imageView, url, null);
                     pictureCount--;
                 }
@@ -195,7 +199,6 @@ public class PicturesLayout extends LinearLayout implements View.OnClickListener
     private LinearLayout getRowLinearLayout() {
         LinearLayout linearLayout = new LinearLayout(getContext());
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.bottomMargin = DrawUtils.dpToPx(getContext(), division);
         linearLayout.setLayoutParams(params);
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         return linearLayout;
