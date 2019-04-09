@@ -7,9 +7,13 @@ import com.ytempest.baselibrary.base.BaseLibrary;
 import com.ytempest.baselibrary.util.LogUtils;
 import com.ytempest.framelibrary.base.FrameLibrary;
 import com.ytempest.lovefood.MyEventBusIndex;
+import com.ytempest.lovefood.util.ThreadExecutor;
 import com.ytempest.lovefood.util.UserHelper;
 
 import org.greenrobot.eventbus.EventBus;
+
+import io.reactivex.android.plugins.RxAndroidPlugins;
+import io.reactivex.plugins.RxJavaPlugins;
 
 
 /**
@@ -28,7 +32,11 @@ public class BaseApplication extends Application {
         // 初始化 MobSDK
         MobSDK.init(this, "27cdc1d5f5ff5", "558df308bbb5de301500d31121438c15");
 
-        EventBus.builder().ignoreGeneratedIndex(false).addIndex(new MyEventBusIndex()).installDefaultEventBus();
+        EventBus.builder()
+                .ignoreGeneratedIndex(false)
+                .addIndex(new MyEventBusIndex())
+                .executorService(ThreadExecutor.getExecutor())
+                .installDefaultEventBus();
 
         initUtils();
     }
