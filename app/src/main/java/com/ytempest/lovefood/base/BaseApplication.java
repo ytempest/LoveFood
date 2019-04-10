@@ -4,16 +4,13 @@ import android.app.Application;
 
 import com.mob.MobSDK;
 import com.ytempest.baselibrary.base.BaseLibrary;
+import com.ytempest.baselibrary.util.CustomThreadExecutor;
 import com.ytempest.baselibrary.util.LogUtils;
 import com.ytempest.framelibrary.base.FrameLibrary;
 import com.ytempest.lovefood.MyEventBusIndex;
-import com.ytempest.lovefood.util.ThreadExecutor;
 import com.ytempest.lovefood.util.UserHelper;
 
 import org.greenrobot.eventbus.EventBus;
-
-import io.reactivex.android.plugins.RxAndroidPlugins;
-import io.reactivex.plugins.RxJavaPlugins;
 
 
 /**
@@ -35,7 +32,7 @@ public class BaseApplication extends Application {
         EventBus.builder()
                 .ignoreGeneratedIndex(false)
                 .addIndex(new MyEventBusIndex())
-                .executorService(ThreadExecutor.getExecutor())
+                .executorService(CustomThreadExecutor.getInstance().getExecutor())
                 .installDefaultEventBus();
 
         initUtils();
