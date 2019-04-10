@@ -56,6 +56,7 @@
         <activity android:name=".mvp.view.PreviewCookbookActivity" />
         <activity android:name=".mvp.view.EditCookbookActivity" />
         <activity android:name=".mvp.view.CookbookListActivity" />
+        <activity android:name=".mvp.view.cookbook.ReleaseCookbookActivity" />
 
         <activity android:name=".mvp.view.activity.ActivityDetailActivity">
             <!--<intent-filter>-->

@@ -44,7 +44,7 @@ public class CookbookFragment extends MvpFragment<CookbookContract.Presenter> im
         mNavigationView.setRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomToast.getInstance().show("发菜谱");
+                ReleaseCookbookActivity.startActivity(getContext());
             }
         });
 
