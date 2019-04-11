@@ -2,7 +2,6 @@ package com.ytempest.lovefood.mvp.view.cookbook;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
@@ -124,27 +123,54 @@ public class ReleaseCookbookActivity extends BaseSkinActivity<ReleaseCookbookCon
             return;
         }
 
+        boolean hadEmptyMainData = mMainAmountView.isHaveEmptyData();
+        if (hadEmptyMainData) {
+            CustomToast.getInstance().show("请正确填写主料");
+            return;
+        }
+
+        boolean hadEmptyAccData = mAccAmountView.isHaveEmptyData();
+        if (hadEmptyAccData) {
+            CustomToast.getInstance().show("请正确填写辅料");
+            return;
+        }
+
+        int proNo = mProcedureView.judgeExistEmptyData();
+        if (proNo != 0) {
+            String msg;
+            if (proNo == -1) {
+                msg = "请添加步骤描述和步骤图片";
+
+            } else {
+                msg = String.format("请为第%s步添加步骤描述和步骤图片", proNo);
+            }
+            CustomToast.getInstance().show(msg);
+            return;
+        }
+
+        List<AmountView.AmountData> mainData = mMainAmountView.getAmountData();
+        List<AmountView.AmountData> accData = mAccAmountView.getAmountData();
+        List<ProcedureView.ProcedureData> proData = mProcedureView.getProcedureData();
+
+        if (true) {
+            CustomToast.getInstance().show("success");
+            return;
+        }
 
         // TODO: 2019/03/02 等待处理保存菜谱的逻辑
         // TODO: 2019/03/02 存在的问题：当不改变图片，只修改其他信息该如何处理
         String cookGroup = "小吃";
-        String cookType = "";
-        File cookImage = (File) mProductIv.getHolder();
-        String cookTitle = mTitleEt.getText().toString().trim();
-        String cookDesc = mDescEt.getText().toString().trim();
-        long cookPublishTime = System.currentTimeMillis();
-        List<AmountView.AmountData> mainData = mMainAmountView.getAmountData();
-        List<AmountView.AmountData> accData = mAccAmountView.getAmountData();
-        List<ProcedureView.ProcedureData> procedureData = mProcedureView.getProcedureData();
-
-        Map<String, RequestBody> map = new HashMap<>(22);
+        String cookType = "广东小吃";
+        Map<String, RequestBody> map = new HashMap<>(
+                6 + mainData.size() + accData.size() + proData.size());
 
         map.put("cookGroup", RetrofitUtils.createBodyFromString(cookGroup));
+        map.put("cookGroup", RetrofitUtils.createBodyFromString(cookGroup));
         map.put("cookType", RetrofitUtils.createBodyFromString(cookType));
-        map.put("cookImage", RetrofitUtils.createBodyFromFile(cookImage));
-        map.put("cookTitle", RetrofitUtils.createBodyFromString(cookTitle));
-        map.put("cookDesc", RetrofitUtils.createBodyFromString(cookDesc));
-        map.put("cookPublishTime", RetrofitUtils.createBodyFromString(String.valueOf(cookPublishTime)));
+        map.put("cookImage", RetrofitUtils.createBodyFromFile((File) produceImage));
+        map.put("cookTitle", RetrofitUtils.createBodyFromString(cookType));
+        map.put("cookDesc", RetrofitUtils.createBodyFromString(cookType));
+        map.put("cookPublishTime", RetrofitUtils.createBodyFromString(String.valueOf(cookType)));
         for (int i = 0; i < mainData.size(); i++) {
             AmountView.AmountData data = mainData.get(i);
             int no = i + 1;
@@ -157,13 +183,13 @@ public class ReleaseCookbookActivity extends BaseSkinActivity<ReleaseCookbookCon
             map.put("accName" + no, RetrofitUtils.createBodyFromString(data.name));
             map.put("accAmount" + no, RetrofitUtils.createBodyFromString(data.amount));
         }
-        for (int i = 0; i < procedureData.size(); i++) {
-            ProcedureView.ProcedureData data = procedureData.get(i);
-            int no = data.no;
-            map.put("proceNo" + no, RetrofitUtils.createBodyFromString(String.valueOf(no)));
-            map.put("proceDesc" + no, RetrofitUtils.createBodyFromString(data.desc));
-            map.put("proceImage" + no, RetrofitUtils.createBodyFromFile(data.imageFile));
-        }
+//        for (int i = 0; i < procedureData.size(); i++) {
+//            ProcedureView.ProcedureData data = procedureData.get(i);
+//            int no = data.no;
+//            map.put("proceNo" + no, RetrofitUtils.createBodyFromString(String.valueOf(no)));
+//            map.put("proceDesc" + no, RetrofitUtils.createBodyFromString(data.desc));
+//            map.put("proceImage" + no, RetrofitUtils.createBodyFromFile(data.imageFile));
+//        }
     }
 
     @OnClick(R.id.iv_product)

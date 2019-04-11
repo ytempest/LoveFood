@@ -2,6 +2,7 @@ package com.ytempest.lovefood.widget;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -118,20 +119,44 @@ public class AmountView extends LinearLayout {
         return getChildCount() == 1;
     }
 
+    public boolean isHaveEmptyData() {
+        boolean isHave = false;
+        int count = getChildCount();
+        if (count == 0) {
+            isHave = true;
+        }
+        for (int i = 0; i < count; i++) {
+            // 跳过分界线View
+            if ((i + 1) % 2 == 0) {
+                continue;
+            }
+            ViewGroup container = (ViewGroup) getChildAt(i);
+            String name = getName(container);
+            String amount = getAmount(container);
+            if (TextUtils.isEmpty(name) || TextUtils.isEmpty(amount)) {
+                isHave = true;
+            }
+        }
+        return isHave;
+    }
 
     public List<AmountData> getAmountData() {
         int count = getChildCount();
         List<AmountData> mainList = new ArrayList<>(count / 2);
         for (int i = 0; i < count; i++) {
             // 跳过分界线View
-            if (i % 2 == 0) {
+            if ((i + 1) % 2 == 0) {
                 continue;
             }
             AmountData bean = new AmountData();
-            View container = getChildAt(i);
-            bean.name = getName(container);
-            bean.amount = getAmount(container);
-            mainList.add(bean);
+            ViewGroup container = (ViewGroup) getChildAt(i);
+            String name = getName(container);
+            String amount = getAmount(container);
+            if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(amount)) {
+                bean.name = name;
+                bean.amount = amount;
+                mainList.add(bean);
+            }
         }
         return mainList;
     }
@@ -141,13 +166,13 @@ public class AmountView extends LinearLayout {
         public String amount;
     }
 
-    private String getName(View view) {
-        EditText editText = view.findViewById(R.id.tv_name);
+    private String getName(ViewGroup group) {
+        EditText editText = (EditText) group.getChildAt(0);
         return editText.getText().toString().trim();
     }
 
-    private String getAmount(View view) {
-        EditText editText = view.findViewById(R.id.tv_amount);
+    private String getAmount(ViewGroup group) {
+        EditText editText = (EditText) group.getChildAt(1);
         return editText.getText().toString().trim();
     }
 }

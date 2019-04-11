@@ -2,6 +2,7 @@ package com.ytempest.lovefood.widget;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,17 +85,38 @@ public class ProcedureView extends LinearLayout implements View.OnClickListener 
         return view;
     }
 
+    public int judgeExistEmptyData() {
+        Integer no = 0;
+        int count = getChildCount();
+        if (count == 0) {
+            no = -1;
+        }
+        for (int i = 0; i < count; i++) {
+            ViewGroup container = (ViewGroup) getChildAt(i);
+            TextView descView = (TextView) container.getChildAt(1);
+            ProcedureImageView imageView = (ProcedureImageView) container.getChildAt(2);
+
+            String desc = descView.getText().toString().trim();
+            File imageFile = imageView.getImageFile();
+            if (TextUtils.isEmpty(desc) || imageFile == null) {
+                no = imageView.getNo();
+                break;
+            }
+        }
+        return no;
+    }
+
     public List<ProcedureData> getProcedureData() {
         int count = getChildCount();
         List<ProcedureData> list = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {
-            ProcedureData data = new ProcedureData();
             ViewGroup container = (ViewGroup) getChildAt(i);
             TextView descView = (TextView) container.getChildAt(1);
-            data.desc = descView.getText().toString().trim();
+            String desc = descView.getText().toString().trim();
             ProcedureImageView imageView = (ProcedureImageView) container.getChildAt(2);
-            data.no = imageView.getNo();
-            data.imageFile = imageView.getImageFile();
+            int no = imageView.getNo();
+            File imageFile = imageView.getImageFile();
+            ProcedureData data = new ProcedureData(no, desc, imageFile);
             list.add(data);
         }
         return list;
@@ -104,6 +126,12 @@ public class ProcedureView extends LinearLayout implements View.OnClickListener 
         public int no;
         public String desc;
         public File imageFile;
+
+        public ProcedureData(int no, String desc, File imageFile) {
+            this.no = no;
+            this.desc = desc;
+            this.imageFile = imageFile;
+        }
     }
 
     @Override
