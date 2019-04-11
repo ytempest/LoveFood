@@ -3,12 +3,14 @@ package com.ytempest.lovefood.mvp.view.cookbook;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
 import android.widget.EditText;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
+import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
@@ -86,12 +88,43 @@ public class ReleaseCookbookActivity extends BaseSkinActivity<ReleaseCookbookCon
         mNavigationView.setRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                saveCookbookInfo();
+                releaseCookbook();
             }
         });
     }
 
-    private void saveCookbookInfo() {
+    @Override
+    protected void initView() {
+        mProcedureView.setListener(this);
+    }
+
+    @Override
+    protected void initData() {
+    }
+
+
+    /* Click */
+
+    private void releaseCookbook() {
+        Object produceImage = mProductIv.getHolder();
+        if (produceImage == null) {
+            CustomToast.getInstance().show("请添加菜谱的成品图");
+            return;
+        }
+
+        String title = mTitleEt.getText().toString().trim();
+        if (TextUtils.isEmpty(title)) {
+            CustomToast.getInstance().show("请输入菜谱标题");
+            return;
+        }
+
+        String desc = mDescEt.getText().toString().trim();
+        if (TextUtils.isEmpty(desc)) {
+            CustomToast.getInstance().show("请输入菜谱介绍");
+            return;
+        }
+
+
         // TODO: 2019/03/02 等待处理保存菜谱的逻辑
         // TODO: 2019/03/02 存在的问题：当不改变图片，只修改其他信息该如何处理
         String cookGroup = "小吃";
@@ -133,29 +166,9 @@ public class ReleaseCookbookActivity extends BaseSkinActivity<ReleaseCookbookCon
         }
     }
 
-    @Override
-    protected void initView() {
-        mProcedureView.setListener(this);
-    }
-
-
-    @Override
-    protected void initData() {
-    }
-
-    /* Click */
-
     @OnClick(R.id.iv_product)
     protected void onAddProductPictureClick(View view) {
         selectImage(CODE_PRODUCT_IMAGE);
-    }
-
-    private void selectImage(int requestPictureCode) {
-        ImageSelector.create()
-                .count(1)
-                .origin(mPictureList)
-                .showCamera(false)
-                .start(ReleaseCookbookActivity.this, requestPictureCode);
     }
 
     @OnClick(R.id.bt_add_main)
@@ -184,17 +197,12 @@ public class ReleaseCookbookActivity extends BaseSkinActivity<ReleaseCookbookCon
         selectImage(mProcedurePair.first);
     }
 
-
-    protected void onSelectPhotoSuccess(View targetView, Bitmap photo, File imageFile) {
-        if (targetView == mProductIv) {
-            mProductIv.setHolder(imageFile);
-            mProductIv.setImageBitmap(photo);
-
-        } else if (targetView instanceof ProcedureImageView) {
-            ProcedureImageView procedureImageView = (ProcedureImageView) targetView;
-            procedureImageView.setImageFile(imageFile);
-            procedureImageView.setImageBitmap(photo);
-        }
+    private void selectImage(int requestPictureCode) {
+        ImageSelector.create()
+                .count(1)
+                .origin(mPictureList)
+                .showCamera(false)
+                .start(ReleaseCookbookActivity.this, requestPictureCode);
     }
 
     @Override
