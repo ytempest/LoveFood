@@ -83,6 +83,14 @@ public interface ApiService {
                                                                    @Query("pageNum") Integer pageNum,
                                                                    @Query("pageSize") Integer pageSize);
 
+    /**
+     * 获取用户所有话题
+     */
+    @GET("user/topicList")
+    Observable<BaseResult<DataList<TopicInfo>>> getUserTopicList(@Query("userId") Long userId,
+                                                                 @Query("pageNum") Integer pageNum,
+                                                                 @Query("pageSize") Integer pageSize);
+
 
     /*---------   菜谱接口   ---------*/
 

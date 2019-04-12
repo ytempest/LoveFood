@@ -49,6 +49,7 @@
         <activity android:name=".mvp.view.personal.UpdateUserActivity" />
         <activity android:name=".mvp.view.personal.UpdatePasswordActivity" />
         <activity android:name=".mvp.view.personal.MyCookbookActivity" />
+        <activity android:name=".mvp.view.personal.MyTopicActivity" />
 
         <activity android:name=".mvp.view.topic.TopicDetailActivity" />
         <activity android:name=".mvp.view.topic.TopicReleaseActivity" />

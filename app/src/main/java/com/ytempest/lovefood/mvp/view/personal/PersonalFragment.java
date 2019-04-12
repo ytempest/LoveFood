@@ -101,7 +101,7 @@ public class PersonalFragment extends MvpFragment<PersonalContract.Presenter> im
 
     @OnClick(R.id.item_topic)
     protected void onMyTopicClick(View view) {
-
+        MyTopicActivity.startActivity(getContext());
     }
 
     @OnClick(R.id.item_account_manage)

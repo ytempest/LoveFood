@@ -1,29 +1,34 @@
-package com.ytempest.lovefood.mvp.view.topic;
+package com.ytempest.lovefood.mvp.view.personal;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ytempest.baselibrary.base.mvp.MvpFragment;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
-import com.ytempest.baselibrary.util.LogUtils;
+import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.baselibrary.view.dialog.AlertDialog;
 import com.ytempest.baselibrary.view.recyclerview.LoadRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.RefreshRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonRecyclerAdapter;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonViewHolder;
+import com.ytempest.framelibrary.base.BaseSkinActivity;
+import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
+import com.ytempest.lovefood.aop.CheckNet;
 import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
 import com.ytempest.lovefood.common.adapter.DefaultRefreshViewCreator;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.http.data.TopicInfo;
-import com.ytempest.lovefood.mvp.contract.TopicContract;
-import com.ytempest.lovefood.mvp.presenter.TopicPresenter;
-import com.ytempest.lovefood.mvp.view.personal.PreviewUserActivity;
+import com.ytempest.lovefood.mvp.contract.MyTopicContract;
+import com.ytempest.lovefood.mvp.presenter.MyTopicPresenter;
+import com.ytempest.lovefood.mvp.view.topic.TopicDetailActivity;
+import com.ytempest.lovefood.mvp.view.topic.TopicReleaseActivity;
 import com.ytempest.lovefood.util.Config;
 import com.ytempest.lovefood.util.DateFormatUtils;
 import com.ytempest.lovefood.util.DrawUtils;
@@ -34,37 +39,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
+@InjectPresenter(MyTopicPresenter.class)
+public class MyTopicActivity extends BaseSkinActivity<MyTopicContract.Presenter>
+        implements MyTopicContract.MyTopicView,
+        CommonRecyclerAdapter.OnItemClickListener,
+        RefreshRecyclerView.OnRefreshMoreListener, LoadRecyclerView.OnLoadMoreListener, CommonRecyclerAdapter.OnLongClickListener {
 
-/**
- * @author ytempest
- *         Description：
- */
-@InjectPresenter(TopicPresenter.class)
-public class TopicFragment extends MvpFragment<TopicPresenter> implements TopicContract.TopicView,
-        RefreshRecyclerView.OnRefreshMoreListener, CommonRecyclerAdapter.OnItemClickListener, LoadRecyclerView.OnLoadMoreListener {
+    private static final String TAG = "MyTopicActivity";
 
-    private static final String TAG = "TopicFragment";
+    public static void startActivity(Context context) {
+        Intent intent = new Intent(context, MyTopicActivity.class);
+        context.startActivity(intent);
+    }
+
+    private int mPageNum = 1;
+
+    @BindView(R.id.navigation_view)
+    protected NavigationView mNavigationView;
 
     @BindView(R.id.recycler_view)
     protected LoadRecyclerView mRecyclerView;
 
-    private int mPageNum = 1;
-    private CommonRecyclerAdapter<TopicInfo> mAdapter;
     private List<TopicInfo> mDataList = new ArrayList<>();
+    private CommonRecyclerAdapter<TopicInfo> mAdapter;
     private final DefaultLoadViewCreator LOAD_CREATOR = new DefaultLoadViewCreator();
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_topic;
+    protected int getLayoutResId() {
+        return R.layout.activity_list;
+    }
+
+    @Override
+    protected void initTitle() {
+        mNavigationView.enableLeftFinish(this);
+        mNavigationView.setTitleText("我的话题");
+        mNavigationView.setRightText("发布");
+        mNavigationView.setRightClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TopicReleaseActivity.startActivity(getContext());
+            }
+        });
     }
 
     @Override
     protected void initView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(MyTopicActivity.this));
         mRecyclerView.setRefreshViewCreator(new DefaultRefreshViewCreator());
         mRecyclerView.setOnRefreshMoreListener(this);
+    }
+
+    @Override
+    protected void initData() {
         mAdapter = new CommonRecyclerAdapter<TopicInfo>(
                 getContext(), mDataList, R.layout.item_topic_view) {
             @Override
@@ -73,7 +100,6 @@ public class TopicFragment extends MvpFragment<TopicPresenter> implements TopicC
                 ImageLoaderManager.getInstance().showImage(holder.getView(R.id.iv_head), url, null);
                 View userView = holder.getView(R.id.ll_user_container);
                 userView.setTag(item.getUserId());
-                userView.setOnClickListener(PREVIEW_USER_LISTENER);
                 holder.setText(R.id.tv_name, item.getUserAccount());
                 holder.setText(R.id.tv_time, DateFormatUtils.formatTime(item.getTopicPublishTime()));
 
@@ -89,36 +115,30 @@ public class TopicFragment extends MvpFragment<TopicPresenter> implements TopicC
                 picturesLayout.setPictureUrlList(item.getTopicImage());
                 picturesLayout.setCallback(SHOW_PICTURE_CALLBACK);
                 holder.setText(R.id.tv_comment, NumberUtils.getLong(item.getCommentCount()) + "评论");
-
             }
         };
-        mAdapter.setOnItemClickListener(TopicFragment.this);
+        mAdapter.setOnItemClickListener(this);
+        mAdapter.setOnItemLongClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
+
+        getPresenter().getMyTopicList(mPageNum, Config.PAGE_SIZE);
     }
-
-    private AlertDialog mImageDialog;
-
-    private final View.OnClickListener PREVIEW_USER_LISTENER = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            long userId = (long) v.getTag();
-            PreviewUserActivity.startActivity(getContext(), userId);
-        }
-    };
 
     private final View.OnClickListener OPEN_TOPIC_DETAIL_LISTENER = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             TopicInfo info = (TopicInfo) v.getTag();
-            TopicDetailActivity.startActivity(getActivity(), info);
+            TopicDetailActivity.startActivity(getContext(), info);
         }
     };
+
+    private AlertDialog mImageDialog;
 
     private final PicturesLayout.Callback SHOW_PICTURE_CALLBACK = new PicturesLayout.Callback() {
         @Override
         public void onPictureClick(ImageView i, String url, List<ImageView> imageGroupList, List<TopicInfo.Image> urlList) {
             if (mImageDialog == null) {
-                mImageDialog = new AlertDialog.Builder(mContext)
+                mImageDialog = new AlertDialog.Builder(getContext())
                         .setContentView(R.layout.dialog_show_picture)
                         .setWidthAndHeight(DrawUtils.getScreenWidth(getContext()), DrawUtils.getScreenHeight(getContext()))
                         .fullWidth()
@@ -136,51 +156,62 @@ public class TopicFragment extends MvpFragment<TopicPresenter> implements TopicC
         }
     };
 
-    @Override
-    protected void initData() {
-        getPresenter().getTopicList(mPageNum, Config.PAGE_SIZE);
-    }
-
     /* Click */
 
+    @CheckNet
     @Override
     public void onItemClick(View view, int position) {
-
+        TopicInfo topicInfo = mDataList.get(position - 1);
+        TopicDetailActivity.startActivity(this, topicInfo);
     }
 
-    @OnClick(R.id.fab_release)
-    protected void onReleaseTopicClick(View view) {
-        Intent intent = new Intent(getContext(), TopicReleaseActivity.class);
-        startActivity(intent);
+    @Override
+    public boolean onItemLongClick(View view, int position) {
+        // TODO  heqidu: 话题长按点击
+        CustomToast.getInstance().show("You long click " + position);
+        return true;
     }
+
+    private final View.OnClickListener EDIT_TOPIC_LISTENER = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // TODO  heqidu: 编辑话题
+//            BaseCookbook cookbook = (BaseCookbook) v.getTag();
+//            EditCookbookActivity.startActivity(MyTopicActivity.this, cookbook.getCookId());
+            mDialog.dismiss();
+        }
+    };
+
+    private AlertDialog mDialog;
+
+    private AlertDialog getDialog() {
+        if (mDialog == null) {
+            mDialog = new AlertDialog.Builder(MyTopicActivity.this)
+                    .setContentView(R.layout.dialog_edit_cookbook)
+                    .addDefaultAnimation()
+                    .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    .setCanceledOnTouchOutside(true)
+                    .create();
+
+        }
+        return mDialog;
+    }
+
 
     /* MVP View */
 
     @Override
-    public void onGetTopicList(DataList<TopicInfo> result) {
-        mDataList.addAll(result.getList());
-        mAdapter.notifyDataSetChanged();
+    public void onGetTopicList(DataList<TopicInfo> data) {
+        int lastPosition = mDataList.size();
+        mDataList.addAll(data.getList());
 
-        // 添加上拉刷新的View
-        addLoadView(result);
-    }
-
-    private void addLoadView(DataList<TopicInfo> result) {
-        long total = result.getTotal();
-        if (total > Config.PAGE_SIZE) {
-            mRecyclerView.removeLoadViewCreator();
-            mRecyclerView.setLoadViewCreator(LOAD_CREATOR);
-            mRecyclerView.setOnLoadMoreListener(this);
-        }
+        mAdapter.notifyItemInserted(lastPosition);
     }
 
     @Override
-    public void onRefreshTopicList(DataList<TopicInfo> data) {
+    public void onRefreshCookbookList(DataList<TopicInfo> data) {
         mDataList.clear();
         mDataList.addAll(data.getList());
-
-        // 添加上拉刷新的View
-        addLoadView(data);
 
         mAdapter.notifyDataSetChanged();
         mRecyclerView.stopRefresh();
@@ -212,4 +243,3 @@ public class TopicFragment extends MvpFragment<TopicPresenter> implements TopicC
     }
 
 }
-

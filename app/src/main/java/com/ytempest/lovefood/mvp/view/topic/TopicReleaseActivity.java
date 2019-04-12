@@ -1,5 +1,6 @@
 package com.ytempest.lovefood.mvp.view.topic;
 
+import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.ArrayMap;
@@ -36,8 +37,12 @@ public class TopicReleaseActivity extends BaseSkinActivity<TopicReleaseContract.
         implements TopicReleaseContract.TopicReleaseView {
 
     private static final String TAG = "TopicReleaseActivity";
-
     private static final int REQUEST_CODE = 0x11;
+
+    public static void startActivity(Context context) {
+        Intent intent = new Intent(context, TopicReleaseActivity.class);
+        context.startActivity(intent);
+    }
 
     @BindView(R.id.navigation_view)
     protected NavigationView mNavigationView;
