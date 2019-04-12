@@ -157,8 +157,4 @@ public class PictureFlowLayout extends FlowLayout {
     public void setImageLoader(ImageLoader loader) {
         this.mImageLoader = loader;
     }
-
-    public interface ImageLoader {
-        void onLoad(ImageView imageView, String imagePath);
-    }
 }

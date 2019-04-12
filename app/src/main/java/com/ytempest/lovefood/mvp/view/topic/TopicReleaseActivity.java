@@ -22,6 +22,7 @@ import com.ytempest.lovefood.mvp.view.imageSelect.ImageSelector;
 import com.ytempest.lovefood.util.Config;
 import com.ytempest.lovefood.util.DataUtils;
 import com.ytempest.lovefood.util.UserHelper;
+import com.ytempest.lovefood.widget.ImageLoader;
 import com.ytempest.lovefood.widget.PictureFlowLayout;
 
 import java.io.File;
@@ -86,7 +87,7 @@ public class TopicReleaseActivity extends BaseSkinActivity<TopicReleaseContract.
 
             }
         });
-        mPictureContainer.setImageLoader(new PictureFlowLayout.ImageLoader() {
+        mPictureContainer.setImageLoader(new ImageLoader() {
             @Override
             public void onLoad(ImageView imageView, String imagePath) {
                 ImageLoaderManager.getInstance().showImage(imageView, imagePath, null);
