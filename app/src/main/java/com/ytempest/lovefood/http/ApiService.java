@@ -138,6 +138,14 @@ public interface ApiService {
                                                                    @Query("cookGroup") String group,
                                                                    @Query("cookType") String type);
 
+
+    /**
+     * 发布菜谱
+     */
+    @Multipart
+    @POST("cook/addCook")
+    Observable<BaseResult<Object>> releaseCookbook(@PartMap Map<String, RequestBody> partMap);
+
     /*---------   活动接口   ---------*/
 
     @GET("activity/list")

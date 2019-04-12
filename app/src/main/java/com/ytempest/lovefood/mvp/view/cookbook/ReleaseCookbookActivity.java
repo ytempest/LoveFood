@@ -2,6 +2,7 @@ package com.ytempest.lovefood.mvp.view.cookbook;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.UserManager;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.ytempest.lovefood.mvp.presenter.ReleaseCookbookPresenter;
 import com.ytempest.lovefood.mvp.view.imageSelect.ImageSelectActivity;
 import com.ytempest.lovefood.mvp.view.imageSelect.ImageSelector;
 import com.ytempest.lovefood.util.DataUtils;
+import com.ytempest.lovefood.util.UserHelper;
 import com.ytempest.lovefood.widget.AmountView;
 import com.ytempest.lovefood.widget.ProcedureImageView;
 import com.ytempest.lovefood.widget.ProcedureView;
@@ -152,44 +154,43 @@ public class ReleaseCookbookActivity extends BaseSkinActivity<ReleaseCookbookCon
         List<AmountView.AmountData> accData = mAccAmountView.getAmountData();
         List<ProcedureView.ProcedureData> proData = mProcedureView.getProcedureData();
 
-        if (true) {
-            CustomToast.getInstance().show("success");
-            return;
-        }
-
-        // TODO: 2019/03/02 等待处理保存菜谱的逻辑
-        // TODO: 2019/03/02 存在的问题：当不改变图片，只修改其他信息该如何处理
-        String cookGroup = "小吃";
-        String cookType = "广东小吃";
         Map<String, RequestBody> map = new HashMap<>(
                 6 + mainData.size() + accData.size() + proData.size());
 
-        map.put("cookGroup", RetrofitUtils.createBodyFromString(cookGroup));
+        String cookGroup = "小吃";
+        String cookType = "广东小吃";
+        long userId = UserHelper.getInstance().getUserInfo().getUserId();
+
         map.put("cookGroup", RetrofitUtils.createBodyFromString(cookGroup));
         map.put("cookType", RetrofitUtils.createBodyFromString(cookType));
         map.put("cookImage", RetrofitUtils.createBodyFromFile((File) produceImage));
+        map.put("cookUserId", RetrofitUtils.createBodyFromString(String.valueOf(userId)));
         map.put("cookTitle", RetrofitUtils.createBodyFromString(cookType));
         map.put("cookDesc", RetrofitUtils.createBodyFromString(cookType));
+        // TODO  heqidu: 发布时间应该放到服务器
         map.put("cookPublishTime", RetrofitUtils.createBodyFromString(String.valueOf(cookType)));
-        for (int i = 0; i < mainData.size(); i++) {
+
+        for (int i = 0, len = DataUtils.getSize(mainData); i < len; i++) {
             AmountView.AmountData data = mainData.get(i);
             int no = i + 1;
             map.put("mainName" + no, RetrofitUtils.createBodyFromString(data.name));
             map.put("mainAmount" + no, RetrofitUtils.createBodyFromString(data.amount));
         }
-        for (int i = 0; i < accData.size(); i++) {
+        for (int i = 0, len = DataUtils.getSize(accData); i < len; i++) {
             AmountView.AmountData data = accData.get(i);
             int no = i + 1;
             map.put("accName" + no, RetrofitUtils.createBodyFromString(data.name));
             map.put("accAmount" + no, RetrofitUtils.createBodyFromString(data.amount));
         }
-//        for (int i = 0; i < procedureData.size(); i++) {
-//            ProcedureView.ProcedureData data = procedureData.get(i);
-//            int no = data.no;
-//            map.put("proceNo" + no, RetrofitUtils.createBodyFromString(String.valueOf(no)));
-//            map.put("proceDesc" + no, RetrofitUtils.createBodyFromString(data.desc));
-//            map.put("proceImage" + no, RetrofitUtils.createBodyFromFile(data.imageFile));
-//        }
+        for (int i = 0, len = DataUtils.getSize(proData); i < len; i++) {
+            ProcedureView.ProcedureData data = proData.get(i);
+            int no = data.no;
+            map.put("proceNo" + no, RetrofitUtils.createBodyFromString(String.valueOf(no)));
+            map.put("proceDesc" + no, RetrofitUtils.createBodyFromString(data.desc));
+            map.put("proceImage" + no, RetrofitUtils.createBodyFromFile(data.imageFile));
+        }
+
+        getPresenter().releaseCookbook(map);
     }
 
     @OnClick(R.id.iv_product)
@@ -258,5 +259,10 @@ public class ReleaseCookbookActivity extends BaseSkinActivity<ReleaseCookbookCon
     }
 
     /* MVP View */
+
+    @Override
+    public void onReleasesCookbookSuccess() {
+        ReleaseCookbookActivity.this.finish();
+    }
 
 }
