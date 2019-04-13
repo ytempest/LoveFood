@@ -4,13 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
-import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.baselibrary.view.dialog.AlertDialog;
 import com.ytempest.baselibrary.view.recyclerview.LoadRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.RefreshRecyclerView;
@@ -168,35 +166,8 @@ public class MyTopicActivity extends BaseSkinActivity<MyTopicContract.Presenter>
     @Override
     public boolean onItemLongClick(View view, int position) {
         // TODO  heqidu: 话题长按点击
-        CustomToast.getInstance().show("You long click " + position);
         return true;
     }
-
-    private final View.OnClickListener EDIT_TOPIC_LISTENER = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            // TODO  heqidu: 编辑话题
-//            BaseCookbook cookbook = (BaseCookbook) v.getTag();
-//            EditCookbookActivity.startActivity(MyTopicActivity.this, cookbook.getCookId());
-            mDialog.dismiss();
-        }
-    };
-
-    private AlertDialog mDialog;
-
-    private AlertDialog getDialog() {
-        if (mDialog == null) {
-            mDialog = new AlertDialog.Builder(MyTopicActivity.this)
-                    .setContentView(R.layout.dialog_edit_cookbook)
-                    .addDefaultAnimation()
-                    .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    .setCanceledOnTouchOutside(true)
-                    .create();
-
-        }
-        return mDialog;
-    }
-
 
     /* MVP View */
 
@@ -204,6 +175,9 @@ public class MyTopicActivity extends BaseSkinActivity<MyTopicContract.Presenter>
     public void onGetTopicList(DataList<TopicInfo> data) {
         int lastPosition = mDataList.size();
         mDataList.addAll(data.getList());
+
+        // 添加上拉刷新的View
+        addLoadView(data);
 
         mAdapter.notifyItemInserted(lastPosition);
     }
@@ -213,8 +187,20 @@ public class MyTopicActivity extends BaseSkinActivity<MyTopicContract.Presenter>
         mDataList.clear();
         mDataList.addAll(data.getList());
 
+        // 添加上拉刷新的View
+        addLoadView(data);
+
         mAdapter.notifyDataSetChanged();
         mRecyclerView.stopRefresh();
+    }
+
+    private void addLoadView(DataList<TopicInfo> result) {
+        long total = result.getTotal();
+        if (total > Config.PAGE_SIZE) {
+            mRecyclerView.removeLoadViewCreator();
+            mRecyclerView.setLoadViewCreator(LOAD_CREATOR);
+            mRecyclerView.setOnLoadMoreListener(this);
+        }
     }
 
     @Override

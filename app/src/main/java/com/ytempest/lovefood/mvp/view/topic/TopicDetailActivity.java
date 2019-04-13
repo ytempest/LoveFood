@@ -71,6 +71,9 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
     @BindView(R.id.recycler_view)
     protected LoadRecyclerView mRecyclerView;
 
+    @BindView(R.id.ll_comment)
+    protected View mCommentView;
+
     private List<CommentDetailInfo> mDataList = new ArrayList<>();
     private CommonRecyclerAdapter<CommentDetailInfo> mAdapter;
     private final DefaultLoadViewCreator LOAD_CREATOR = new DefaultLoadViewCreator();
@@ -118,6 +121,11 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
         mAdapter.setOnItemLongClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addHeaderView(getTopicHeadView(mRecyclerView, mTopicInfo));
+
+        long userId = UserHelper.getInstance().getUserInfo().getUserId();
+        if (userId == mTopicInfo.getUserId()) {
+            mCommentView.setVisibility(View.GONE);
+        }
     }
 
     private View getTopicHeadView(ViewGroup viewGroup, TopicInfo info) {
