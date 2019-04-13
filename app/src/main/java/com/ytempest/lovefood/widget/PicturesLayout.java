@@ -108,6 +108,7 @@ public class PicturesLayout extends FlowLayout implements View.OnClickListener {
         SquareImageView squareImageView = (SquareImageView) imageView;
         squareImageView.setHolder(url);
         squareImageView.setOnClickListener(this);
+        imageView.setBackgroundResource(R.drawable.picture_loading);
         ImageLoaderManager.getInstance().showImage(imageView, url, null);
     }
 }
