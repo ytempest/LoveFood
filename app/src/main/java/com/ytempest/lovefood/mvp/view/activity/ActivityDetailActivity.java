@@ -37,9 +37,6 @@ public class ActivityDetailActivity extends BaseSkinActivity<ActivityDetailContr
         context.startActivity(intent);
     }
 
-//    @BindView(R.id.navigation_view)
-//    protected NavigationView mNavigationView;
-
     @BindView(R.id.iv_cover)
     protected ImageView mCoverView;
 

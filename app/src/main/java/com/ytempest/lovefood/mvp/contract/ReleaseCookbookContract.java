@@ -19,6 +19,8 @@ public interface ReleaseCookbookContract extends IContract {
     interface Presenter extends IPresenter {
 
         void releaseCookbook(Map<String, RequestBody> map);
+
+        void partakeActivityByCookbook(Map<String, RequestBody> map);
     }
 
     interface ReleaseCookbookView extends IView {
@@ -28,5 +30,7 @@ public interface ReleaseCookbookContract extends IContract {
 
     interface Model extends IModel {
         Observable<BaseResult<Object>> releaseCookbook(Map<String, RequestBody> map);
+
+        Observable<BaseResult<Object>> partakeActivityByCookbook(Map<String, RequestBody> map);
     }
 }

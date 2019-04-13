@@ -18,10 +18,16 @@ import okhttp3.RequestBody;
  */
 public class ReleaseCookbookModel extends BaseModel implements ReleaseCookbookContract.Model {
 
-
     @Override
     public Observable<BaseResult<Object>> releaseCookbook(Map<String, RequestBody> map) {
         return RetrofitClient.client().getService().releaseCookbook(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<BaseResult<Object>> partakeActivityByCookbook(Map<String, RequestBody> map) {
+        return RetrofitClient.client().getService().partakeActivityByCookbook(map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

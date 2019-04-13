@@ -27,7 +27,7 @@ public class PageListPresenter extends BasePresenter<PageListContract.PageListVi
                                    super.onNext(result);
                                    int code = result.getCode();
                                    if (code == ResultUtils.SUCCESS) {
-                                       getView().onGetPartakeCookListSuccess(result.getData());
+                                       getView().onRefreshPartakeCookListSuccess(result.getData());
 
                                    } else if (code == ResultUtils.ERROR) {
                                        getView().onGetPartakeCookListFail(result.getMsg());

@@ -22,7 +22,7 @@ public interface PageListContract extends IContract {
     }
 
     interface PageListView extends IView {
-        void onGetPartakeCookListSuccess(DataList<BaseCookbook> data);
+        void onRefreshPartakeCookListSuccess(DataList<BaseCookbook> data);
 
         void onGetPartakeCookListFail(String msg);
 

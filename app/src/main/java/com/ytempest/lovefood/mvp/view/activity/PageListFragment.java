@@ -1,6 +1,7 @@
 package com.ytempest.lovefood.mvp.view.activity;
 
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.ytempest.baselibrary.base.mvp.MvpFragment;
@@ -20,6 +21,7 @@ import com.ytempest.lovefood.http.data.BaseCookbook;
 import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.mvp.contract.PageListContract;
 import com.ytempest.lovefood.mvp.presenter.PageListPresenter;
+import com.ytempest.lovefood.mvp.view.PreviewCookbookActivity;
 import com.ytempest.lovefood.util.Config;
 import com.ytempest.lovefood.util.DateFormatUtils;
 
@@ -34,7 +36,7 @@ import butterknife.BindView;
 @InjectPresenter(PageListPresenter.class)
 public class PageListFragment extends MvpFragment<PageListContract.Presenter>
         implements PageListContract.PageListView,
-        RefreshRecyclerView.OnRefreshMoreListener, LoadRecyclerView.OnLoadMoreListener {
+        RefreshRecyclerView.OnRefreshMoreListener, LoadRecyclerView.OnLoadMoreListener, CommonRecyclerAdapter.OnItemClickListener {
 
     @BindView(R.id.recycler_view)
     protected LoadRecyclerView mRecyclerView;
@@ -67,6 +69,7 @@ public class PageListFragment extends MvpFragment<PageListContract.Presenter>
                 holder.setText(R.id.tv_time, DateFormatUtils.formatDate(item.getCookPublishTime()));
             }
         };
+        mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -99,7 +102,8 @@ public class PageListFragment extends MvpFragment<PageListContract.Presenter>
     /* View MVP */
 
     @Override
-    public void onGetPartakeCookListSuccess(DataList<BaseCookbook> data) {
+    public void onRefreshPartakeCookListSuccess(DataList<BaseCookbook> data) {
+        mRecyclerView.stopRefresh();
         mDataList.clear();
         mDataList.addAll(data.getList());
 
@@ -132,5 +136,13 @@ public class PageListFragment extends MvpFragment<PageListContract.Presenter>
         if (mPageNum == data.getPageCount()) {
             mRecyclerView.removeLoadViewCreator();
         }
+    }
+
+    /* Click */
+
+    @Override
+    public void onItemClick(View view, int position) {
+        long cookId = mDataList.get(position - 1).getCookId();
+        PreviewCookbookActivity.startActivity(getContext(), cookId);
     }
 }

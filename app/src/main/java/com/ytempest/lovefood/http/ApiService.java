@@ -175,4 +175,12 @@ public interface ApiService {
     Observable<BaseResult<DataList<BaseCookbook>>> getPartakeCookList(@Query("actId") long actId,
                                                                       @Query("pageNum") int pageNum,
                                                                       @Query("pageSize") int pageSize);
+
+    /**
+     * 使用菜谱参加指定活动
+     */
+    @Multipart
+    @POST("activity/partake")
+    Observable<BaseResult<Object>> partakeActivityByCookbook(@PartMap Map<String, RequestBody> partMap);
+
 }

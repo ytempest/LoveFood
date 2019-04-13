@@ -1,23 +1,29 @@
 package com.ytempest.lovefood.mvp.view.activity;
 
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.ytempest.baselibrary.base.BaseFragment;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.http.data.ActivityDetailInfo;
+import com.ytempest.lovefood.mvp.view.cookbook.ReleaseCookbookActivity;
 import com.ytempest.lovefood.util.DataUtils;
 import com.ytempest.lovefood.util.DateFormatUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author ytempest
  * @date 2019/3/22
  */
 public class PageDetailFragment extends BaseFragment {
+
+    public static final int ACTION_PARTAKE = 1;
+    public static final int ACTION_SEE_WINNER = 2;
 
     @BindView(R.id.tv_desc)
     protected TextView mDescTv;
@@ -31,9 +37,11 @@ public class PageDetailFragment extends BaseFragment {
     @BindView(R.id.tv_prize)
     protected TextView mPrizeTv;
 
-
     @BindView(R.id.bt_button)
     protected Button mButton;
+
+    private ActivityDetailInfo mData;
+    private int mCurAction;
 
     @Override
     protected int getLayoutId() {
@@ -51,6 +59,7 @@ public class PageDetailFragment extends BaseFragment {
     }
 
     public void setData(ActivityDetailInfo data, boolean isUserPartakeActivity) {
+        mData = data;
         mDescTv.setText(String.format("\t\t\t\t%s", data.getActDesc()));
         String startDate = DateFormatUtils.formatDate(data.getActStartTime());
         String finishDate = DateFormatUtils.formatDate(data.getActFinishTime());
@@ -68,6 +77,7 @@ public class PageDetailFragment extends BaseFragment {
         if (data.getActFinishTime() < curTime) {
             // 如果活动已经结束
             mButton.setEnabled(true);
+            mCurAction = ACTION_SEE_WINNER;
             mButton.setText("查看获奖名单");
 
         } else if (isUserPartakeActivity) {
@@ -78,9 +88,19 @@ public class PageDetailFragment extends BaseFragment {
         } else {
             // 如果用户还没有参加活动
             mButton.setEnabled(true);
+            mCurAction = ACTION_PARTAKE;
             mButton.setText("立即参加");
         }
+    }
 
+    @OnClick(R.id.bt_button)
+    protected void onButtonClick(View view) {
+        if (mCurAction == ACTION_PARTAKE) {
+            long actId = mData.getActId();
+            ReleaseCookbookActivity.startActivity(getContext(), actId);
 
+        } else if (mCurAction == ACTION_SEE_WINNER) {
+
+        }
     }
 }

@@ -4,7 +4,6 @@ import com.ytempest.baselibrary.base.mvp.BasePresenter;
 import com.ytempest.baselibrary.base.mvp.inject.InjectModel;
 import com.ytempest.lovefood.http.data.BaseResult;
 import com.ytempest.lovefood.http.observable.BaseObserver;
-import com.ytempest.lovefood.mvp.contract.AccountManageContract;
 import com.ytempest.lovefood.mvp.contract.ReleaseCookbookContract;
 import com.ytempest.lovefood.mvp.model.ReleaseCookbookModel;
 import com.ytempest.lovefood.util.ResultUtils;
@@ -26,6 +25,27 @@ public class ReleaseCookbookPresenter extends BasePresenter<ReleaseCookbookContr
         getView().onRequestStart("添加中...");
 
         getModel().releaseCookbook(map).subscribe(new BaseObserver<BaseResult<Object>>() {
+            @Override
+            public void onNext(BaseResult<Object> result) {
+                super.onNext(result);
+                int code = result.getCode();
+                if (code == ResultUtils.SUCCESS) {
+                    getView().onRequestSuccess(result.getMsg());
+                    getView().onReleasesCookbookSuccess();
+
+                } else if (code == ResultUtils.ERROR) {
+                    getView().onRequestFail(result.getMsg());
+                }
+
+            }
+        });
+    }
+
+    @Override
+    public void partakeActivityByCookbook(Map<String, RequestBody> map) {
+        getView().onRequestStart("正在传送...");
+
+        getModel().partakeActivityByCookbook(map).subscribe(new BaseObserver<BaseResult<Object>>() {
             @Override
             public void onNext(BaseResult<Object> result) {
                 super.onNext(result);

@@ -47,11 +47,22 @@ public class ReleaseCookbookActivity extends PermissionActivity<ReleaseCookbookC
         ProcedureView.OnPictureClickListener {
 
     private static final String TAG = "ReleaseCookbookActivity";
+    private static final String ACT_ID = "act_id";
 
     public static void startActivity(Context context) {
+        startActivity(context, -1);
+    }
+
+    public static void startActivity(Context context, long actId) {
         Intent intent = new Intent(context, ReleaseCookbookActivity.class);
+        intent.putExtra(ACT_ID, actId);
         context.startActivity(intent);
     }
+
+    public static final int ACTION_RELEASE_COOKBOOK = 1;
+    public static final int ACTION_PARTAKE_ACTIVITY = 2;
+    private int mCurAction;
+    private long mActId;
 
     private static final int CODE_PRODUCT_IMAGE = 0x11;
     private static final int CODE_PERMISSION_READ = 0x000111;
@@ -88,6 +99,20 @@ public class ReleaseCookbookActivity extends PermissionActivity<ReleaseCookbookC
 
     @Override
     protected void initTitle() {
+        mActId = getIntent().getLongExtra(ACT_ID, -1);
+        mCurAction = mActId == -1 ? ACTION_RELEASE_COOKBOOK : ACTION_PARTAKE_ACTIVITY;
+
+        String title = null;
+        String rightText = null;
+        if (mCurAction == ACTION_RELEASE_COOKBOOK) {
+            title = "发布菜谱";
+            rightText = "发布";
+        } else if (mCurAction == ACTION_PARTAKE_ACTIVITY) {
+            title = "参加活动";
+            rightText = "确定";
+        }
+        mNavigationView.setTitleText(title);
+        mNavigationView.setRightText(rightText);
         mNavigationView.enableLeftFinish(this);
         mNavigationView.setRightClickListener(new View.OnClickListener() {
             @Override
@@ -100,10 +125,17 @@ public class ReleaseCookbookActivity extends PermissionActivity<ReleaseCookbookC
     @Override
     protected void initView() {
         mProcedureView.setListener(this);
+        showProperViewCount();
     }
 
     @Override
     protected void initData() {
+    }
+
+    private void showProperViewCount() {
+        mMainAmountView.addNewAmountView();
+        mAccAmountView.addNewAmountView();
+        mProcedureView.addNextStepView();
     }
 
     /* Click */
@@ -165,12 +197,12 @@ public class ReleaseCookbookActivity extends PermissionActivity<ReleaseCookbookC
 
         map.put("cookGroup", RetrofitUtils.createBodyFromString(cookGroup));
         map.put("cookType", RetrofitUtils.createBodyFromString(cookType));
-        map.put("cookImage", RetrofitUtils.createBodyFromFile((File) produceImage));
+        File image = (File) produceImage;
+        map.put(RetrofitUtils.toFileKey("cookImage", image.getName()),
+                RetrofitUtils.createBodyFromFile(image));
         map.put("cookUserId", RetrofitUtils.createBodyFromString(String.valueOf(userId)));
-        map.put("cookTitle", RetrofitUtils.createBodyFromString(cookType));
-        map.put("cookDesc", RetrofitUtils.createBodyFromString(cookType));
-        // TODO  heqidu: 发布时间应该放到服务器
-        map.put("cookPublishTime", RetrofitUtils.createBodyFromString(String.valueOf(cookType)));
+        map.put("cookTitle", RetrofitUtils.createBodyFromString(title));
+        map.put("cookDesc", RetrofitUtils.createBodyFromString(desc));
 
         for (int i = 0, len = DataUtils.getSize(mainData); i < len; i++) {
             AmountView.AmountData data = mainData.get(i);
@@ -189,9 +221,17 @@ public class ReleaseCookbookActivity extends PermissionActivity<ReleaseCookbookC
             int no = data.no;
             map.put("proceNo" + no, RetrofitUtils.createBodyFromString(String.valueOf(no)));
             map.put("proceDesc" + no, RetrofitUtils.createBodyFromString(data.desc));
-            map.put("proceImage" + no, RetrofitUtils.createBodyFromFile(data.imageFile));
+            map.put(RetrofitUtils.toFileKey("proceImage" + no, data.imageFile.getName()),
+                    RetrofitUtils.createBodyFromFile(data.imageFile));
         }
-        getPresenter().releaseCookbook(map);
+
+        if (mCurAction == ACTION_RELEASE_COOKBOOK) {
+            getPresenter().releaseCookbook(map);
+
+        } else if (mCurAction == ACTION_PARTAKE_ACTIVITY) {
+            map.put("actId", RetrofitUtils.createBodyFromString(String.valueOf(mActId)));
+            getPresenter().partakeActivityByCookbook(map);
+        }
     }
 
     @OnClick(R.id.iv_product)
@@ -292,5 +332,4 @@ public class ReleaseCookbookActivity extends PermissionActivity<ReleaseCookbookC
     public void onReleasesCookbookSuccess() {
         ReleaseCookbookActivity.this.finish();
     }
-
 }
