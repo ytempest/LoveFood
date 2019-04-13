@@ -54,8 +54,9 @@ public class BasePresenter<View extends IView, Model extends IModel> implements 
     public void detach() {
         mModel.detach();
         mView = null;
-        mProxyView = null;
         mContract = null;
+        // TODO: 2019/04/13 尝试修复请求成功后，View已经被销毁的情形
+//        mProxyView = null;
     }
 
 
