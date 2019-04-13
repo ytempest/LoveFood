@@ -13,8 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@color/app_color"
-        app:left_icon="@drawable/icon_left_arrow"
-        app:right_text="编辑" />
+        app:left_icon="@drawable/icon_left_arrow" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -80,6 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="22dp"
                 android:layout_marginRight="20dp"
+                android:gravity="center"
                 android:maxLines="8"
                 android:paddingBottom="3dp"
                 android:paddingTop="3dp"

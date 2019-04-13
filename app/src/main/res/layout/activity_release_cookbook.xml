@@ -14,8 +14,8 @@
         android:layout_height="45dp"
         android:background="@color/app_color"
         app:left_icon="@drawable/icon_left_arrow"
-        app:right_text="保存"
-        app:title_text="添加菜谱" />
+        app:right_text="发布"
+        app:title_text="发布菜谱" />
 
     <ScrollView
         android:layout_width="match_parent"
