@@ -6,9 +6,10 @@
 
     <com.ytempest.lovefood.widget.ResizableImageView
         android:id="@+id/iv_show_picture"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/picture_loading" />
 
 </FrameLayout>
 
