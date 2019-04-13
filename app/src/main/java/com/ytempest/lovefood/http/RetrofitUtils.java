@@ -1,12 +1,10 @@
 package com.ytempest.lovefood.http;
 
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import java.io.File;
 import java.net.FileNameMap;
 import java.net.URLConnection;
-import java.nio.ByteBuffer;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -50,7 +48,7 @@ public class RetrofitUtils {
     }
 
     /**
-     * 将文件封装成Body
+     * 将文件封装成Body，使用该方法需要配对使用 toFileKey()方法对 key 进行转化
      */
     public static RequestBody createBodyFromFile(@NonNull File file) {
         return MultipartBody.create(MediaType.parse(guessMimeType(file.getAbsolutePath())), file);

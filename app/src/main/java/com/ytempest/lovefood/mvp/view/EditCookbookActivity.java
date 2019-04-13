@@ -10,10 +10,10 @@ import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
-import com.ytempest.lovefood.mvp.contract.EditCookbookContract;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.RetrofitUtils;
 import com.ytempest.lovefood.http.data.CookbookInfo;
+import com.ytempest.lovefood.mvp.contract.EditCookbookContract;
 import com.ytempest.lovefood.mvp.presenter.EditCookbookPresenter;
 import com.ytempest.lovefood.widget.AmountView;
 import com.ytempest.lovefood.widget.ProcedureImageView;
@@ -104,7 +104,8 @@ public class EditCookbookActivity extends SelectImageActivity<EditCookbookContra
         map.put("cookId", RetrofitUtils.createBodyFromString(String.valueOf(mCookId)));
         map.put("cookGroup", RetrofitUtils.createBodyFromString(cookGroup));
         map.put("cookType", RetrofitUtils.createBodyFromString(cookType));
-        map.put("cookImage", RetrofitUtils.createBodyFromFile(cookImage));
+        map.put(RetrofitUtils.toFileKey("cookImage", cookImage.getName()),
+                RetrofitUtils.createBodyFromFile(cookImage));
         map.put("cookUserId", RetrofitUtils.createBodyFromString(String.valueOf(cookUserId)));
         map.put("cookTitle", RetrofitUtils.createBodyFromString(cookTitle));
         map.put("cookDesc", RetrofitUtils.createBodyFromString(cookDesc));
@@ -126,7 +127,8 @@ public class EditCookbookActivity extends SelectImageActivity<EditCookbookContra
             int no = data.no;
             map.put("proceNo" + no, RetrofitUtils.createBodyFromString(String.valueOf(no)));
             map.put("proceDesc" + no, RetrofitUtils.createBodyFromString(data.desc));
-            map.put("proceImage" + no, RetrofitUtils.createBodyFromFile(data.imageFile));
+            map.put(RetrofitUtils.toFileKey("proceImage" + no, data.imageFile.getName()),
+                    RetrofitUtils.createBodyFromFile(data.imageFile));
         }
         getPresenter().saveCookbookInfo(map);
     }
