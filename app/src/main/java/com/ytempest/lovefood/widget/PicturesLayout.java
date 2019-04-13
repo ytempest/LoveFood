@@ -46,12 +46,12 @@ public class PicturesLayout extends FlowLayout implements View.OnClickListener {
     public void setPictureUrlList(List<TopicInfo.Image> urlList) {
         int existCount = getChildCount();
         int size = DataUtils.getSize(urlList);
-        if (existCount < size) {
+        if (existCount <= size) {
             for (int i = existCount; i < size; i++) {
                 addView(getPictureView(), 0);
             }
         } else {
-            for (int i = size - 1; i < existCount - 1; i++) {
+            for (int i = existCount - 1; i >= size; i--) {
                 removeViewAt(i);
             }
         }
