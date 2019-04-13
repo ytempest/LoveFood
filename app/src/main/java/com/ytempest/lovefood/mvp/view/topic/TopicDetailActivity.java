@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
+import com.ytempest.baselibrary.util.LogUtils;
 import com.ytempest.baselibrary.view.dialog.AlertDialog;
 import com.ytempest.baselibrary.view.recyclerview.LoadRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonRecyclerAdapter;
@@ -23,14 +24,12 @@ import com.ytempest.lovefood.aop.CheckNet;
 import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.BaseComment;
-import com.ytempest.lovefood.http.data.BaseCookbook;
 import com.ytempest.lovefood.http.data.CommentDetailInfo;
 import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.http.data.TopicInfo;
 import com.ytempest.lovefood.http.data.UserInfo;
 import com.ytempest.lovefood.mvp.contract.TopicDetailContract;
 import com.ytempest.lovefood.mvp.presenter.TopicDetailPresenter;
-import com.ytempest.lovefood.mvp.view.EditCookbookActivity;
 import com.ytempest.lovefood.mvp.view.personal.PreviewUserActivity;
 import com.ytempest.lovefood.util.Config;
 import com.ytempest.lovefood.util.DateFormatUtils;
@@ -208,42 +207,14 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
 
     @Override
     public boolean onItemLongClick(View view, int position) {
-        AlertDialog dialog = getDialog();
-        View edit = dialog.getView(R.id.tv_edit_cookbook);
-        edit.setTag(mDataList.get(position - 1));
-        edit.setOnClickListener(EDIT_COOKBOOK_LISTENER);
-        dialog.show();
         return true;
     }
 
-    private final View.OnClickListener EDIT_COOKBOOK_LISTENER = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            BaseCookbook cookbook = (BaseCookbook) v.getTag();
-            EditCookbookActivity.startActivity(TopicDetailActivity.this, cookbook.getCookId());
-            mDialog.dismiss();
-        }
-    };
-
-    private AlertDialog mDialog;
-
-    private AlertDialog getDialog() {
-        if (mDialog == null) {
-            mDialog = new AlertDialog.Builder(TopicDetailActivity.this)
-                    .setContentView(R.layout.dialog_edit_cookbook)
-                    .addDefaultAnimation()
-                    .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    .setCanceledOnTouchOutside(true)
-                    .create();
-        }
-        return mDialog;
-    }
 
     /* MVP View */
 
     @Override
     public void onGetCommentListSuccess(DataList<CommentDetailInfo> data) {
-
         int lastPosition = mDataList.size();
         mDataList.addAll(data.getList());
 
