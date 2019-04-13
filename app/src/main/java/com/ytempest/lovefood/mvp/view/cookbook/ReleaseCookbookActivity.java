@@ -1,8 +1,8 @@
 package com.ytempest.lovefood.mvp.view.cookbook;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.os.UserManager;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
@@ -11,12 +11,13 @@ import android.widget.EditText;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.view.CustomToast;
-import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
+import com.ytempest.lovefood.callback.Callback;
 import com.ytempest.lovefood.http.RetrofitUtils;
 import com.ytempest.lovefood.mvp.contract.ReleaseCookbookContract;
 import com.ytempest.lovefood.mvp.presenter.ReleaseCookbookPresenter;
+import com.ytempest.lovefood.mvp.view.PermissionActivity;
 import com.ytempest.lovefood.mvp.view.imageSelect.ImageSelectActivity;
 import com.ytempest.lovefood.mvp.view.imageSelect.ImageSelector;
 import com.ytempest.lovefood.util.DataUtils;
@@ -41,7 +42,7 @@ import okhttp3.RequestBody;
  * @date 2019/4/10
  */
 @InjectPresenter(ReleaseCookbookPresenter.class)
-public class ReleaseCookbookActivity extends BaseSkinActivity<ReleaseCookbookContract.Presenter>
+public class ReleaseCookbookActivity extends PermissionActivity<ReleaseCookbookContract.Presenter>
         implements ReleaseCookbookContract.ReleaseCookbookView,
         ProcedureView.OnPictureClickListener {
 
@@ -53,6 +54,8 @@ public class ReleaseCookbookActivity extends BaseSkinActivity<ReleaseCookbookCon
     }
 
     private static final int CODE_PRODUCT_IMAGE = 0x11;
+    private static final int CODE_PERMISSION_READ = 0x000111;
+
     private Pair<Integer, ProcedureImageView> mProcedurePair = new Pair<>(0, null);
 
     @BindView(R.id.navigation_view)
@@ -102,7 +105,6 @@ public class ReleaseCookbookActivity extends BaseSkinActivity<ReleaseCookbookCon
     @Override
     protected void initData() {
     }
-
 
     /* Click */
 
@@ -189,13 +191,22 @@ public class ReleaseCookbookActivity extends BaseSkinActivity<ReleaseCookbookCon
             map.put("proceDesc" + no, RetrofitUtils.createBodyFromString(data.desc));
             map.put("proceImage" + no, RetrofitUtils.createBodyFromFile(data.imageFile));
         }
-
         getPresenter().releaseCookbook(map);
     }
 
     @OnClick(R.id.iv_product)
     protected void onAddProductPictureClick(View view) {
-        selectImage(CODE_PRODUCT_IMAGE);
+        requestReadPermission(new Callback<Boolean>() {
+            @Override
+            public void onCall(Boolean result) {
+                if (result) {
+                    selectImage(CODE_PRODUCT_IMAGE);
+
+                } else {
+                    CustomToast.getInstance().show("请授予对手机读写的权限");
+                }
+            }
+        });
     }
 
     @OnClick(R.id.bt_add_main)
@@ -220,8 +231,25 @@ public class ReleaseCookbookActivity extends BaseSkinActivity<ReleaseCookbookCon
 
     @Override
     public void onImageClick(View view, int no) {
-        mProcedurePair = new Pair<>(no, ((ProcedureImageView) view));
-        selectImage(mProcedurePair.first);
+        requestReadPermission(new Callback<Boolean>() {
+            @Override
+            public void onCall(Boolean result) {
+                if (result) {
+                    mProcedurePair = new Pair<>(no, ((ProcedureImageView) view));
+                    selectImage(mProcedurePair.first);
+
+                } else {
+                    CustomToast.getInstance().show("请授予对手机读写的权限");
+                }
+            }
+        });
+    }
+
+    private void requestReadPermission(Callback<Boolean> callback) {
+        requestPermission(CODE_PERMISSION_READ,
+                "需要获取手机的读写权限",
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                callback);
     }
 
     private void selectImage(int requestPictureCode) {

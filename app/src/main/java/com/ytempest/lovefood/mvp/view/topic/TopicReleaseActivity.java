@@ -1,5 +1,6 @@
 package com.ytempest.lovefood.mvp.view.topic;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -11,12 +12,13 @@ import android.widget.ImageView;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.view.CustomToast;
-import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
+import com.ytempest.lovefood.callback.Callback;
 import com.ytempest.lovefood.http.RetrofitUtils;
 import com.ytempest.lovefood.mvp.contract.TopicReleaseContract;
 import com.ytempest.lovefood.mvp.presenter.TopicReleasePresenter;
+import com.ytempest.lovefood.mvp.view.PermissionActivity;
 import com.ytempest.lovefood.mvp.view.imageSelect.ImageSelectActivity;
 import com.ytempest.lovefood.mvp.view.imageSelect.ImageSelector;
 import com.ytempest.lovefood.util.Config;
@@ -34,11 +36,13 @@ import butterknife.BindView;
 import okhttp3.RequestBody;
 
 @InjectPresenter(TopicReleasePresenter.class)
-public class TopicReleaseActivity extends BaseSkinActivity<TopicReleaseContract.Presenter>
+public class TopicReleaseActivity extends PermissionActivity<TopicReleaseContract.Presenter>
         implements TopicReleaseContract.TopicReleaseView {
 
     private static final String TAG = "TopicReleaseActivity";
     private static final int REQUEST_CODE = 0x11;
+    private static final int CODE_PERMISSION_READ = 0x000111;
+
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, TopicReleaseActivity.class);
@@ -79,14 +83,10 @@ public class TopicReleaseActivity extends BaseSkinActivity<TopicReleaseContract.
         mPictureContainer.setSelectPictureListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageSelector.create()
-                        .count(mPictureContainer.getMaxCapacity())
-                        .origin(mPictureContainer.getPictureList())
-                        .showCamera(false)
-                        .start(TopicReleaseActivity.this, REQUEST_CODE);
-
+                onSelectImage();
             }
         });
+
         mPictureContainer.setImageLoader(new ImageLoader() {
             @Override
             public void onLoad(ImageView imageView, String imagePath) {
@@ -114,6 +114,8 @@ public class TopicReleaseActivity extends BaseSkinActivity<TopicReleaseContract.
         }
 
     }
+
+    /* click */
 
     private void releaseTopic() {
         String title = mTitleTv.getText().toString();
@@ -157,6 +159,27 @@ public class TopicReleaseActivity extends BaseSkinActivity<TopicReleaseContract.
 //        String destPath = mCacheImageDir.getAbsolutePath() + File.separator + new File(path).getName();
 //        ImageUtils.compressImage(path, destPath);
         return new File(path);
+    }
+
+    private void onSelectImage() {
+        requestPermission(CODE_PERMISSION_READ,
+                "需要获取手机的读写权限",
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}
+                , new Callback<Boolean>() {
+                    @Override
+                    public void onCall(Boolean result) {
+                        if (result) {
+                            ImageSelector.create()
+                                    .count(mPictureContainer.getMaxCapacity())
+                                    .origin(mPictureContainer.getPictureList())
+                                    .showCamera(false)
+                                    .start(TopicReleaseActivity.this, REQUEST_CODE);
+
+                        } else {
+                            CustomToast.getInstance().show("请授予对手机读写的权限");
+                        }
+                    }
+                });
     }
 
     /* MVP View */
