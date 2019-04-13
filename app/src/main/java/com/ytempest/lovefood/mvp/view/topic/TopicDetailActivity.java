@@ -173,7 +173,6 @@ public class TopicDetailActivity extends BaseSkinActivity<TopicDetailContract.Pr
 
     private AlertDialog mCommentDialog;
 
-    @CheckNet
     @OnClick(R.id.ll_comment)
     protected void onCommentClick(View view) {
         if (mCommentDialog == null) {

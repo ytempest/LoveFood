@@ -14,6 +14,7 @@ import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
+import com.ytempest.lovefood.aop.CheckNet;
 import com.ytempest.lovefood.callback.Callback;
 import com.ytempest.lovefood.http.RetrofitUtils;
 import com.ytempest.lovefood.mvp.contract.TopicReleaseContract;
@@ -117,6 +118,7 @@ public class TopicReleaseActivity extends PermissionActivity<TopicReleaseContrac
 
     /* click */
 
+    @CheckNet
     private void releaseTopic() {
         String title = mTitleTv.getText().toString();
         if (TextUtils.isEmpty(title)) {

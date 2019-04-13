@@ -11,6 +11,7 @@ import com.ytempest.baselibrary.view.recyclerview.RefreshRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonRecyclerAdapter;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonViewHolder;
 import com.ytempest.lovefood.R;
+import com.ytempest.lovefood.aop.CheckNet;
 import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
 import com.ytempest.lovefood.common.adapter.DefaultRefreshViewCreator;
 import com.ytempest.lovefood.http.RetrofitClient;
@@ -81,6 +82,7 @@ public class ActivityFragment extends MvpFragment<ActivityContract.Presenter> im
 
     /* Click */
 
+    @CheckNet
     @Override
     public void onItemClick(View view, int position) {
         long actId = mDataList.get(position - 1).getActId();
