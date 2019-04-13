@@ -15,17 +15,18 @@ import com.ytempest.baselibrary.view.recyclerview.adapter.CommonViewHolder;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
-import com.ytempest.lovefood.mvp.view.EditCookbookActivity;
-import com.ytempest.lovefood.mvp.view.PreviewCookbookActivity;
 import com.ytempest.lovefood.aop.CheckNet;
 import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
 import com.ytempest.lovefood.common.adapter.DefaultRefreshViewCreator;
-import com.ytempest.lovefood.mvp.contract.MyCookbookContract;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.BaseCookbook;
 import com.ytempest.lovefood.http.data.CookbookInfo;
 import com.ytempest.lovefood.http.data.DataList;
+import com.ytempest.lovefood.mvp.contract.MyCookbookContract;
 import com.ytempest.lovefood.mvp.presenter.MyCookbookPresenter;
+import com.ytempest.lovefood.mvp.view.EditCookbookActivity;
+import com.ytempest.lovefood.mvp.view.PreviewCookbookActivity;
+import com.ytempest.lovefood.mvp.view.cookbook.ReleaseCookbookActivity;
 import com.ytempest.lovefood.util.Config;
 import com.ytempest.lovefood.util.DateFormatUtils;
 
@@ -70,14 +71,13 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
         mNavigationView.setRightClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2019/02/15 添加发布菜谱的逻辑
+                ReleaseCookbookActivity.startActivity(getContext());
             }
         });
     }
 
     @Override
     protected void initView() {
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(MyCookbookActivity.this));
         mRecyclerView.setRefreshViewCreator(new DefaultRefreshViewCreator());
         mRecyclerView.setOnRefreshMoreListener(this);

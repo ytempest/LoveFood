@@ -12,9 +12,9 @@ import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
-import com.ytempest.lovefood.mvp.contract.PreviewCookbookContract;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.CookbookInfo;
+import com.ytempest.lovefood.mvp.contract.PreviewCookbookContract;
 import com.ytempest.lovefood.mvp.presenter.PreviewCookbookPresenter;
 import com.ytempest.lovefood.widget.AmountView;
 import com.ytempest.lovefood.widget.ProcedureView;
@@ -35,7 +35,6 @@ public class PreviewCookbookActivity extends BaseSkinActivity<PreviewCookbookCon
         implements PreviewCookbookContract.PreviewCookbookView, PreviewCookbookContract {
 
     private static final String COOK_ID = "cook_id";
-    private long mCookId;
 
     public static void startActivity(Context context, long cookId) {
         Intent intent = new Intent(context, PreviewCookbookActivity.class);
@@ -76,6 +75,8 @@ public class PreviewCookbookActivity extends BaseSkinActivity<PreviewCookbookCon
     @BindViews({R.id.tv_title_introduce, R.id.tv_title_main, R.id.tv_title_acc, R.id.tv_title_step})
     protected TitleView[] mTitleViews;
 
+    private long mCookId;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_preview_cookbook;
@@ -83,13 +84,14 @@ public class PreviewCookbookActivity extends BaseSkinActivity<PreviewCookbookCon
 
     @Override
     protected void initTitle() {
+        mCookId = getIntent().getLongExtra(COOK_ID, -1);
+        if (mCookId == -1) {
+            CustomToast.getInstance().show("数据异常");
+            finish();
+        }
+
         mNavigationView.enableLeftFinish(this);
-        mNavigationView.setRightClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditCookbookActivity.startActivity(PreviewCookbookActivity.this, mCookId);
-            }
-        });
+
     }
 
     @Override
@@ -99,14 +101,7 @@ public class PreviewCookbookActivity extends BaseSkinActivity<PreviewCookbookCon
 
     @Override
     protected void initData() {
-        long cookId = getIntent().getLongExtra(COOK_ID, -1);
-        if (cookId != -1) {
-            mCookId = cookId;
-            getPresenter().getCookbookInfo(cookId);
-        } else {
-            CustomToast.getInstance().show("数据异常");
-            finish();
-        }
+        getPresenter().getCookbookInfo(mCookId);
     }
 
     /* MVP View */
