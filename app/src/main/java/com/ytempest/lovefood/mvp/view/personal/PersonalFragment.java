@@ -117,7 +117,7 @@ public class PersonalFragment extends MvpFragment<PersonalContract.Presenter> im
 
     @OnClick(R.id.item_activity)
     protected void onPartakeActivityClick(View view) {
-
+        MyPartakeActivity.startActivity(getContext());
     }
 
 

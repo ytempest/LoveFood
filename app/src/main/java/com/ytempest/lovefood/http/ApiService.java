@@ -2,6 +2,7 @@ package com.ytempest.lovefood.http;
 
 import com.ytempest.lovefood.http.data.ActivityDetailInfo;
 import com.ytempest.lovefood.http.data.ActivityInfo;
+import com.ytempest.lovefood.http.data.BaseActivityInfo;
 import com.ytempest.lovefood.http.data.BaseComment;
 import com.ytempest.lovefood.http.data.BaseCookbook;
 import com.ytempest.lovefood.http.data.BaseResult;
@@ -98,6 +99,14 @@ public interface ApiService {
     Observable<BaseResult<DataList<BaseCookbook>>> getUserCollectionList(@Query("userId") Long userId,
                                                                          @Query("pageNum") Integer pageNum,
                                                                          @Query("pageSize") Integer pageSize);
+
+    /**
+     * 获取用户参与的所有活动
+     */
+    @GET("user/activityList")
+    Observable<BaseResult<DataList<BaseActivityInfo>>> getUserPartakeList(@Query("userId") Long userId,
+                                                                          @Query("pageNum") Integer pageNum,
+                                                                          @Query("pageSize") Integer pageSize);
 
 
     /*---------   菜谱接口   ---------*/
