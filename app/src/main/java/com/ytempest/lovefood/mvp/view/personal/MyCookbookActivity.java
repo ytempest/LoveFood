@@ -110,8 +110,10 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
     @CheckNet
     @Override
     public void onItemClick(View view, int position) {
-        long cookId = mDataList.get(position - 1).getCookId();
-        PreviewCookbookActivity.startActivity(this, cookId);
+        BaseCookbook cookbook = mDataList.get(position - 1);
+        long userId = cookbook.getCookUserId();
+        long cookId = cookbook.getCookId();
+        PreviewCookbookActivity.startActivity(this, userId, cookId);
     }
 
     @Override

@@ -146,13 +146,28 @@ public interface ApiService {
                                                                    @Query("cookGroup") String group,
                                                                    @Query("cookType") String type);
 
-
     /**
      * 发布菜谱
      */
     @Multipart
     @POST("cook/addCook")
     Observable<BaseResult<Object>> releaseCookbook(@PartMap Map<String, RequestBody> partMap);
+
+    /**
+     * 判断用户是否收藏了菜谱
+     */
+    @GET("user/isCollect")
+    Observable<BaseResult<Boolean>> isUserCollection(@Query("userId") long userId,
+                                                     @Query("cookId") long cookId);
+
+    /**
+     * 为指定用户收藏了菜谱，如果已经收藏则取消收藏
+     */
+    @FormUrlEncoded
+    @POST("user/collectCook")
+    Observable<BaseResult<Boolean>> collectionCookbook(@Field("userId") long userId,
+                                                       @Field("cookId") long cookId);
+
 
     /*---------   活动接口   ---------*/
 

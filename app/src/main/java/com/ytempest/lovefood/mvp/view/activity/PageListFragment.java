@@ -142,7 +142,9 @@ public class PageListFragment extends MvpFragment<PageListContract.Presenter>
 
     @Override
     public void onItemClick(View view, int position) {
-        long cookId = mDataList.get(position - 1).getCookId();
-        PreviewCookbookActivity.startActivity(getContext(), cookId);
+        BaseCookbook cookbook = mDataList.get(position - 1);
+        long userId = cookbook.getCookUserId();
+        long cookId = cookbook.getCookId();
+        PreviewCookbookActivity.startActivity(getContext(), userId, cookId);
     }
 }

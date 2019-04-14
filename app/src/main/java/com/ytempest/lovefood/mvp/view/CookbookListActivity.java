@@ -21,10 +21,10 @@ import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.aop.CheckNet;
 import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
 import com.ytempest.lovefood.common.adapter.DefaultRefreshViewCreator;
-import com.ytempest.lovefood.mvp.contract.CookbookListContract;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.BaseCookbook;
 import com.ytempest.lovefood.http.data.DataList;
+import com.ytempest.lovefood.mvp.contract.CookbookListContract;
 import com.ytempest.lovefood.mvp.presenter.CookbookListPresenter;
 import com.ytempest.lovefood.util.CommonUtils;
 import com.ytempest.lovefood.util.Config;
@@ -113,8 +113,10 @@ public class CookbookListActivity extends BaseSkinActivity<CookbookListContract.
     @CheckNet
     @Override
     public void onItemClick(View view, int position) {
-        long cookId = mDataList.get(position - 1).getCookId();
-        PreviewCookbookActivity.startActivity(this, cookId);
+        BaseCookbook cookbook = mDataList.get(position - 1);
+        long userId = cookbook.getCookUserId();
+        long cookId = cookbook.getCookId();
+        PreviewCookbookActivity.startActivity(this, userId, cookId);
     }
 
     @Override

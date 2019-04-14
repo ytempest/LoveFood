@@ -16,13 +16,23 @@ import io.reactivex.Observable;
 public interface PreviewCookbookContract extends IContract {
     interface Presenter extends IPresenter {
         void getCookbookInfo(long cookId);
+
+        void getCookbookInfo(long cookId, long userId);
+
+        void collectionCookbook(long userId, long cookId);
     }
 
     interface PreviewCookbookView extends IView {
-        void onGetCookbookInfo(CookbookInfo data);
+        void onGetCookbookInfo(CookbookInfo data, Boolean isCollection);
+
+        void onCollectionCookbook(boolean isCollection);
     }
 
     interface Model extends IModel {
         Observable<BaseResult<CookbookInfo>> getCookbookInfo(long cookId);
+
+        Observable<BaseResult<Boolean>> judgeUserCollection(long userId, long cookId);
+
+        Observable<BaseResult<Boolean>> collectionCookbook(long userId, long cookId);
     }
 }
