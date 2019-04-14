@@ -14,4 +14,11 @@ public class SimplCallback {
             callback.onCall(param);
         }
     }
+
+    public static <FirstType, SecondType> void call(WrapCallback<FirstType, SecondType> callback,
+                                                    FirstType firstParam, SecondType secondParam) {
+        if (callback != null) {
+            callback.onCall(firstParam, secondParam);
+        }
+    }
 }
