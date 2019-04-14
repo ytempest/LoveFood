@@ -91,6 +91,14 @@ public interface ApiService {
                                                                  @Query("pageNum") Integer pageNum,
                                                                  @Query("pageSize") Integer pageSize);
 
+    /**
+     * 获取用户所有的收藏
+     */
+    @GET("user/collectList")
+    Observable<BaseResult<DataList<BaseCookbook>>> getUserCollectionList(@Query("userId") Long userId,
+                                                                         @Query("pageNum") Integer pageNum,
+                                                                         @Query("pageSize") Integer pageSize);
+
 
     /*---------   菜谱接口   ---------*/
 

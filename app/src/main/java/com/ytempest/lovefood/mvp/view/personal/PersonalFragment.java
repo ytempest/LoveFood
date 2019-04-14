@@ -112,7 +112,7 @@ public class PersonalFragment extends MvpFragment<PersonalContract.Presenter> im
 
     @OnClick(R.id.item_collection)
     protected void onMyCollectionClick(View view) {
-
+        MyCollectionActivity.startActivity(getContext());
     }
 
     @OnClick(R.id.item_activity)
