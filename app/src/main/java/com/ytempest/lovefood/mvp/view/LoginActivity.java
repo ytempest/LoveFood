@@ -12,9 +12,9 @@ import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.button.ModifiableButton;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.aop.CheckNet;
-import com.ytempest.lovefood.mvp.contract.LoginContract;
 import com.ytempest.lovefood.common.listener.PasswordStatusChangeListener;
 import com.ytempest.lovefood.common.listener.TextWatcherListener;
+import com.ytempest.lovefood.mvp.contract.LoginContract;
 import com.ytempest.lovefood.mvp.presenter.LoginPresenter;
 import com.ytempest.lovefood.util.RegexUtils;
 

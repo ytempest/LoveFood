@@ -11,9 +11,9 @@ import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
-import com.ytempest.lovefood.mvp.contract.PreviewUserContract;
-import com.ytempest.lovefood.http.data.UserInfo;
 import com.ytempest.lovefood.http.RetrofitClient;
+import com.ytempest.lovefood.http.data.UserInfo;
+import com.ytempest.lovefood.mvp.contract.PreviewUserContract;
 import com.ytempest.lovefood.mvp.presenter.PreviewUserPresenter;
 import com.ytempest.lovefood.util.DateFormatUtils;
 

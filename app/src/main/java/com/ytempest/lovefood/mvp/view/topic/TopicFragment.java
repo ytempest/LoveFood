@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.ytempest.baselibrary.base.mvp.MvpFragment;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
-import com.ytempest.baselibrary.util.LogUtils;
 import com.ytempest.baselibrary.view.dialog.AlertDialog;
 import com.ytempest.baselibrary.view.recyclerview.LoadRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.RefreshRecyclerView;

@@ -13,7 +13,7 @@ public class JSON {
         return GSON.toJson(src);
     }
 
-    public static <T> T from(String json, Class<T> clazz){
+    public static <T> T from(String json, Class<T> clazz) {
         return GSON.fromJson(json, clazz);
     }
 }

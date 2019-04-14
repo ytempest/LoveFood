@@ -4,7 +4,6 @@ package com.ytempest.lovefood.aop;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 
 import com.ytempest.baselibrary.util.ResourcesUtils;

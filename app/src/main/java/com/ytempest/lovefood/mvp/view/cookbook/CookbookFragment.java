@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.ytempest.baselibrary.base.mvp.MvpFragment;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
-import com.ytempest.baselibrary.view.CustomToast;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonRecyclerAdapter;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonViewHolder;
 import com.ytempest.framelibrary.view.NavigationView;

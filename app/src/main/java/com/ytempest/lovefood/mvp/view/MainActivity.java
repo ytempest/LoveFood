@@ -11,11 +11,11 @@ import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.common.adapter.FragmentPagerAdapter;
 import com.ytempest.lovefood.mvp.contract.MainContract;
+import com.ytempest.lovefood.mvp.presenter.MainPresenter;
 import com.ytempest.lovefood.mvp.view.activity.ActivityFragment;
 import com.ytempest.lovefood.mvp.view.cookbook.CookbookFragment;
 import com.ytempest.lovefood.mvp.view.personal.PersonalFragment;
 import com.ytempest.lovefood.mvp.view.topic.TopicFragment;
-import com.ytempest.lovefood.mvp.presenter.MainPresenter;
 
 import java.util.ArrayList;
 import java.util.List;

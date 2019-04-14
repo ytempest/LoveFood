@@ -2,10 +2,10 @@ package com.ytempest.lovefood.mvp.model;
 
 import com.ytempest.baselibrary.base.mvp.BaseModel;
 import com.ytempest.framelibrary.encrypt.EncryptUtils;
-import com.ytempest.lovefood.mvp.contract.RegisterContract;
+import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.BaseResult;
 import com.ytempest.lovefood.http.data.UserInfo;
-import com.ytempest.lovefood.http.RetrofitClient;
+import com.ytempest.lovefood.mvp.contract.RegisterContract;
 import com.ytempest.lovefood.util.UserHelper;
 
 import io.reactivex.Observable;

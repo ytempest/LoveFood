@@ -6,7 +6,6 @@ import com.ytempest.lovefood.http.data.BaseCookbook;
 import com.ytempest.lovefood.http.data.BaseResult;
 import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.mvp.contract.MyCollectionContract;
-import com.ytempest.lovefood.mvp.contract.MyCookbookContract;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

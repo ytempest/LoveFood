@@ -16,8 +16,8 @@ import com.ytempest.framelibrary.view.button.VerifyButton;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.aop.CheckNet;
 import com.ytempest.lovefood.common.DefaultEventHandler;
-import com.ytempest.lovefood.mvp.contract.RegisterContract;
 import com.ytempest.lovefood.common.listener.PasswordStatusChangeListener;
+import com.ytempest.lovefood.mvp.contract.RegisterContract;
 import com.ytempest.lovefood.mvp.presenter.RegisterPresenter;
 import com.ytempest.lovefood.util.RegexUtils;
 

@@ -1,10 +1,10 @@
 package com.ytempest.lovefood.mvp.model;
 
 import com.ytempest.baselibrary.base.mvp.BaseModel;
-import com.ytempest.lovefood.mvp.contract.EditCookbookContract;
 import com.ytempest.lovefood.http.RetrofitClient;
 import com.ytempest.lovefood.http.data.BaseResult;
 import com.ytempest.lovefood.http.data.CookbookInfo;
+import com.ytempest.lovefood.mvp.contract.EditCookbookContract;
 
 import java.util.Map;
 

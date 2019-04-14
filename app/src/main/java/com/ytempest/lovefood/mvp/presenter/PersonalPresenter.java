@@ -2,8 +2,8 @@ package com.ytempest.lovefood.mvp.presenter;
 
 import com.ytempest.baselibrary.base.mvp.BasePresenter;
 import com.ytempest.baselibrary.base.mvp.inject.InjectModel;
-import com.ytempest.lovefood.mvp.contract.PersonalContract;
 import com.ytempest.lovefood.http.data.UserInfo;
+import com.ytempest.lovefood.mvp.contract.PersonalContract;
 import com.ytempest.lovefood.mvp.model.PersonalModel;
 import com.ytempest.lovefood.util.UserHelper;
 

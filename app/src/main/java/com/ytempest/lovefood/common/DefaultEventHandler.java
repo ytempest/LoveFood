@@ -1,7 +1,7 @@
 package com.ytempest.lovefood.common;
 
-import com.ytempest.baselibrary.util.LogUtils;
 import com.ytempest.baselibrary.util.CustomThreadExecutor;
+import com.ytempest.baselibrary.util.LogUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;

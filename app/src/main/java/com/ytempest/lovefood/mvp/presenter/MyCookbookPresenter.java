@@ -2,11 +2,11 @@ package com.ytempest.lovefood.mvp.presenter;
 
 import com.ytempest.baselibrary.base.mvp.BasePresenter;
 import com.ytempest.baselibrary.base.mvp.inject.InjectModel;
-import com.ytempest.lovefood.mvp.contract.MyCookbookContract;
 import com.ytempest.lovefood.http.data.BaseCookbook;
 import com.ytempest.lovefood.http.data.BaseResult;
 import com.ytempest.lovefood.http.data.DataList;
 import com.ytempest.lovefood.http.observable.BaseObserver;
+import com.ytempest.lovefood.mvp.contract.MyCookbookContract;
 import com.ytempest.lovefood.mvp.model.MyCookbookModel;
 import com.ytempest.lovefood.util.ResultUtils;
 import com.ytempest.lovefood.util.UserHelper;
