@@ -1,13 +1,12 @@
 package com.ytempest.lovefood.mvp.view.personal;
 
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Pair;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
-import com.ytempest.baselibrary.view.dialog.AlertDialog;
 import com.ytempest.baselibrary.view.recyclerview.LoadRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.RefreshRecyclerView;
 import com.ytempest.baselibrary.view.recyclerview.adapter.CommonRecyclerAdapter;
@@ -16,6 +15,7 @@ import com.ytempest.framelibrary.base.BaseSkinActivity;
 import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.aop.CheckNet;
+import com.ytempest.lovefood.callback.WrapCallback;
 import com.ytempest.lovefood.common.adapter.DefaultLoadViewCreator;
 import com.ytempest.lovefood.common.adapter.DefaultRefreshViewCreator;
 import com.ytempest.lovefood.http.RetrofitClient;
@@ -29,6 +29,7 @@ import com.ytempest.lovefood.mvp.view.PreviewCookbookActivity;
 import com.ytempest.lovefood.mvp.view.cookbook.ReleaseCookbookActivity;
 import com.ytempest.lovefood.util.Config;
 import com.ytempest.lovefood.util.DateFormatUtils;
+import com.ytempest.lovefood.widget.ListDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -118,35 +119,28 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
 
     @Override
     public boolean onItemLongClick(View view, int position) {
-        AlertDialog dialog = getDialog();
-        View edit = dialog.getView(R.id.tv_edit_cookbook);
-        edit.setTag(mDataList.get(position - 1));
-        edit.setOnClickListener(EDIT_COOKBOOK_LISTENER);
+        ListDialog dialog = getListDialog();
+        dialog.addData(ListDialog.SINGLE, mDataList.get(position - 1));
         dialog.show();
         return true;
     }
 
-    private final View.OnClickListener EDIT_COOKBOOK_LISTENER = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            BaseCookbook cookbook = (BaseCookbook) v.getTag();
-            EditCookbookActivity.startActivity(MyCookbookActivity.this, cookbook.getCookId());
-            mDialog.dismiss();
-        }
-    };
+    private ListDialog mListDialog;
 
-    private AlertDialog mDialog;
-
-    private AlertDialog getDialog() {
-        if (mDialog == null) {
-            mDialog = new AlertDialog.Builder(MyCookbookActivity.this)
-                    .setContentView(R.layout.dialog_edit_cookbook)
-                    .addDefaultAnimation()
-                    .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    .setCanceledOnTouchOutside(true)
-                    .create();
+    private ListDialog getListDialog() {
+        if (mListDialog == null) {
+            List<Pair<Integer, String>> list = new ArrayList<>();
+            list.add(new Pair<>(ListDialog.SINGLE, "编辑菜谱"));
+            mListDialog = new ListDialog(getContext(), list, new WrapCallback<Integer, Object>() {
+                @Override
+                public void onCall(Integer firstParam, Object secondParam) {
+                    BaseCookbook cookbook = (BaseCookbook) secondParam;
+                    EditCookbookActivity.startActivity(MyCookbookActivity.this, cookbook.getCookId());
+                    mListDialog.dismiss();
+                }
+            });
         }
-        return mDialog;
+        return mListDialog;
     }
 
     /**
@@ -154,8 +148,7 @@ public class MyCookbookActivity extends BaseSkinActivity<MyCookbookContract.Pres
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEditCookbookInfoSuccess(CookbookInfo newCookbook) {
-        View edit = mDialog.getView(R.id.tv_edit_cookbook);
-        BaseCookbook cookbook = (BaseCookbook) edit.getTag();
+        BaseCookbook cookbook = (BaseCookbook) getListDialog().getData(ListDialog.SINGLE);
         cookbook.setCookTitle(newCookbook.getCookTitle());
         cookbook.setCookDesc(newCookbook.getCookDesc());
         cookbook.setCookGroup(newCookbook.getCookGroup());
