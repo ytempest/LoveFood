@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -91,13 +92,27 @@ public class NavigationView extends RelativeLayout {
     }
 
     public void setLeftText(String text) {
-        mLeftTextView.setVisibility(View.VISIBLE);
+        mLeftImageView.setVisibility(GONE);
+        mLeftTextView.setVisibility(VISIBLE);
         mLeftTextView.setText(text);
     }
 
+    public void steLeftIcon(@DrawableRes int iconId) {
+        mLeftImageView.setVisibility(VISIBLE);
+        mLeftTextView.setVisibility(GONE);
+        mLeftImageView.setImageResource(iconId);
+    }
+
     public void setRightText(String text) {
+        mRightImageView.setVisibility(GONE);
         mRightTextView.setVisibility(View.VISIBLE);
         mRightTextView.setText(text);
+    }
+
+    public void setRightIcon(@DrawableRes int iconId) {
+        mRightImageView.setVisibility(VISIBLE);
+        mRightTextView.setVisibility(GONE);
+        mRightImageView.setImageResource(iconId);
     }
 
     public void enableLeftFinish(Context context) {
@@ -128,6 +143,4 @@ public class NavigationView extends RelativeLayout {
             mRightTextView.setOnClickListener(listener);
         }
     }
-
-
 }
