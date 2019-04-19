@@ -7,7 +7,11 @@ import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.ytempest.baselibrary.base.mvp.inject.InjectPresenter;
 import com.ytempest.baselibrary.imageloader.ImageLoaderManager;
 import com.ytempest.baselibrary.view.CustomToast;
@@ -15,6 +19,7 @@ import com.ytempest.framelibrary.view.NavigationView;
 import com.ytempest.lovefood.R;
 import com.ytempest.lovefood.callback.Callback;
 import com.ytempest.lovefood.http.RetrofitUtils;
+import com.ytempest.lovefood.http.data.CookClassify;
 import com.ytempest.lovefood.mvp.contract.ReleaseCookbookContract;
 import com.ytempest.lovefood.mvp.presenter.ReleaseCookbookPresenter;
 import com.ytempest.lovefood.mvp.view.PermissionActivity;
@@ -89,6 +94,13 @@ public class ReleaseCookbookActivity extends PermissionActivity<ReleaseCookbookC
 
     @BindView(R.id.procedure_view)
     protected ProcedureView mProcedureView;
+
+    @BindView(R.id.tv_group)
+    protected TextView mGroupTv;
+
+    @BindView(R.id.tv_type)
+    protected TextView mTypeTv;
+
 
     private ArrayList<String> mPictureList = new ArrayList<>(1);
 
@@ -191,8 +203,8 @@ public class ReleaseCookbookActivity extends PermissionActivity<ReleaseCookbookC
         Map<String, RequestBody> map = new HashMap<>(
                 6 + mainData.size() + accData.size() + proData.size());
 
-        String cookGroup = "小吃";
-        String cookType = "广东小吃";
+        String cookGroup = mGroupTv.getText().toString();
+        String cookType = mTypeTv.getText().toString();
         long userId = UserHelper.getInstance().getUserInfo().getUserId();
 
         map.put("cookGroup", RetrofitUtils.createBodyFromString(cookGroup));
@@ -269,6 +281,45 @@ public class ReleaseCookbookActivity extends PermissionActivity<ReleaseCookbookC
         mProcedureView.removeNextStepView();
     }
 
+    @OnClick(R.id.tv_group)
+    protected void onSelectGroupClick(View view) {
+        OptionsPickerView groupPicker = new OptionsPickerBuilder(getContext(), new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                String curGroup = mGroupTv.getText().toString();
+                String newGroup = getGroupList().get(options1);
+                if (!curGroup.equals(newGroup)) {
+                    mGroupTv.setText(newGroup);
+                    mTypeTv.setText(CookClassify.getTypeByGroup(newGroup).get(0));
+                }
+            }
+        }).build();
+        groupPicker.setPicker(getGroupList());
+        groupPicker.show();
+    }
+
+    private List<String> mGroupList;
+
+    private List<String> getGroupList() {
+        if (mGroupList == null) {
+            mGroupList = CookClassify.getGroupList();
+        }
+        return mGroupList;
+    }
+
+    @OnClick(R.id.tv_type)
+    protected void onSelectTypeClick(View view) {
+        List<String> typeList = CookClassify.getTypeByGroup(mGroupTv.getText().toString());
+        OptionsPickerView typePicker = new OptionsPickerBuilder(getContext(), new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                mTypeTv.setText(typeList.get(options1));
+            }
+        }).build();
+        typePicker.setPicker(typeList);
+        typePicker.show();
+    }
+
     @Override
     public void onImageClick(View view, int no) {
         requestReadPermission(new Callback<Boolean>() {
@@ -284,6 +335,8 @@ public class ReleaseCookbookActivity extends PermissionActivity<ReleaseCookbookC
             }
         });
     }
+
+    /* Extra */
 
     private void requestReadPermission(Callback<Boolean> callback) {
         requestPermission(CODE_PERMISSION_READ,

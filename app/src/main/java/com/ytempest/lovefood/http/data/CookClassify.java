@@ -1,5 +1,7 @@
 package com.ytempest.lovefood.http.data;
 
+import com.ytempest.lovefood.util.DataUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,5 +84,28 @@ public class CookClassify {
 
     public static final List<CookClassify> getCookClassifyList() {
         return COOK_CLASSIFY_LIST;
+    }
+
+
+    public static List<String> getGroupList() {
+        List<String> list = new ArrayList<>();
+        for (int i = 0, len = DataUtils.getSize(COOK_CLASSIFY_LIST); i < len; i++) {
+            CookClassify classify = COOK_CLASSIFY_LIST.get(i);
+            String group = classify.getGroup();
+            list.add(group);
+
+        }
+        return list;
+
+    }
+
+    public static List<String> getTypeByGroup(String group) {
+        for (int i = 0, len = DataUtils.getSize(COOK_CLASSIFY_LIST); i < len; i++) {
+            CookClassify classify = COOK_CLASSIFY_LIST.get(i);
+            if (group.equals(classify.getGroup())) {
+                return COOK_CLASSIFY_LIST.get(i).getTypeList();
+            }
+        }
+        return new ArrayList<>();
     }
 }

@@ -68,8 +68,42 @@
                 android:orientation="vertical"
                 android:padding="20dp">
 
+
                 <TextView
                     style="@style/title_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="分类" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_group"
+                        style="@style/text_content_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:padding="6dp"
+                        android:text="小吃" />
+
+                    <TextView
+                        android:id="@+id/tv_type"
+                        style="@style/text_content_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:padding="6dp"
+                        android:text="广东小吃" />
+                </LinearLayout>
+
+
+                <TextView
+                    style="@style/title_text_style"
+                    android:layout_marginTop="10dp"
                     android:text="菜谱标题" />
 
                 <EditText
@@ -90,6 +124,7 @@
                     android:hint="添加该菜谱的介绍"
                     android:maxLines="9"
                     tool:text="卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚卤鸡爪又叫卤鸡脚" />
+
 
                 <com.ytempest.lovefood.widget.TitleView
                     android:id="@+id/tv_title_main"
