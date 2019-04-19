@@ -137,7 +137,7 @@ public class TopicFragment extends MvpFragment<TopicPresenter> implements TopicC
 
     @Override
     protected void initData() {
-        getPresenter().getTopicList(mPageNum, Config.PAGE_SIZE);
+        getPresenter().getTopicList(mPageNum, Config.TOPIC_PAGE_SIZE);
     }
 
     /* Click */
@@ -166,7 +166,7 @@ public class TopicFragment extends MvpFragment<TopicPresenter> implements TopicC
 
     private void addLoadView(DataList<TopicInfo> result) {
         long total = result.getTotal();
-        if (total > Config.PAGE_SIZE) {
+        if (total > Config.TOPIC_PAGE_SIZE) {
             mRecyclerView.removeLoadViewCreator();
             mRecyclerView.setLoadViewCreator(LOAD_CREATOR);
             mRecyclerView.setOnLoadMoreListener(this);
@@ -201,13 +201,13 @@ public class TopicFragment extends MvpFragment<TopicPresenter> implements TopicC
     @Override
     public void onRefresh() {
         mPageNum = 1;
-        getPresenter().refreshTopicList(mPageNum, Config.PAGE_SIZE);
+        getPresenter().refreshTopicList(mPageNum, Config.TOPIC_PAGE_SIZE);
     }
 
     @Override
     public void onLoad() {
         mPageNum++;
-        getPresenter().loadTopicList(mPageNum, Config.PAGE_SIZE);
+        getPresenter().loadTopicList(mPageNum, Config.TOPIC_PAGE_SIZE);
     }
 
 }

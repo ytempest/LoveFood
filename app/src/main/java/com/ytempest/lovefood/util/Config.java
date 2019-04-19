@@ -32,4 +32,9 @@ public class Config {
      */
     public static final String EXTERNAL_CACHE_TOPIC_IMAGE_DIR =
             EXTERNAL_ROOT_DIR + File.separator + "topicImage";
+
+    /**
+     * 话题列表展示的数量
+     */
+    public static final int TOPIC_PAGE_SIZE = 5;
 }
