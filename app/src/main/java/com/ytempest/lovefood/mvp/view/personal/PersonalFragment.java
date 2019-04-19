@@ -123,7 +123,7 @@ public class PersonalFragment extends MvpFragment<PersonalContract.Presenter> im
 
     @OnClick(R.id.item_help)
     protected void onHelpClick(View view) {
-        startActivity(new Intent(getActivity(), TestActivity.class));
+//        startActivity(new Intent(getActivity(), TestActivity.class));
     }
 
     @OnClick(R.id.tv_login_out)

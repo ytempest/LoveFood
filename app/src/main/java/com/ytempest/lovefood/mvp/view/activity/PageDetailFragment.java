@@ -78,7 +78,7 @@ public class PageDetailFragment extends BaseFragment {
             // 如果活动已经结束
             mButton.setEnabled(true);
             mCurAction = ACTION_SEE_WINNER;
-            mButton.setText("查看获奖名单");
+            mButton.setText("已结束");
 
         } else if (isUserPartakeActivity) {
             // 如果用户参加了活动

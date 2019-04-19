@@ -16,11 +16,13 @@
             android:layout_gravity="left"
             android:text="我的" />
 
+        <!-- todo：设置页展示隐藏 -->
         <TextView
             android:id="@+id/tv_setting"
             style="@style/top_bar_text_style"
             android:layout_gravity="right"
-            android:text="设置" />
+            android:text="设置"
+            android:visibility="invisible" />
     </FrameLayout>
 
     <LinearLayout
